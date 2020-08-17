@@ -1,0 +1,27 @@
+{
+  "name": "sass--galp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "fibers": "^5.0.0",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.1.0",
+    "node-sass": "^4.14.1",
+    "sass": "^1.26.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeTime-13-08-2020/sass--galp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodeTime-13-08-2020/sass--galp/issues"
+  },
+  "homepage": "https://github.com/CodeTime-13-08-2020/sass--galp#readme"
+}
