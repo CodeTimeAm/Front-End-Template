@@ -29,7 +29,6 @@ git# Before start
 - git add .
 - git pull // To download all files //
 - git commit -m "TEXT WHAT DONE" / To comment what have changed or crate //
-
 - git push // To upload all files //
   
 
@@ -38,9 +37,10 @@ git# Before start
   - ab-hero10-index.html
   - ab-hero10-stayk.css
   - ab-hero10-syle.scss
-  - ....
+  - .... .
+
+
+# Step IV Pull requests
+
+  - When you upload your files you must enter in your github account and create ***Pull requests***
   
-  
-  # Step IV Pull requests
-  
-  -When you upload your files you must enter in your github account and create ***Pull requests***
