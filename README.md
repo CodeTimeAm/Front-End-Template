@@ -34,7 +34,7 @@
 - **git push** // To upload all files //
   
 
--**git pull origin master** // To download all uptadates from master to your branch
+- **git pull origin master** // To download all uptadates from master to your branch
 
 - **All files which you creating must start with your branch name for example**
   [ branch name ab-hero10 - files ]
