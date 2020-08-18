@@ -22,6 +22,7 @@
 - git fetch  ( To update all branches )
 - git branch ( To show all branch and in which branch you are now )
 - git branch -b (branch name which must be created) // Creating branch //
+  -If not working **git branch (branch name which must be created)** // Creating branch //
 - git checkout (branch name which created) // Enter in your branch //
 
 # Step III Working in Branch
@@ -32,10 +33,31 @@
 
 - git push // To upload all files //
   
+
 - **All files which you creating must start with your branch name for example**
   [ branch name ab-hero10 - files ]
   - ab-hero10-index.html
-  - ab-hero10-stayk.css
-  - ab-hero10-syle.scss
-  - ....
+  - ab-hero10-style.css
+  - ab-hero10-style.scss
+  - .... .
+
+
+# Step IV Creating Folder structure
+
+- img
+  - jpg
+  - jpeg
+  - icon
+  - svg
+  - png
+  - favicon
+  - sprite
+- fonts
+- js
+- css
+- scss
+
+# Step V Pull requests
+
+  - When you upload your files you must enter in your github account and create ***Pull requests***
   
