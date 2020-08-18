@@ -1,4 +1,4 @@
-# Before start
+git# Before start
 
 - first command: `npm i`
 - second command: `gulp sass:watch`
@@ -26,4 +26,15 @@
 
 # Step III Working in Branch
 
-- git pull
+- git add .
+- git pull // To download all files //
+- git commit -m "TEXT WHAT DONE" / To comment what have changed or crate //
+- git push // To upload all files //
+  
+- **All files which you creating must start with your branch name for example**
+  [ branch name ab-hero10 - files ]
+  - ab-hero10-index.html
+  - ab-hero10-stayk.css
+  - ab-hero10-syle.scss
+  - ....
+  
