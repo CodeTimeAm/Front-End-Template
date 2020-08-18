@@ -27,12 +27,14 @@
 
 # Step III Working in Branch
 
-- git add .
-- git pull // To download all files //
-- git commit -m "TEXT WHAT DONE" / To comment what have changed or crate //
+- **git add .**
+- **git pull** // To download all files //
+- **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or crate //
 
-- git push // To upload all files //
+- **git push** // To upload all files //
   
+
+-**git pull origin master** // To download all uptadates from master to your branch
 
 - **All files which you creating must start with your branch name for example**
   [ branch name ab-hero10 - files ]
