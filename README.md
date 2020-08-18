@@ -29,6 +29,7 @@ git# Before start
 - git add .
 - git pull // To download all files //
 - git commit -m "TEXT WHAT DONE" / To comment what have changed or crate //
+
 - git push // To upload all files //
   
 - **All files which you creating must start with your branch name for example**
