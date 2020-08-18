@@ -3,4 +3,27 @@
 - first command: `npm i`
 - second command: `gulp sass:watch`
 
-# After
+# Step I Cheking github
+
+- *Go to Your team* [ ***codetime-13.08.2020-team*** ]
+- In ***nav*** section select to ***Projects***
+- Enter Task Manager ***Private***
+- Enter nav section select to ***Projects***
+- Will choose [ ***sass--gulp*** ]
+- In To Do list find task which need to do
+- Pick up your task
+- You must task drop to ***In Progress*** section
+- When task done you must task drop to ***Done*** section
+  
+# Step II Creating Branch
+
+## **branch name mast create as in To Do list writen**
+
+- git fetch  ( To update all branches )
+- git branch ( To show all branch and in which branch you are now )
+- git branch -b (branch name which must be created) // Creating branch //
+- git checkout (branch name which created) // Enter in your branch //
+
+# Step III Working in Branch
+
+- git pull
