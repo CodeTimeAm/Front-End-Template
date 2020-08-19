@@ -7,11 +7,11 @@ var sass = require('gulp-sass');
 sass.compiler = require('sass');
 
 gulp.task('sass', function () {
-  return gulp.src('./sass/**/*.scss')
+  return gulp.src('./src/sass/**/*.scss')
     .pipe(sass({fiber: Fiber}).on('error', sass.logError))
-    .pipe(gulp.dest('./css'));
+    .pipe(gulp.dest('./src/css'));
 });
 
 gulp.task('sass:watch', function () {
-  gulp.watch('./sass/**/*.scss', gulp.series(['sass']));
+  gulp.watch('./src/sass/**/*.scss', gulp.series(['sass']));
 });
