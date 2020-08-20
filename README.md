@@ -5,8 +5,6 @@
 
 - Step I [Cheking github](documentation/checking-github.md)
 
-
-
 # Step II Creating Branch
 
 ## **branch name mast create as in To Do list writen**
@@ -34,22 +32,6 @@
   - .... .
 
 # Step IV Creating Folder structure
-
-- img
-
-  - jpg
-  - jpeg
-  - icon
-  - svg
-  - png
-  - favicon
-  - sprite
-
-- fonts
-
-- js
-- css
-- scss
 
 # Step V Pull requests
 
