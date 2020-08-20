@@ -9,30 +9,40 @@
 
 ## **branch name mast create as in To Do list writen**
 
-- git fetch ( To update all branches )
-- git branch ( To show all branch and in which branch you are now )
-- git branch -b (branch name which must be created) // Creating branch // -If not working **git branch (branch name which must be created)** // Creating branch //
-- git checkout (branch name which created) // Enter in your branch //
+- **git fetch** ( To update all branches )
+- **git branch** ( To show all branch and in which branch you are now )
+- **git branch** (branch name which must be created) // Creating branch //
+- **git checkout** (branch name which created) // Enter in your branch //
+- **git checkput -b (branch name which must be created)**// With this command you creating branch and go to create branch auto.
+- **git branch** // Always check in what branch you are before start working //
 
 # Step III Working in Branch
 
 - **git add .**
-- **git pull** // To download all files //
 - **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or crate //
+- **git pull** // To download all files //
 
 - **git push** // To upload all files //
 
-- **git pull origin master** // To download all uptadates from master to your branch
+* **git pull origin master** // To download all uptadates from master to your branch
 
-- **All files which you creating must start with your branch name for example** [ branch name ab-hero10 - files ]
+* **All files which you creating must start with your branch name for example** [ branch name _ab - files ]
 
-  - ab-hero10-index.html
-  - ab-hero10-style.css
-  - ab-hero10-style.scss
+  - \_ab-style.scss
+
   - .... .
-
-# Step IV Creating Folder structure
 
 # Step V Pull requests
 
+=======
+
 - When you upload your files you must enter in your github account and create **_Pull requests_**
+
+# Step [Folder and file structure](documentation/folder-file-structure.md)
+
+# Step [Connecting third-party libraries](documentation/libraries.md)
+
+# Step [Working with styles functions mixins vendor](documentation/style.md)
+
+
+# Step [Mixins](documentation/mixins.md)
