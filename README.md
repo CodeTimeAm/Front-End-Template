@@ -32,7 +32,9 @@
   - _ab-style.scss
   - .... .
 
-# Step IV [Folder and file structure](documentation/folder-file-structure.md)
+# Step [Folder and file structure](documentation/folder-file-structure.md)
+
+# Step [Connecting third-party libraries](documentation/ibraries.md)
 
 # Step V Pull requests
 
