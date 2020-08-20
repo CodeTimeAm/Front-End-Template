@@ -34,7 +34,6 @@
 
 # Step V Pull requests
 
-=======
 
 - When you upload your files you must enter in your github account and create **_Pull requests_**
 
