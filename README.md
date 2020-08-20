@@ -36,6 +36,8 @@
 
 # Step [Connecting third-party libraries](documentation/libraries.md)
 
+# Step [Working with styles functions mixinsvendor](documentation/style.md)
+
 # Step V Pull requests
 
 - When you upload your files you must enter in your github account and create **_Pull requests_**
