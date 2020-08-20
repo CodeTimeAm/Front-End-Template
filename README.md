@@ -31,6 +31,9 @@
 
   - _ab-style.scss
   - .... .
+# Step V Pull requests
+
+- When you upload your files you must enter in your github account and create **_Pull requests_**
 
 # Step [Folder and file structure](documentation/folder-file-structure.md)
 
@@ -38,6 +41,5 @@
 
 # Step [Working with styles functions mixinsvendor](documentation/style.md)
 
-# Step V Pull requests
+# Step  [Mixins](documentation/mixins.md)
 
-- When you upload your files you must enter in your github account and create **_Pull requests_**
