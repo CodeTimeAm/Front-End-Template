@@ -34,6 +34,8 @@
 
 # Step V Pull requests
 
+=======
+
 - When you upload your files you must enter in your github account and create **_Pull requests_**
 
 # Step [Folder and file structure](documentation/folder-file-structure.md)
@@ -41,5 +43,6 @@
 # Step [Connecting third-party libraries](documentation/libraries.md)
 
 # Step [Working with styles functions mixins vendor](documentation/style.md)
+
 
 # Step [Mixins](documentation/mixins.md)
