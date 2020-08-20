@@ -10,36 +10,16 @@ Styles are located in a folder `src/scss`:
 codetime-template
 └── src
     └── scss
-        ├── functions
-        │   ├── _responsive.scss
-        │   └── _sprites.scss
-        ├── mixins
-        │   ├── _breakpoint.scss
-        │   ├── _clearfix.scss
-        │   ├── _retina.scss
-        │   ├── _sprites.scss
-        │   ├── _triangle.scss
-        │   └── _visually-hidden.scss
-        ├── vendor
-        │   └── .keep
-        ├── _base.scss
-        ├── _fonts.scss
-        ├── _functions.scss
-        ├── _mixins.scss
-        ├── _sprites.hbs
-        ├── _sprites.scss
-        ├── _variables.scss
-        ├── _vendor.scss
-        └── main.scss
+      
 ```
 
-The task is responsible for assembling and converting SCSS to CSS `scss`:
+The task is responsible for assembling and converting SASS to CSS `scss`:
 
 ```bash
-gulp scss
+gulp sass
 ```
 
-After executing the command in the folder `build/css` появятся файлы `style.css` и `style.css.map`:
+After executing the command in the folder `build/css` appear file `style.css` and `style.css.map`:
 
 ```text
 codetime-template
@@ -70,21 +50,7 @@ It is recommended to use [BEM notation] for class naming (https://ru.bem.info/me
 State classes are recommended to be written briefly:
 
 ```scss
-.is-active {
-    // ...
-}
 
-.is-current {
-    // ...
-}
-
-.is-open {
-    // ...
-}
-
-.is-hidden {
-    // ...
-}
 ```
 
 ### CSS property order
@@ -96,7 +62,7 @@ You can check the correct order of properties using a linter:
 gulp lint:scss
 ```
 
-### Переменные
+### Variables
 
 In file `src/scss/_variables.scss` only the main variables should be taken out:
 
@@ -176,10 +142,10 @@ Linter is integrated into the assembly [stylelint](https://stylelint.io/).
 Settings file — `.stylelintrc`.
 This linter allows you to maintain the SCSS code in accordance with the specified regulations.
 
-Verification is carried out using the task `lint:scss`:
+Verification is carried out using the task `lint:sass`:
 
 ```bash
-gulp lint:scss
+gulp lint:sass
 ```
 
 Usage example:
@@ -214,7 +180,7 @@ Test results:
 
 Corrected code:
 
-```scss
+```sass
 .block {
     border-radius: 0;
     width:30px;
