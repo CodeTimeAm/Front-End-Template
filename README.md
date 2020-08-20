@@ -19,7 +19,7 @@
 # Step III Working in Branch
 
 - **git add .**
-- **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or crate //
+- **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or create //
 - **git pull** // To download all files //
 
 - **git push** // To upload all files //
