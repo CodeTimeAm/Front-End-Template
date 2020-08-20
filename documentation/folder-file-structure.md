@@ -3,12 +3,31 @@
 ```text
 codetime-template
 ├── src
+│   ├── css
+│   ├── fonts
+│   │   └── .keep
 │   ├── img
+│   │   └── favicon
+│   │       └── .keep
 │   │   └── sprites
 │   │       ├── png
 │   │       │   └── .keep
 │   │       └── svg
 │   │           └── .keep
+│   ├── sass
+│   │   ├── mixins
+│   │   │   └── _mixin.scss
+│   │   ├── vendor
+│   │   │   └── ._fonts.scss_
+│   │   ├── _base.scss
+│   │   ├── _fonts.scss
+│   │   ├── _functions.scss
+│   │   ├── _mixins.scss
+│   │   ├── _sprites.hbs
+│   │   ├── _sprites.scss
+│   │   ├── _variables.scss
+│   │   ├── _vendor.scss
+│   │   └── main.scss
 │   ├── js
 │   │   ├── vendor
 │   │   │   └── .keep
@@ -22,26 +41,7 @@ codetime-template
 │   ├── resources
 │   │   └── fonts
 │   │       └── .keep
-│   ├── scss
-│   │   ├── functions
-│   │   │   └── _sprites.scss
-│   │   ├── mixins
-│   │   │   ├── _clearfix.scss
-│   │   │   ├── _retina.scss
-│   │   │   ├── _sprites.scss
-│   │   │   ├── _triangle.scss
-│   │   │   └── _visually-hidden.scss
-│   │   ├── vendor
-│   │   │   └── .keep
-│   │   ├── _base.scss
-│   │   ├── _fonts.scss
-│   │   ├── _functions.scss
-│   │   ├── _mixins.scss
-│   │   ├── _sprites.hbs
-│   │   ├── _sprites.scss
-│   │   ├── _variables.scss
-│   │   ├── _vendor.scss
-│   │   └── main.scss
+
 │   └── index.pug
 ├── .babelrc
 ├── .editorconfig
