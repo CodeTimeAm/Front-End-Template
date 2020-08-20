@@ -29,6 +29,7 @@
 * **All files which you creating must start with your branch name for example** [ branch name _ab - files ]
 
   - \_ab-style.scss
+
   - .... .
 
 # Step V Pull requests
@@ -39,6 +40,6 @@
 
 # Step [Connecting third-party libraries](documentation/libraries.md)
 
-# Step [Working with styles functions mixinsvendor](documentation/style.md)
+# Step [Working with styles functions mixins vendor](documentation/style.md)
 
 # Step [Mixins](documentation/mixins.md)
