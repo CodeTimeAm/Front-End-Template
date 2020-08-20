@@ -34,7 +34,7 @@
 
 # Step [Folder and file structure](documentation/folder-file-structure.md)
 
-# Step [Connecting third-party libraries](documentation/ibraries.md)
+# Step [Connecting third-party libraries](documentation/libraries.md)
 
 # Step V Pull requests
 
