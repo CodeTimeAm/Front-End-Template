@@ -11,43 +11,28 @@
 
 - git fetch ( To update all branches )
 - git branch ( To show all branch and in which branch you are now )
-- git branch -b (branch name which must be created) // Creating branch // -If not working **git branch (branch name which must be created)** // Creating branch //
+- git branch (branch name which must be created) // Creating branch //
 - git checkout (branch name which created) // Enter in your branch //
+- git checkput -b (branch name which must be created) // With this command you creating branch and go to create branch auto.
+- git branch // Always check in what branch you are before start working //
 
 # Step III Working in Branch
 
 - **git add .**
-- **git pull** // To download all files //
 - **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or crate //
+- **git pull** // To download all files //
 
 - **git push** // To upload all files //
+  
 
 - **git pull origin master** // To download all uptadates from master to your branch
 
-- **All files which you creating must start with your branch name for example** [ branch name ab-hero10 - files ]
+- **All files which you creating must start with your branch name for example** [ branch name _ab - files ]
 
-  - ab-hero10-index.html
-  - ab-hero10-style.css
-  - ab-hero10-style.scss
+  - _ab-style.scss
   - .... .
 
-# Step IV Creating Folder structure
-
-- img
-
-  - jpg
-  - jpeg
-  - icon
-  - svg
-  - png
-  - favicon
-  - sprite
-
-- fonts
-
-- js
-- css
-- scss
+# Step IV [Folder and file structure](documentation/folder-file-structure.md)
 
 # Step V Pull requests
 
