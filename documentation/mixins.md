@@ -1,3 +1,3 @@
 # Mixins
 
-- [btn](documentation/mixin/btn.md)
+- [btn](documentation/mixins/btn.md)
