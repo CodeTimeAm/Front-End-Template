@@ -91,7 +91,7 @@ Mixin | Defaults | Description
 ```
 
 ```scss
-//sass
+// sass
 .our__element {
     @include icon (25px, 26px)
 }
