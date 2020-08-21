@@ -3,8 +3,7 @@
 
 Mixin | Defaults | Description
 ---|---|---
-`icon($width-icon, $height-icon, )` | width: $width-icon;<br>height: $height-icon; <br>background: url("../../img/sprite/png");<br>display: inline-block; | Create icon
-
+`icon($width-icon, $height-icon, )` | width: $width-icon;<br>height: $height-icon; <br>background: url("../../img/sprite/png/");<br>display: inline-block; | Create icon
 
 
 ```
@@ -20,7 +19,7 @@ Mixin | Defaults | Description
 .our__element {
    width: 100%;
    height: 100%;
-   background: url("../img/sprite/png");
+   background: url("../img/sprite/png/");
    display: inline-block;
 }
 
@@ -38,7 +37,7 @@ Mixin | Defaults | Description
 .our__element {
    width: 25px;
    height: 26px;
-   background: url("../img/sprite/png");
+   background: url("../img/sprite/png/");
    display: inline-block;
 }
 
