@@ -3,12 +3,8 @@
 - 1 command: `npm i`
 - second command: `gulp sass:watch`
 
-- If premmisionDenied in PowerShell (powershell run as administrator) command:`Set-ExecutionPolicy` (YES)
-- For clean install package use `npm cache clean --force`
-- npm i npm -g
-- Installing gulp global command: `npm i gulp --global gulp-cli`
-- Installing gulp command: `npm i gulp --save-dev` (To save install package version)
 
+- Step [Gulp Sass Troubleshoot](documentation/gulp-sass-troubleshoot.md)
 - Step I [Cheking github](documentation/checking-github.md)
 
 # Step II Creating Branch
@@ -39,7 +35,6 @@
   - .... .
 
 # Step V Pull requests
-
 
 - When you upload your files you must enter in your github account and create **_Pull requests_**
 
