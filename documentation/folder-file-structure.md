@@ -2,60 +2,69 @@
 
 ```text
 codetime-template
+├── documentation
+├── img \ icon
 ├── src
+│   ├── css
+│   │   └── style.css
+│   ├── fonts
+│   │   └── .keep
 │   ├── img
+│   │   ├── favicon
+│   │   │   └── .keep
 │   │   └── sprites
 │   │       ├── png
 │   │       │   └── .keep
 │   │       └── svg
 │   │           └── .keep
-│   ├── js
+│   ├── sass
+│   │   ├── mixins
+│   │   │   └── _mixin.scss
 │   │   ├── vendor
-│   │   │   └── .keep
+│   │   │   ├─── base
+│   │   │   │    ├── _body.scss
+│   │   │   │    └── _html.scss
+│   │   │   ├─── embed
+│   │   │   │    ├── _img.scss
+│   │   │   │    └── _svg.scss
+│   │   │   ├─── forms
+│   │   │   │    ├── _button.scss
+│   │   │   │    ├── _checkbox-and-radio.scss
+│   │   │   │    ├── _cursor.scss
+│   │   │   │    ├── _fieldset.scss
+│   │   │   │    ├── _fix-focus-inner.scss
+│   │   │   │    ├── _fix-fonts.scss
+│   │   │   │    ├── _fix-overflow.scss
+│   │   │   │    ├── _fix-text-transform.scss
+│   │   │   │    ├── _legend.scss
+│   │   │   │    ├── _margin.scss
+│   │   │   │    ├── _number.scss
+│   │   │   │    ├── _optgroup.scss
+│   │   │   │    ├── _search.scss
+│   │   │   │    └── _textarea.scss
+│   │   │   ├─── grouping
+│   │   │   │    ├── _.scss
+│   │   │   │    └── _.scss
+│   │   │   ├─── html5
+│   │   │   │    ├── _.scss
+│   │   │   │    └── _.scss
+│   │   │   ├─── links
+│   │   │   │    ├── _.scss
+│   │   │   │    └── _.scss
+│   │   │   ├─── text-level
+│   │   │   │    ├── _.scss
+│   │   │   │    └── _.scss
+│   │   │   └ _normalize.scss
+│   ├── js
 │   │   ├── main.js
 │   │   └── vendor.js
-│   ├── pug
-│   │   ├── mixins
-│   │   │   └── svg.pug
-│   │   ├── base.pug
-│   │   └── mixins.pug
-│   ├── resources
-│   │   └── fonts
-│   │       └── .keep
-│   ├── scss
-│   │   ├── functions
-│   │   │   └── _sprites.scss
-│   │   ├── mixins
-│   │   │   ├── _clearfix.scss
-│   │   │   ├── _retina.scss
-│   │   │   ├── _sprites.scss
-│   │   │   ├── _triangle.scss
-│   │   │   └── _visually-hidden.scss
-│   │   ├── vendor
-│   │   │   └── .keep
-│   │   ├── _base.scss
-│   │   ├── _fonts.scss
-│   │   ├── _functions.scss
-│   │   ├── _mixins.scss
-│   │   ├── _sprites.hbs
-│   │   ├── _sprites.scss
-│   │   ├── _variables.scss
-│   │   ├── _vendor.scss
-│   │   └── main.scss
 │   └── index.pug
-├── .babelrc
-├── .editorconfig
-├── .eslintignore
-├── .eslintrc
-├── .gitignore
-├── .npmrc
-├── .pug-lintrc.json
-├── .stylelintignore
-├── .stylelintrc
+├── gitignore
 ├── gulpfile.js
 ├── package.json
-├── README.md
-└── webpack.config.js
+├── package-lock.json
+└── README.md
+
 ```
 
 ## `src`
@@ -130,10 +139,6 @@ When assembling, files from this folder go to `build/fonts`.
 
 Folder `src/scss` is intended for storing styles.
 
-## `src/scss/functions`
-
-Folder `src/scss/functions` is intended for storing SCSS functions.
-
 ## `src/scss/mixins`
 
 Folder `src/scss/mixins` is intended for storing SCSS mixins.
@@ -150,17 +155,9 @@ File `src/scss/_base.scss` is intended for store basic styles.
 
 File `src/scss/_fonts.scss` is intended for store basic styles.
 
-## `src/scss/_functions.scss`
-
-File `src/scss/_functions.scss` is intended for connect functions from a folder `src/scss/functions`.
-
 ## `src/scss/_mixins.scss`
 
 File `src/scss/_mixins.scss` is intended for connect mixins from a folder `src/scss/mixins`.
-
-## `src/scss/_sprites.hbs`
-
-`src/scss/_sprites.hbs` - the template on the basis of which the file content is generated `src/scss/_sprites.scss`.
 
 ## `src/scss/_sprites.scss`
 
@@ -175,51 +172,19 @@ File `src/scss/_variables.scss` is intended for storing SCSS variables.
 
 File `src/scss/_vendor.scss` is intended for include styles from third-party libraries.
 
-## `src/scss/main.scss`
+## `src/scss/style.scss`
 
-File `src/scss/main.scss` is intended for store the main styles of the site.
-When assembled, this file is converted to CSS and saved in`build/css` вместе с файлом `main.css.map`.
+File `src/scss/style.scss` is intended for store the main styles of the site.
+When assembled, this file is converted to CSS and saved in`build/css` вместе с файлом `style.css.map`.
 
 ## `src/index.pug`
 
 `src/index.pug` - home page template.
 When building, all Pug files from the folder `src` converted to HTML and saved to `build`.
 
-## `.babelrc`
-
-`.babelrc` - Babel JavaScript transpiler settings file.
-
-## `.editorconfig`
-
-`.editorconfig` - editor settings file.
-
-## `.eslintignore`
-
-`.eslintignore` - ESLint settings file for ignoring files.
-
-## `.eslintrc`
-
-`.eslintrc` — ESLint settings file.
-
 ## `.gitignore`
 
 `.gitignore` — git settings file to ignore files.
-
-## `.npmrc`
-
-`.npmrc` - npm settings file.
-
-## `.pug-lintrc.json`
-
-`.pug-lintrc.json` — settings file pug-lint.
-
-## `.stylelintignore`
-
-`.stylelintignore` — settings file stylelint for ignoring files.
-
-## `.stylelintrc`
-
-`.stylelintrc` — settings file stylelint.
 
 ## `gulpfile.js`
 
@@ -233,7 +198,3 @@ When building, all Pug files from the folder `src` converted to HTML and saved t
 
 `README.md` - project description.
 
-## `webpack.config.js`
-
-
-`webpack.config.js` - webpack settings file. ```

@@ -1,9 +1,9 @@
 // Vendors
-@import "./vendor/normalize/normalize.scss";
+@import "./vendor/normalize/_normalize.scss";
 
 // Typography
-@import "./fonts.scss";
-@import "./typography.scss";
+@import "./_fonts.scss";
+@import "./_typography.scss";
 
 // Mixins
-@import "./mixin/mixin.scss";
+@import "./mixins/_mixin.scss";

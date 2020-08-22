@@ -25,7 +25,7 @@
 # Step III Working in Branch
 
 - **git add .**
-- **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or crate //
+- **git commit -m "TEXT WHAT DONE"**/ To comment what have changed or create //
 - **git pull** // To download all files //
 
 - **git push** // To upload all files //
@@ -40,7 +40,6 @@
 
 # Step V Pull requests
 
-=======
 
 - When you upload your files you must enter in your github account and create **_Pull requests_**
 
