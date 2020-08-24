@@ -1,0 +1,28 @@
+@mixin btn($background-color: #fff, $border-radius: 0, $color: #000, $font-size: 16px, $padding: 0, $line-height: 2) {
+  background-color: $background-color;
+  border-radius: $border-radius;
+  font-size: $font-size;
+  color: $color;
+  text-decoration: none;
+  padding: $padding;
+  display: inline-block;
+  line-height: $font-size + $line-height;
+}
+
+@mixin icon($width-icon: 100%, $height-icon: 100%) {
+  width: $width-icon;
+  height: $height-icon;
+  background: url("../../img/sprite/png");
+  display: inline-block;
+}
+
+// @mixin font($font_name, $file_name, $weight, $style) {
+
+// @font-face {
+// font-family: $font_name;
+// font-display: swap;
+// src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2");
+// font-weight: #{$weight};
+// font-style: #{$style};
+// }
+// }

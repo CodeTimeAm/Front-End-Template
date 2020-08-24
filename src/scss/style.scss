@@ -1,0 +1,41 @@
+// Vendors
+// @import "./vendor/normalize/_normalize.scss";
+
+// Typography
+// @import "./_fonts.scss";
+
+@mixin font($font_name, $file_name, $weight, $style) {
+	@font-face {
+		font-family: $font_name;
+		font-display: swap;
+		src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2");
+		font-weight: #{$weight};
+		font-style: #{$style};
+	}
+}
+
+@import "fonts.scss";
+// @import "./_typography.scss";
+
+// Mixins
+// @import "./mixins/_mixins.scss";
+
+body {
+	font-size: 15px;
+	display: flex;
+}
+
+span {
+	font-size: 20px;
+	@media (max-wdth: 750px) {
+		font-size: 10px;
+	}
+}
+
+div {
+	background: url(../img/4k-Wallpapers-Free-Download-wide.jpg) 0 0 no-repeat;
+	font-size: 40px;
+	@media (max-wdth: 750px) {
+		font-size: 50px;
+	}
+}
