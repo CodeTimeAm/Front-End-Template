@@ -4,38 +4,85 @@
 // Typography
 // @import "./_fonts.scss";
 
-@mixin font($font_name, $file_name, $weight, $style) {
-	@font-face {
-		font-family: $font_name;
-		font-display: swap;
-		src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2");
-		font-weight: #{$weight};
-		font-style: #{$style};
-	}
-}
+// @mixin font($font_name, $file_name, $weight, $style) {
+// 	@font-face {
+// 		font-family: $font_name;
+// 		font-display: swap;
+// 		src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2");
+// 		font-weight: #{$weight};
+// 		font-style: #{$style};
+// 	}
+// }
 
-@import "fonts.scss";
+// @import "fonts.scss";
 // @import "./_typography.scss";
 
 // Mixins
 // @import "./mixins/_mixins.scss";
 
-body {
-	font-size: 15px;
-	display: flex;
-}
+// body {
+// 	font-size: 15px;
+// 	display: flex;
+// }
 
-span {
-	font-size: 20px;
-	@media (max-wdth: 750px) {
-		font-size: 10px;
+// span {
+// 	font-size: 20px;
+// 	@media (max-wdth: 750px) {
+// 		font-size: 10px;
+// 	}
+// }
+
+// div {
+// 	background: url(../img/4k-Wallpapers-Free-Download-wide.jpg) 0 0 no-repeat;
+// 	font-size: 40px;
+// 	@media (max-wdth: 750px) {
+// 		font-size: 50px;
+// 	}
+// }
+
+$col: 576;
+$sm: 576;
+$md: 768;
+$lg: 992;
+$xl: 1200;
+$gutter: 30;
+$grid: 12;
+
+// $grid-name: col sm md lg xl;
+// @for $i from 1 through $grid {
+// 	@each $grid in $grid-name {
+// 		@if $grid != "col" {
+// 			.col-#{$grid}-#{$i} {
+// 				width: 100% / ($i * 1);
+// 				padding: 0 $gutter / 2 + px;
+// 			}
+// 		} @else if $grid == "col" {
+// 			.col-#{$i} {
+// 				width: 100% / ($i * 1);
+// 				padding: 0 $gutter / 2 + px;
+// 			}
+// 		}
+// 	}
+// }
+
+$grid-name: col sm md lg xl;
+@for $i from 1 through $grid {
+	@each $grid in $grid-name {
+		@if $grid != "col" {
+			.offset-#{$grid}-#{$i} {
+				margin-left: (100% / $i);
+			}
+		}
+		// @else if $grid == "col" {
+		// 	.offset-#{$i} {
+		// 		margin-left: ($i * 1);
+		// 	}
+		// }
 	}
 }
-
-div {
-	background: url(../img/4k-Wallpapers-Free-Download-wide.jpg) 0 0 no-repeat;
-	font-size: 40px;
-	@media (max-wdth: 750px) {
-		font-size: 50px;
+@for $i from 0 through $grid {
+	
+	.test-#{$i} {
+		margin-left: ($i * (1 / $grid)) * 100%;
 	}
 }

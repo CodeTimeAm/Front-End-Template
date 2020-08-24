@@ -45,8 +45,8 @@ let { src, dest } = require("gulp"),
   svgSprite = require("gulp-svg-sprite"),
   ttf2woff = require("gulp-ttf2woff"),
   ttf2woff2 = require("gulp-ttf2woff2"),
-  fonter = require("gulp-fonter"),
-  spritesmith = require("gulp.spritesmith");
+  fonter = require("gulp-fonter");
+// spritesmith = require("gulp.spritesmith");
 
 function browserSync(params) {
   browsersync.init({
@@ -157,31 +157,31 @@ gulp.task("svgSprite", function () {
     .pipe(dest(path.build.img));
 });
 
-gulp.task("sprite", function () {
-  // Generate our spritesheet
-  var spriteData = gulp.src(source_folder + "/img/sprite/*.png").pipe(
-    spritesmith({
-      imgName: "sprite.png",
-      cssName: "sprite.css",
-    })
-  );
+// gulp.task("sprite", function () {
+//   // Generate our spritesheet
+//   var spriteData = gulp.src(source_folder + "/img/sprite/*.png").pipe(
+//     spritesmith({
+//       imgName: "sprite.png",
+//       cssName: "sprite.css",
+//     })
+//   );
 
-  // Pipe image stream through image optimizer and onto disk
-  // var imgStream = sprite.img
-    // DEV: We must buffer our stream into a Buffer for `imagemin`
-  return spriteData
-    .pipe(dest(source_folder + "/img/sprite/png/"));
-    .pipe(dest(source_folder + "/css/"));
+//   // Pipe image stream through image optimizer and onto disk
+//   // var imgStream = sprite.img
+//     // DEV: We must buffer our stream into a Buffer for `imagemin`
+//   return spriteData
+//     .pipe(dest(source_folder + "/img/sprite/png/"));
+//     .pipe(dest(source_folder + "/css/"));
 
 
-  // Pipe CSS stream through CSS optimizer and onto disk
-  var cssStream = sprite.css
-    .pipe(csso())
-    .pipe(gulp.dest(source_folder + "/css/"));
+//   // Pipe CSS stream through CSS optimizer and onto disk
+//   var cssStream = sprite.css
+//     .pipe(csso())
+//     .pipe(gulp.dest(source_folder + "/css/"));
 
-  // Return a merged stream to handle both `end` events
-  return merge(imgStream, cssStream);
-});
+//   // Return a merged stream to handle both `end` events
+//   return merge(imgStream, cssStream);
+// });
 
 function fontsStyle(params) {
   let file_content = fs.readFileSync(source_folder + "/scss/fonts.scss");
@@ -197,10 +197,10 @@ function fontsStyle(params) {
             fs.appendFile(
               source_folder + "/scss/fonts.scss",
               '@include font("' +
-                fontname +
-                '", "' +
-                fontname +
-                '", "400", "normal");\r\n',
+              fontname +
+              '", "' +
+              fontname +
+              '", "400", "normal");\r\n',
               cb
             );
           }
@@ -211,7 +211,7 @@ function fontsStyle(params) {
   }
 }
 
-function cb() {}
+function cb() { }
 
 function watchFiles(params) {
   gulp.watch([path.watch.html], html);
