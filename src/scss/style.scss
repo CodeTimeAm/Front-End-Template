@@ -49,6 +49,7 @@ $grid-name: col sm md lg xl;
 	}
 }
 
+
 @for $i from 0 through $grid {
 	@each $grid in $grid-name {
 		@if $grid != "col" {
