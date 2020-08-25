@@ -4,10 +4,10 @@ $md: 768;
 $lg: 992;
 $xl: 1200;
 $gutter: 30;
-$gridnumbers: 12;
+$col_numbers: 12;
 
-$grid: $gridnumbers;
-$gridofsett: $gridnumbers;
+$grid: $col_numbers;
+$gridofsett: $col_numbers;
 
 $grid-name: col sm md lg xl;
 @for $i from 1 through $grid {
