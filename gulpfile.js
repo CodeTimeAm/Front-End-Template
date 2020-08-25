@@ -29,23 +29,23 @@ let path = {
 };
 
 let { src, dest } = require("gulp"),
-  gulp         = require("gulp"),
-  browsersync  = require("browser-sync").create(),
-  fileinclude  = require("gulp-file-include"),
-  del          = require("del"),
-  scss         = require("gulp-sass"),
+  gulp = require("gulp"),
+  browsersync = require("browser-sync").create(),
+  fileinclude = require("gulp-file-include"),
+  del = require("del"),
+  scss = require("gulp-sass"),
   autoprefixer = require("gulp-autoprefixer"),
-  group_media  = require("gulp-group-css-media-queries"),
-  clean_css    = require("gulp-clean-css"),
-  rename       = require("gulp-rename"),
-  uglify       = require("gulp-uglify-es").default,
-  imagemin     = require("gulp-imagemin"),
-  webphtml     = require("gulp-webp-html"),
-  webpcss      = require("gulp-webp-css"),
-  svgSprite    = require("gulp-svg-sprite"),
-  ttf2woff     = require("gulp-ttf2woff"),
-  ttf2woff2    = require("gulp-ttf2woff2"),
-  fonter       = require("gulp-fonter");
+  group_media = require("gulp-group-css-media-queries"),
+  clean_css = require("gulp-clean-css"),
+  rename = require("gulp-rename"),
+  uglify = require("gulp-uglify-es").default,
+  imagemin = require("gulp-imagemin"),
+  webphtml = require("gulp-webp-html"),
+  webpcss = require("gulp-webp-css"),
+  svgSprite = require("gulp-svg-sprite"),
+  ttf2woff = require("gulp-ttf2woff"),
+  ttf2woff2 = require("gulp-ttf2woff2"),
+  fonter = require("gulp-fonter");
 // spritesmith = require("gulp.spritesmith");
 
 function browserSync(params) {
@@ -82,7 +82,7 @@ function css() {
         })
       )
       .pipe(dest("./src/css"))
-      .pipe(webpcss({}))
+      .pipe(webpcss())
       .pipe(dest(path.build.css))
       // .pipe(dest(path.src.css))
       .pipe(clean_css())
@@ -226,9 +226,7 @@ function clean(params) {
 
 let build = gulp.series(
   clean,
-  gulp.parallel(js, css, html, images, fonts),
-  fontsStyle
-);
+  gulp.parallel(js, css, html, images, fonts), fontsStyle);
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
 exports.fontsStyle = fontsStyle;

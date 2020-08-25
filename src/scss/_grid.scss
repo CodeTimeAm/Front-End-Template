@@ -1,0 +1,41 @@
+$col: 576;
+$sm: 576;
+$md: 768;
+$lg: 992;
+$xl: 1200;
+$gutter: 30;
+$gridnumbers: 12;
+
+$grid: $gridnumbers;
+$gridofsett: $gridnumbers;
+
+$grid-name: col sm md lg xl;
+@for $i from 1 through $grid {
+	@each $grid in $grid-name {
+		@if $grid != "col" {
+			.col-#{$grid}-#{$i} {
+				width: 100% / ($i * 1);
+				padding: 0 $gutter / 2 + px;
+			}
+		} @else if $grid == "col" {
+			.col-#{$i} {
+				width: 100% / ($i * 1);
+				padding: 0 $gutter / 2 + px;
+			}
+		}
+	}
+}
+
+@for $i from 0 through $grid {
+	@each $grid in $grid-name {
+		@if $grid != "col" {
+			.offset-#{$grid}-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+			}
+		} @else if $grid == "col" {
+			.offset-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+			}
+		}
+	}
+}
