@@ -29,23 +29,23 @@ let path = {
 };
 
 let { src, dest } = require("gulp"),
-  gulp = require("gulp"),
-  browsersync = require("browser-sync").create(),
-  fileinclude = require("gulp-file-include"),
-  del = require("del"),
-  scss = require("gulp-sass"),
+  gulp         = require("gulp"),
+  browsersync  = require("browser-sync").create(),
+  fileinclude  = require("gulp-file-include"),
+  del          = require("del"),
+  scss         = require("gulp-sass"),
   autoprefixer = require("gulp-autoprefixer"),
-  group_media = require("gulp-group-css-media-queries"),
-  clean_css = require("gulp-clean-css"),
-  rename = require("gulp-rename"),
-  uglify = require("gulp-uglify-es").default,
-  imagemin = require("gulp-imagemin"),
-  webphtml = require("gulp-webp-html"),
-  webpcss = require("gulp-webp-css"),
-  svgSprite = require("gulp-svg-sprite"),
-  ttf2woff = require("gulp-ttf2woff"),
-  ttf2woff2 = require("gulp-ttf2woff2"),
-  fonter = require("gulp-fonter");
+  group_media  = require("gulp-group-css-media-queries"),
+  clean_css    = require("gulp-clean-css"),
+  rename       = require("gulp-rename"),
+  uglify       = require("gulp-uglify-es").default,
+  imagemin     = require("gulp-imagemin"),
+  webphtml     = require("gulp-webp-html"),
+  webpcss      = require("gulp-webp-css"),
+  svgSprite    = require("gulp-svg-sprite"),
+  ttf2woff     = require("gulp-ttf2woff"),
+  ttf2woff2    = require("gulp-ttf2woff2"),
+  fonter       = require("gulp-fonter");
 // spritesmith = require("gulp.spritesmith");
 
 function browserSync(params) {

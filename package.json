@@ -1,7 +1,7 @@
 {
   "name": "sass--galp",
   "version": "1.0.0",
-  "description": "",
+  "description": "- 1 command: `npm i` - second command: `gulp sass:watch`",
   "main": "index.js",
   "dependencies": {
     "node-sass": "^4.14.1",
