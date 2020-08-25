@@ -30,8 +30,6 @@ $grid: 12;
 
 // $offsets: ($io * (1 / $grid)) * 100%;
 
-
-
 $grid-name: col sm md lg xl;
 @for $i from 1 through $grid {
 	@each $grid in $grid-name {
@@ -59,22 +57,15 @@ $grid-name: col sm md lg xl;
 		} @else if $grid == "col" {
 			.offsaet-#{$i} {
 				width: 100% / ($i * 1);
-				// padding: 0 $gutter / 2 + px;
+				// margin-left: ($i * (1 / $grid)) * 100%;
 			}
 		}
 	}
 }
 
-
-
 // @for $i from 0 through $grid {
-	
 
 // 	.offset-#{$i} {
 // 		margin-left: ($i * (1 / $grid)) * 100%;
 // 	}
 // }
-
-
-
-
