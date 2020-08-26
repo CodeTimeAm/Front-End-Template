@@ -1,12 +1,12 @@
 // Vendors
-// @import "./vendor/normalize/_normalize.scss";
+@import "./vendor/normalize/normalize";
 
 @import "./base";
 // Grid
 @import "./grid";
 
 // Typography
-// @import "./_fonts.scss";
+@import "./fonts";
 
 @mixin font($font_name, $file_name, $weight, $style) {
 	@font-face {
@@ -18,27 +18,9 @@
 	}
 }
 
-@import "fonts.scss";
-@import "./_typography.scss";
+@import "./typography";
 
 // Mixins
-@import "./mixins/_mixins.scss";
+@import "./mixins/mixins";
 
 
-
-
-h1 {
-	font-style: 120px;
-	color: blue;
-}
-.block {
-	display: flex;
-	flex-direction: row;
-	height: 60px;
-	width: 100%;
-	background: $color-red;
-}
-
-* {
-	border: 1px red solid;
-}
