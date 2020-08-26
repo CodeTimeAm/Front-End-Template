@@ -42,7 +42,11 @@ $gridofsett: $col_quantity;
 	margin-right: -15px;
 	margin-left: -15px;
 }
-.col, .col-sm, .col-md, .col-lg, .col-xl {
+.col,
+.col-sm,
+.col-md,
+.col-lg,
+.col-xl {
 	flex-basis: 0;
 	flex-grow: 1;
 	max-width: 100%;
@@ -112,35 +116,35 @@ $grid-name: col sm md lg xl;
 			.offset-#{$i} {
 				margin-left: ($i * (1 / $gridofsett)) * 100%;
 				@media screen and (min-width: $col + px) {
-					max-width: ($i / $gridofsett) * 100%;
+					margin-left: ($i * (1 / $gridofsett)) * 100%;
 				}
 			}
 		} @else if $grid == "sm" {
 			.offset-sm-#{$i} {
 				margin-left: ($i * (1 / $gridofsett)) * 100%;
 				@media screen and (min-width: $sm + px) {
-					max-width: ($i / $gridofsett) * 100%;
+					margin-left: ($i * (1 / $gridofsett)) * 100%;
 				}
 			}
 		} @else if $grid == "md" {
 			.offset-md-#{$i} {
 				margin-left: ($i * (1 / $gridofsett)) * 100%;
 				@media screen and (min-width: $md + px) {
-					max-width: ($i / $gridofsett) * 100%;
+					margin-left: ($i * (1 / $gridofsett)) * 100%;
 				}
 			}
 		} @else if $grid == "lg" {
 			.offset-lg-#{$i} {
 				margin-left: ($i * (1 / $gridofsett)) * 100%;
 				@media screen and (min-width: $lg + px) {
-					max-width: ($i / $gridofsett) * 100%;
+					margin-left: ($i * (1 / $gridofsett)) * 100%;
 				}
 			}
 		} @else if $grid == "xl" {
 			.offset-xl-#{$i} {
 				margin-left: ($i * (1 / $gridofsett)) * 100%;
 				@media screen and (min-width: $xl + px) {
-					max-width: ($i / $gridofsett) * 100%;
+					margin-left: ($i * (1 / $gridofsett)) * 100%;
 				}
 			}
 		}
