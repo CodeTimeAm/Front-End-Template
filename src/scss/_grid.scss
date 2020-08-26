@@ -4,7 +4,7 @@ $md: 768;
 $lg: 992;
 $xl: 1200;
 $gutter: 30;
-$col_quantity: 500;
+$col_quantity: 12;
 
 $grid: $col_quantity;
 $gridofsett: $col_quantity;
@@ -42,11 +42,7 @@ $gridofsett: $col_quantity;
 	margin-right: -15px;
 	margin-left: -15px;
 }
-.col,
-.col-sm,
-.col-md,
-.col-lg,
-.col-xl {
+.col,.col-sm,.col-md,.col-lg,.col-xl {
 	flex-basis: 0;
 	flex-grow: 1;
 	max-width: 100%;
