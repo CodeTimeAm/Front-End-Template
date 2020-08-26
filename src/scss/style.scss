@@ -1,9 +1,9 @@
 // Vendors
 // @import "./vendor/normalize/_normalize.scss";
 
+@import "./base";
 // Grid
-@import "./_grid.scss";
-
+@import "./grid";
 
 // Typography
 // @import "./_fonts.scss";
@@ -23,4 +23,3 @@
 
 // Mixins
 @import "./mixins/_mixins.scss";
-
