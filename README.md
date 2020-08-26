@@ -1,8 +1,10 @@
 # Before start
 
-- first command: `npm i`
+- 1 command: `npm i`
 - second command: `gulp sass:watch`
 
+
+- Step [Gulp Sass Troubleshoot](documentation/gulp-sass-troubleshoot.md)
 - Step I [Cheking github](documentation/checking-github.md)
 
 # Step II Creating Branch
@@ -34,7 +36,6 @@
 
 # Step V Pull requests
 
-
 - When you upload your files you must enter in your github account and create **_Pull requests_**
 
 # Step [Folder and file structure](documentation/folder-file-structure.md)
@@ -42,6 +43,5 @@
 # Step [Connecting third-party libraries](documentation/libraries.md)
 
 # Step [Working with styles functions mixins vendor](documentation/style.md)
-
 
 # Step [Mixins](documentation/mixins.md)

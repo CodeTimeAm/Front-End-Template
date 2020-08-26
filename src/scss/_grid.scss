@@ -1,0 +1,136 @@
+$col: 376;
+$sm: 576;
+$md: 768;
+$lg: 992;
+$xl: 1200;
+$gutter: 30;
+$col_quantity: 12;
+
+$grid: $col_quantity;
+$gridofsett: $col_quantity;
+
+.container {
+	display: flex;
+	width: 100%;
+	padding-right: $gutter / 2 + px;
+	padding-left: $gutter / 2 + px;
+	margin-right: auto;
+	margin-left: auto;
+	@media screen and (min-width: $col + px) {
+		max-width: 540px;
+	}
+	@media screen and (min-width: $sm + px) {
+		max-width: 540px;
+	}
+	@media screen and (min-width: $md + px) {
+		max-width: 720px;
+	}
+	@media screen and (min-width: $lg + px) {
+		max-width: 960px;
+	}
+	@media screen and (min-width: $xl + px) {
+		max-width: 1500px;
+	}
+	&-fluid {
+		display: flex;
+		width: 100%;
+		padding-right: $gutter / 2 + px;
+		padding-left: $gutter / 2 + px;
+	}
+}
+
+$grid-name: col sm md lg xl;
+// @for $i from 1 through $grid {
+// 	@each $grid in $grid-name {
+// 		@if $grid != "col" {
+// 			.col-#{$grid}-#{$i} {
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 			}
+// 		} @else if $grid == "col" {
+// 			.col-#{$i} {
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 				@media screen and (min-width: $col + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// @for $i from 0 through $grid - 1 {
+// 	@each $grid in $grid-name {
+// 		@if $grid != "col"  {
+// 			.offset-#{$grid}-#{$i} {
+// 				margin-left: ($i * (1 / $gridofsett)) * 100%;
+// 			}
+// 		}
+// 		@else if $grid == "sm" {
+// 			.bar-#{$i} {
+// 				text-size: 20px;
+// 				// @media screen and (min-width: $xm + px) {
+// 				// 	max-width: ($i / $gridofsett) * 200%;
+// 				// }
+// 			}
+// 		} @else if $grid == "col" {
+// 			.offset-#{$i} {
+// 				margin-left: ($i * (1 / $gridofsett)) * 100%;
+// 				@media screen and (min-width: $col + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+
+
+@for $i from 0 through $grid - 1 {
+	@each $grid in $grid-name {
+		@if $grid == "col"  {
+			.offset-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+				@media screen and (min-width: $col + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		}
+		@else if $grid == "sm" {
+			.offset-sm-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+				@media screen and (min-width: $sm + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		} 
+		@else if $grid == "md" {
+			.offset-md-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+				@media screen and (min-width: $md + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		} 
+		@else if $grid == "lg" {
+			.offset-lg-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+				@media screen and (min-width: $lg + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		} 
+		@else if $grid == "xl" {
+			.offset-#{$i} {
+				margin-left: ($i * (1 / $gridofsett)) * 100%;
+				@media screen and (min-width: $xl + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		}
+	}
+}
