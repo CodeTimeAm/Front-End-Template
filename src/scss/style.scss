@@ -23,3 +23,22 @@
 
 // Mixins
 @import "./mixins/_mixins.scss";
+
+
+
+
+h1 {
+	font-style: 120px;
+	color: blue;
+}
+.block {
+	display: flex;
+	flex-direction: row;
+	height: 60px;
+	width: 100%;
+	background: $color-red;
+}
+
+* {
+	border: 1px red solid;
+}
