@@ -1,12 +1,13 @@
 // Vendors
 // @import "./vendor/normalize/_normalize.scss";
 
-@import "./base";
+//@import "./base";
 // Grid
-@import "./grid";
+ @import "./grid";
 
 // Typography
 // @import "./_fonts.scss";
+
 
 @mixin font($font_name, $file_name, $weight, $style) {
 	@font-face {
@@ -28,7 +29,7 @@
 
 
 h1 {
-	font-style: 120px;
+	font-size: 120px;
 	color: blue;
 }
 .block {
