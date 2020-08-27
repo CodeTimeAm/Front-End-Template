@@ -1,0 +1,21 @@
+html {
+	box-sizing: border-box;
+}
+body {
+	-webkit-font-smoothing: antialiased;
+}
+* {
+	box-sizing: inherit;
+	&::before {
+		box-sizing: inherit;
+	}
+	&::after {
+		box-sizing: inherit;
+	}
+}
+a,
+button,
+input[type="button"],
+input[type="submit"] {
+	-webkit-appearance: none;
+}
