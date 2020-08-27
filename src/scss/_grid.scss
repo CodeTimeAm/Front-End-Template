@@ -42,11 +42,7 @@ $gridofsett: $col_quantity;
 	margin-right: -15px;
 	margin-left: -15px;
 }
-.col,
-.col-sm,
-.col-md,
-.col-lg,
-.col-xl {
+.col,.col-sm,.col-md,.col-lg,.col-xl {
 	flex-basis: 0;
 	flex-grow: 1;
 	max-width: 100%;
