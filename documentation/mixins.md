@@ -68,16 +68,19 @@ Mixin | Defaults | Description
 `icon($width-icon, $height-icon, )` | width: $width-icon;<br>height: $height-icon; <br>background: url("../../img/sprite/png/");<br>display: inline-block; | Create icon
 
 
-```
-//scss
-.our__element {
-   @include icon( )
+```scss
+// scss
+.my-element {
+   @include icon();
 }
+
 ```
 
 
-```
-// css 
+
+```css
+/* css */
+
 .our__element {
    width: 100%;
    height: 100%;
@@ -87,14 +90,14 @@ Mixin | Defaults | Description
 
 ```
 
-```
-//sass
+```scss
+// sass
 .our__element {
     @include icon (25px, 26px)
 }
 ```
 
-```
+```css
 // css 
 .our__element {
    width: 25px;

@@ -1,12 +1,13 @@
 // Vendors
 @import "./vendor/normalize/normalize";
 
-@import "./base";
+//@import "./base";
 // Grid
-@import "./grid";
+
 
 // Typography
 @import "./fonts";
+
 
 @mixin font($font_name, $file_name, $weight, $style) {
 	@font-face {
@@ -22,5 +23,6 @@
 
 // Mixins
 @import "./mixins/mixins";
+
 
 
