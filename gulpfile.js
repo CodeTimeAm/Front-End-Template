@@ -82,7 +82,7 @@ function css() {
         })
       )
       .pipe(dest("./src/css"))
-      .pipe(webpcss())
+      // .pipe(webpcss())
       .pipe(dest(path.build.css))
       // .pipe(dest(path.src.css))
       .pipe(clean_css())
@@ -225,7 +225,7 @@ function clean(params) {
 
 let build = gulp.series(
   clean,
-  gulp.parallel(js, css, html, images, fonts), fontsStyle);
+  gulp.parallel(js, css, html, images, fonts));    //fontsStyle
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
 exports.fontsStyle = fontsStyle;
