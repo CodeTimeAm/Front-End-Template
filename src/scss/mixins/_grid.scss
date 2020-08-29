@@ -56,33 +56,14 @@ $grid-name: col sm md lg xl;
 
 @for $i from 1 through $grid {
 	@each $grid in $grid-name {
-		@if $grid == "xl" {
-			.col-xl-#{$i} {
+		@if $grid == "col" {
+			.col-#{$i} {
+				position: relative;
 				flex: 0 0 ($i / $gridofsett) * 100%;
 				width: ($i / $gridofsett) * 100%;
 				padding-left: $gutter / 2 + px;
 				padding-right: $gutter / 2 + px;
-				@media screen and (min-width: $xl + px) {
-					max-width: ($i / $gridofsett) * 100%;
-				}
-			}
-		} @else if $grid == "lg" {
-			.col-lg-#{$i} {
-				flex: 0 0 ($i / $gridofsett) * 100%;
-				width: ($i / $gridofsett) * 100%;
-				padding-left: $gutter / 2 + px;
-				padding-right: $gutter / 2 + px;
-				@media screen and (min-width: $lg + px) {
-					max-width: ($i / $gridofsett) * 100%;
-				}
-			}
-		} @else if $grid == "md" {
-			.col-md-#{$i} {
-				flex: 0 0 ($i / $gridofsett) * 100%;
-				width: ($i / $gridofsett) * 100%;
-				padding-left: $gutter / 2 + px;
-				padding-right: $gutter / 2 + px;
-				@media screen and (min-width: $md + px) {
+				@media screen and (max-width: $col + px) {
 					max-width: ($i / $gridofsett) * 100%;
 				}
 			}
@@ -96,20 +77,96 @@ $grid-name: col sm md lg xl;
 					max-width: ($i / $gridofsett) * 100%;
 				}
 			}
-		} @else if $grid == "col" {
-			.col-#{$i} {
-				position: relative;
+		} @else if $grid == "md" {
+			.col-md-#{$i} {
 				flex: 0 0 ($i / $gridofsett) * 100%;
 				width: ($i / $gridofsett) * 100%;
 				padding-left: $gutter / 2 + px;
 				padding-right: $gutter / 2 + px;
-				@media screen and (min-width: $col + px) {
+				@media screen and (min-width: $md + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		} @else if $grid == "lg" {
+			.col-lg-#{$i} {
+				flex: 0 0 ($i / $gridofsett) * 100%;
+				width: ($i / $gridofsett) * 100%;
+				padding-left: $gutter / 2 + px;
+				padding-right: $gutter / 2 + px;
+				@media screen and (min-width: $lg + px) {
+					max-width: ($i / $gridofsett) * 100%;
+				}
+			}
+		} @else if $grid == "xl" {
+			.col-xl-#{$i} {
+				flex: 0 0 ($i / $gridofsett) * 100%;
+				width: ($i / $gridofsett) * 100%;
+				padding-left: $gutter / 2 + px;
+				padding-right: $gutter / 2 + px;
+				@media screen and (min-width: $xl + px) {
 					max-width: ($i / $gridofsett) * 100%;
 				}
 			}
 		}
 	}
 }
+// @for $i from 1 through $grid {
+// 	@each $grid in $grid-name {
+// 		@if $grid == "xl" {
+// 			.col-xl-#{$i} {
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 				@media screen and (min-width: $xl + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		} @else if $grid == "lg" {
+// 			.col-lg-#{$i} {
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 				@media screen and (min-width: $lg + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		} @else if $grid == "md" {
+// 			.col-md-#{$i} {
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 				@media screen and (min-width: $md + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		} @else if $grid == "sm" {
+// 			.col-sm-#{$i} {
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 				@media screen and (min-width: $sm + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		} @else if $grid == "col" {
+// 			.col-#{$i} {
+// 				position: relative;
+// 				flex: 0 0 ($i / $gridofsett) * 100%;
+// 				width: ($i / $gridofsett) * 100%;
+// 				padding-left: $gutter / 2 + px;
+// 				padding-right: $gutter / 2 + px;
+// 				@media screen and (max-width: $col + px) {
+// 					max-width: ($i / $gridofsett) * 100%;
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
 @for $i from 0 through $grid - 1 {
 	@each $grid in $grid-name {
 		@if $grid == "xl" {
