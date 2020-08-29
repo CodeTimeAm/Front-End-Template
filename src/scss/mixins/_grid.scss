@@ -28,7 +28,7 @@ $gridofsett: $col_quantity;
 		max-width: ($lg - 32) + px;
 	}
 	@media screen and (min-width: $xl + px) {
-		max-width: ($xl + 300) + px;
+		max-width: $xl + px;
 	}
 	&-fluid {
 		width: 100%;
