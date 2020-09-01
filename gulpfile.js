@@ -5,9 +5,10 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 
+
 gulp.task('watch', function () {
-  watch(['./build/*.html', './build/css/**/*.css'],
-    gulp.parallel(browserSync.reload))
+  watch(['./build/*.html', './build/css/*.css'], gulp.parallel(browserSync.reload))
+  watch('./build/scss/**/*.scss', gulp.parallel('scss'))
 });
 
 gulp.task('server', function () {
@@ -33,6 +34,7 @@ gulp.task('scss', function (callback) {
 
 
 gulp.task('default', gulp.parallel('server', 'watch','scss'));
+
 
 
 

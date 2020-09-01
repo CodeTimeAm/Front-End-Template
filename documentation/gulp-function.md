@@ -5,8 +5,10 @@
 - [gulp-sass](#gulp-sass)
 - [gulp-autoprefixer](#gulp-autoprefixer)
 - [gulp-autoprefixer](#gulp-sourcemaps)
+- [Scss watch](#scss_watch)
 
 
+Scss watch
 #### **browser-sync**
 
 Browser-sync to keep multiple browsers & devices in sync when building websites.
@@ -250,14 +252,84 @@ For more information [this link](https://www.npmjs.com/package/gulp-sourcemaps).
 
 
 
-#### ** **
+#### **scss_watch**
+
+***Scss watch***
+
+ It's what converts your Sass files into CSS and auto-compiles your Sass every time it changes. Following is a more general command that looks for your Sass files and watches for changes inside the directory containing your Sass files: sass --watch .
+
+```
+gulpfile.js
+gulp.task('watch', function () {
+watch(['./build/*.html', './build/css/*.css'], gulp.parallel(browserSync.reload))
+watch('./build/scss/**/*.scss', gulp.parallel('scss'))
+});
+gulp.task('default', gulp.parallel('server', 'watch', 'scss'));
+
+```
+
+
 
 
 #### ** **
 
-#### ** **
+*** ***
+
+ 
+
+```
+ 
+
+```
+
+```
+ 
+```
+
+
+For more information [this link]( ).
+
+
 
 #### ** **
+
+*** ***
+
+ 
+
+```
+ 
+
+```
+
+```
+ 
+```
+
+
+For more information [this link]( ).
+
+
+
+#### ** **
+
+*** ***
+
+ 
+
+```
+ 
+
+```
+
+```
+ 
+```
+
+
+For more information [this link]( ).
+
+
 
 #### ** **
 
