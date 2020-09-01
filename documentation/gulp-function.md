@@ -4,6 +4,7 @@
 - [gulp-watch](#gulp-watch)
 - [gulp-sass](#gulp-sass)
 - [gulp-autoprefixer](#gulp-autoprefixer)
+- [gulp-autoprefixer](#gulp-sourcemaps)
 
 
 #### **browser-sync**
@@ -183,7 +184,7 @@ Package.json
 gulpfile.js
 const autoprefixer = require('gulp-autoprefixer');
 gulp.task('scss', function (callback) {
-return gulp.src("./build/scss/main.scss")
+return gulp.src("./build/scss/style.scss")
 .pipe(sass())
 .pipe(autoprefixer({
 overrideBrowserslist: ['last 3 versions']
@@ -196,6 +197,68 @@ callback();
 
 For more information [this link](https://www.npmjs.com/search?q=gulp-autoprefixer).
 
+#### **gulp-sourcemaps**
+
+***gulp-sourcemaps***
+
+
+It automatically creates source maps from your code. A source map is used to tell you which file and line in your original code a part of minified code comes from. So sourcemaps can be very helpful when debugging minified Angular apps in the browser
+
+```
+Package.json
+{
+"name": "codetime-gulp",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1"
+},
+"author": "CodeTime",
+"license": "ISC",
+"dependencies": {
+"browser-sync": "^2.26.12",
+"gulp": "^4.0.2",
+"gulp-autoprefixer": "^7.0.1",
+"gulp-sass": "^4.1.0",
+"gulp-watch": "^5.0.1",
+
+"gulp-sourcemaps": "^2.6.5"
+}
+}
+
+```
+
+```
+gulpfile.js
+const sourcemaps = require('gulp-sourcemaps');
+gulp.task('scss', function (callback) {
+return gulp.src("./build/scss/style.scss")
+.pipe(sourcemaps.init())
+.pipe(sass())
+.pipe(autoprefixer({
+overrideBrowserslist: ['last 3 versions']
+}))
+.pipe(sourcemaps.write())
+.pipe( gulp.dest("./build/css/") );
+callback();
+});
+```
+
+
+For more information [this link](https://www.npmjs.com/package/gulp-sourcemaps).
+
+
+
+#### ** **
+
+
+#### ** **
+
+#### ** **
+
+#### ** **
+
 #### ** **
 
 *** ***
@@ -215,20 +278,3 @@ For more information [this link](https://www.npmjs.com/search?q=gulp-autoprefixe
 For more information [this link]( ).
 
 
-#### ** **
-
-*** ***
-
- 
-
-```
- 
-
-```
-
-```
- 
-```
-
-
-For more information [this link]( ).
