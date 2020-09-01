@@ -6,9 +6,9 @@
 - [gulp-autoprefixer](#gulp-autoprefixer)
 - [gulp-autoprefixer](#gulp-sourcemaps)
 - [Scss watch](#scss_watch)
+- [gulp-plumber / gulp-notify](#gulp-plumber_gulp-notify)
 
 
-Scss watch
 #### **browser-sync**
 
 Browser-sync to keep multiple browsers & devices in sync when building websites.
@@ -270,23 +270,65 @@ gulp.task('default', gulp.parallel('server', 'watch', 'scss'));
 
 
 
-#### ** **
+#### **gulp-plumber_gulp-notify**
 
-*** ***
+***gulp-plumber and gulp-notify***
 
- 
+gulp-plumber which generates error output. But this does not interrupt the work of Gulp.
+
+gulp-notify when called with a string message will output that message for every file present in the passed stream so, in the final task of the example, it will be called twice.
+
 
 ```
- 
+Package.json
+{
+"name": "codetime-gulp",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1"
+},
+"author": "CodeTime",
+"license": "ISC",
+"dependencies": {
+"browser-sync": "^2.26.12",
+"gulp": "^4.0.2",
+"gulp-autoprefixer": "^7.0.1",
+"gulp-sass": "^4.1.0",
+"gulp-sourcemaps": "^2.6.5",
+"gulp-watch": "^5.0.1",
+
+"gulp-notify": "^3.2.0",
+"gulp-plumber": "^1.2.1"
+}
+}
 
 ```
 
 ```
- 
+gulpfile.js
+const notify = require('gulp-notify');
+const plumber = require('gulp-plumber');
+gulp.task('scss', function (callback) {
+return gulp.src("./build/scss/style.scss")
+.pipe( plumber({
+errorHandler: notify.onError(function(err){
+return {
+title: 'Styles',
+sound: false,
+message: err.message
+}
+})
+}))
+.pipe(sourcemaps.init())
+.pipe(sass())
+……...
 ```
 
 
-For more information [this link]( ).
+For more information gulp-plumber [this link](https://www.npmjs.com/package/gulp-plumber).
+For more information gulp-notify [this link](https://www.npmjs.com/package/gulp-notifyr).
 
 
 
