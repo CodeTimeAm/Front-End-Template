@@ -1,7 +1,7 @@
 # Gulp function and packages
 
 - [browser-sync](#browser-sync)
-
+- [gulp-watch](#gulp-watch)
 
 
 #### **browser-sync**
@@ -39,3 +39,35 @@ baseDir: "./build/"
 });
 ```
 For more information [this link](https://www.npmjs.com/package/browser-sync).
+
+
+
+
+
+
+#### **gulp-watch**
+
+***Watching Files***
+
+The watch() API connects globs to tasks using a file system watcher. It watches for changes to files that match the globs and executes the task when a change occurs
+
+```
+gulpfile.js
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+const watch = require('gulp-watch');
+gulp.task('watch', function () {
+watch('./build/*.html', gulp.parallel(browserSync.reload))
+});
+gulp.task('server', function () {
+browserSync.init({
+server: {
+baseDir: "./build/"
+}
+})
+});
+gulp.task('default', gulp.parallel('server', 'watch'));
+```
+
+
+For more information [this link](https://www.npmjs.com/package/gulp-watch).
