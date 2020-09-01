@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/CodeTime-13-08-2020/codetime-template/issues"
   },
-  "homepage": "https://github.com/CodeTime-13-08-2020/codetime-template#readme"
+  "homepage": "https://github.com/CodeTime-13-08-2020/codetime-template#readme",
+  "dependencies": {
+    "gulp": "^4.0.2"
+  }
 }
