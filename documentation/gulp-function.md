@@ -3,7 +3,7 @@
 - [browser-sync](#browser-sync)
 - [gulp-watch](#gulp-watch)
 - [gulp-sass](#gulp-sass)
-
+- [gulp-autoprefixer](#gulp-autoprefixer)
 
 
 #### **browser-sync**
@@ -125,9 +125,9 @@ Package.json
 "dependencies": {
 "browser-sync": "^2.26.12",
 "gulp": "^4.0.2",
-"gulp-watch": "^5.0.1"
+"gulp-watch": "^5.0.1",
 
-"gulp-sass": "^4.1.0",
+"gulp-sass": "^4.1.0"
 }
 }
 ```
@@ -150,6 +150,52 @@ gulp sass
 For more information [this link](https://www.npmjs.com/package/gulp-sass).
 
 
+#### **gulp-autoprefixer**
+
+***gulp-autoprefixer***
+
+Autoprefixer is able to cut down on a lot of the workload involved in making our grids IE-compatible, it can’t fix everything. It can only translate things that IE can understand. These are the many critical things that you need to be aware of if you don’t want to open the site up in IE one day and have it blow up in your face.
+
+```
+Package.json
+{
+"name": "codetime-gulp",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1"
+},
+"author": "CodeTime",
+"license": "ISC",
+"dependencies": {
+"browser-sync": "^2.26.12",
+"gulp": "^4.0.2",
+"gulp-sass": "^4.1.0",
+"gulp-watch": "^5.0.1",
+
+"gulp-autoprefixer": "^7.0.1"
+}
+}
+```
+
+```
+gulpfile.js
+const autoprefixer = require('gulp-autoprefixer');
+gulp.task('scss', function (callback) {
+return gulp.src("./build/scss/main.scss")
+.pipe(sass())
+.pipe(autoprefixer({
+overrideBrowserslist: ['last 3 versions']
+}))
+.pipe( gulp.dest("./build/css/") );
+callback();
+});
+```
+
+
+For more information [this link](https://www.npmjs.com/search?q=gulp-autoprefixer).
+
 #### ** **
 
 *** ***
@@ -158,6 +204,26 @@ For more information [this link](https://www.npmjs.com/package/gulp-sass).
 
 ```
  
+
+```
+
+```
+ 
+```
+
+
+For more information [this link]( ).
+
+
+#### ** **
+
+*** ***
+
+ 
+
+```
+ 
+
 ```
 
 ```
