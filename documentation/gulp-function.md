@@ -40,6 +40,11 @@ baseDir: "./build/"
 })
 });
 ```
+```
+We can use browser-sync by command
+gulp browserSync
+```
+
 For more information [this link](https://www.npmjs.com/package/browser-sync).
 
 
@@ -91,15 +96,19 @@ baseDir: "./build/"
 });
 gulp.task('default', gulp.parallel('server', 'watch'));
 ```
-
+```
+We can use gulp-watch by command
+gulp watch
+```
 
 For more information [this link](https://www.npmjs.com/package/gulp-watch).
 
 #### **gulp-sass**
 
-***Watching Files***
 
-The watch() API connects globs to tasks using a file system watcher. It watches for changes to files that match the globs and executes the task when a change occurs
+Sass is a preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS). Sass has two syntaxes; the older syntax uses indentation to separate code blocks and newline characters to separate rules.
+
+The newer syntax, SCSS, uses block formatting like CSS. It uses braces to denote code blocks and semicolons to separate lines within a block. The indented syntax and SCSS files are traditionally given the extensions .sass and .scss, respectively.
 
 ```
 Package.json
@@ -133,6 +142,27 @@ return gulp.src("./build/scss/style.scss")
 callback();
 });
 ```
-
+```
+We can use gulp-sass by command
+gulp sass
+```
 
 For more information [this link](https://www.npmjs.com/package/gulp-sass).
+
+
+#### ** **
+
+*** ***
+
+ 
+
+```
+ 
+```
+
+```
+ 
+```
+
+
+For more information [this link]( ).
