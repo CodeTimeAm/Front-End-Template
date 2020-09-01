@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 
-gulp.task('hello', function (callback) {
+
+gulp.task('default', function (callback) {
   console.log("Hello CodeTime");
   callback();
 })
