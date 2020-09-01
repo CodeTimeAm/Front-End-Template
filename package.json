@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/CodeTime-13-08-2020/codetime-template#readme",
   "dependencies": {
+    "browser-sync": "^2.26.12",
     "gulp": "^4.0.2"
   }
 }
