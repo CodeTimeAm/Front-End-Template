@@ -1,5 +1,8 @@
 # Gulp function and packages
 
+- For uninstall use command	
+	- *`npm uninstall`* `(Package-Name)`  
+
 - [browser-sync](#browser-sync)
 - [gulp-watch](#gulp-watch)
 - [gulp-sass](#gulp-sass)
@@ -8,32 +11,15 @@
 - [Scss watch](#scss_watch)
 - [gulp-plumber / gulp-notify](#gulp-plumber_gulp-notify)
 - [gulp-file-include](#gulp-file-include)
-
+- [del](#del)
+- [gulp-file-include](#gulp-file-include)
 
 #### **browser-sync**
 
 Browser-sync to keep multiple browsers & devices in sync when building websites.
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"gulp": "^4.0.2",
 
-"browser-sync": "^2.26.12"
-}
-}
-```
-```
 gulpfile.js
+```javascript
 const gulp = require('gulp'); // Connecting gulp
 const browserSync = require('browser-sync').create();
 gulp.task('server', function () {
@@ -44,11 +30,9 @@ baseDir: "./build/"
 })
 });
 ```
-```
-We can use browser-sync by command
-gulp browserSync
-```
 
+We can use **`browser-sync`** by command
+`browser-sync`
 For more information [this link](https://www.npmjs.com/package/browser-sync).
 
 
@@ -247,17 +231,40 @@ For more information [this link](https://www.npmjs.com/package/gulp-file-include
 
 
 
+#### **del**
+
+***del***
+
+Delete files and directories 'app'  'build'
+
+gulpfile.js
+```javascript
+const del = require('del');
+gulp.task('clean:build', function () {
+return del('./build')
+})
+gulp.task('default',
+gulp.series(
+gulp.parallel('clean:build')
+gulp.parallel('html', 'scss', 'copy:js', 'copy:img'),
+gulp.parallel('server', 'watch')
+)
+);
+```
+
+
+For more information [this link](https://www.npmjs.com/package/del).
+
+
+
 #### ** **
 
 *** ***
 
  
 
-```
- 
-
-```
-
+gulpfile.js
+```javascript
 ```
  
 ```
@@ -266,6 +273,21 @@ For more information [this link](https://www.npmjs.com/package/gulp-file-include
 For more information [this link]( ).
 
 
+#### ** **
+
+*** ***
+
+ 
+
+gulpfile.js
+```javascript
+```
+ 
+```
+
+
+For more information [this link]( ).
+
 
 #### ** **
 
@@ -273,11 +295,8 @@ For more information [this link]( ).
 
  
 
-```
- 
-
-```
-
+gulpfile.js
+```javascript
 ```
  
 ```
