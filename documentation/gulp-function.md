@@ -12,7 +12,7 @@
 - [gulp-plumber / gulp-notify](#gulp-plumber_gulp-notify)
 - [gulp-file-include](#gulp-file-include)
 - [del](#del)
-- [gulp-file-include](#gulp-file-include)
+- [favicons](#favicons)
 
 #### **browser-sync**
 
@@ -257,17 +257,17 @@ For more information [this link](https://www.npmjs.com/package/del).
 
 
 
-#### ** **
+#### **favicons**
 
-*** ***
+***favicons***
 
- 
+For generating favicons and their associated files.
 
 gulpfile.js
 ```javascript
+
 ```
- 
-```
+
 
 
 For more information [this link]( ).
@@ -281,9 +281,9 @@ For more information [this link]( ).
 
 gulpfile.js
 ```javascript
+
 ```
- 
-```
+
 
 
 For more information [this link]( ).
@@ -297,9 +297,9 @@ For more information [this link]( ).
 
 gulpfile.js
 ```javascript
+
 ```
- 
-```
+
 
 
 For more information [this link]( ).
