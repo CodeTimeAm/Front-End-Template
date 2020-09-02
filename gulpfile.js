@@ -2,7 +2,7 @@ const project_folder = "build";
 const source_folder = "src";
 const project_app_folder = "app";
 
-const path = {
+let path = {
   build: {
     html: project_folder + "/",
     css: project_folder + "/css",
@@ -14,6 +14,7 @@ const path = {
 
   src: {
     html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
+    // html: "**/*.html", 
     css: source_folder + "/scss/style.scss",
     js: source_folder + "/js/script.js",
     img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
@@ -62,9 +63,10 @@ function html() {
       errorHandler: notify.onError(function (err) {
       })
     }))
+
     .pipe(fileinclude({ prefix: '@@' }))
-    .pipe(dest(path.build.app_html))
     .pipe(dest(path.build.html))
+    .pipe(dest('app/'))
     .pipe(browsersync.stream());
 };
 
@@ -126,7 +128,7 @@ gulp.task("delfavicon", function () {
 });
 
 gulp.task("favicon", function () {
-  return gulp.src([source_folder + '/img/favicon.{png,ico}'])
+  return gulp.src([source_folder + '/img/favicon.png'])
     .pipe(favicons({
       path: "/img/favicon/",                                // Path for overriding default icons path. `string`
       appName: 'CodeTime',                            // Your application's name. `string`
@@ -180,11 +182,14 @@ gulp.task("favicon", function () {
 
 const clean = () => del(path.clean);
 
-let build = gulp.series(clean, gulp.parallel(js, css, html, images));
+let build = gulp.series(clean, gulp.parallel(html, js, css, images));
 let watching = gulp.parallel(build, browserSync, watchFiles);
 
 
-
+// exports.delfavicon = delfavicon;
+// exports.favicon = favicon;
+// exports.watchFiles = watchFiles;
+exports.clean = clean;
 exports.images = images;
 exports.js = js;
 exports.css = css;
