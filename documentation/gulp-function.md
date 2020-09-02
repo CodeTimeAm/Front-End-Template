@@ -62,26 +62,8 @@ For more information [this link](https://www.npmjs.com/package/browser-sync).
 
 The watch() API connects globs to tasks using a file system watcher. It watches for changes to files that match the globs and executes the task when a change occurs
 
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"browser-sync": "^2.26.12",
-"gulp": "^4.0.2",
 
-"gulp-watch": "^5.0.1"
-}
-}
-```
+
 gulpfile.js
 ```javascript
 const gulp        = require('gulp');
@@ -111,30 +93,10 @@ Sass is a preprocessor scripting language that is interpreted or compiled into C
 
 The newer syntax, SCSS, uses block formatting like CSS. It uses braces to denote code blocks and semicolons to separate lines within a block. The indented syntax and SCSS files are traditionally given the extensions .sass and .scss, respectively.
 
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"browser-sync": "^2.26.12",
-"gulp": "^4.0.2",
-"gulp-watch": "^5.0.1",
 
-"gulp-sass": "^4.1.0"
-}
-}
-```
 
-```
 gulpfile.js
+```javascript
 const sass = require('gulp-sass');
 gulp.task('scss', function (callback) {
 return gulp.src("./build/scss/style.scss")
@@ -143,10 +105,9 @@ return gulp.src("./build/scss/style.scss")
 callback();
 });
 ```
-```
-We can use gulp-sass by command
-gulp sass
-```
+
+We can use **`gulp-sass`** by command
+`gulp sass`
 
 For more information [this link](https://www.npmjs.com/package/gulp-sass).
 
@@ -157,31 +118,8 @@ For more information [this link](https://www.npmjs.com/package/gulp-sass).
 
 Autoprefixer is able to cut down on a lot of the workload involved in making our grids IE-compatible, it can’t fix everything. It can only translate things that IE can understand. These are the many critical things that you need to be aware of if you don’t want to open the site up in IE one day and have it blow up in your face.
 
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"browser-sync": "^2.26.12",
-"gulp": "^4.0.2",
-"gulp-sass": "^4.1.0",
-"gulp-watch": "^5.0.1",
-
-"gulp-autoprefixer": "^7.0.1"
-}
-}
-```
-
-```
 gulpfile.js
+```javascript
 const autoprefixer = require('gulp-autoprefixer');
 gulp.task('scss', function (callback) {
 return gulp.src("./build/scss/style.scss")
@@ -204,33 +142,8 @@ For more information [this link](https://www.npmjs.com/search?q=gulp-autoprefixe
 
 It automatically creates source maps from your code. A source map is used to tell you which file and line in your original code a part of minified code comes from. So sourcemaps can be very helpful when debugging minified Angular apps in the browser
 
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"browser-sync": "^2.26.12",
-"gulp": "^4.0.2",
-"gulp-autoprefixer": "^7.0.1",
-"gulp-sass": "^4.1.0",
-"gulp-watch": "^5.0.1",
-
-"gulp-sourcemaps": "^2.6.5"
-}
-}
-
-```
-
-```
 gulpfile.js
+```javascript
 const sourcemaps = require('gulp-sourcemaps');
 gulp.task('scss', function (callback) {
 return gulp.src("./build/scss/style.scss")
@@ -256,8 +169,8 @@ For more information [this link](https://www.npmjs.com/package/gulp-sourcemaps).
 
  It's what converts your Sass files into CSS and auto-compiles your Sass every time it changes. Following is a more general command that looks for your Sass files and watches for changes inside the directory containing your Sass files: sass --watch .
 
-```
 gulpfile.js
+```javascript
 gulp.task('watch', function () {
 watch(['./build/*.html', './build/css/*.css'], gulp.parallel(browserSync.reload))
 watch('./build/scss/**/*.scss', gulp.parallel('scss'))
@@ -277,35 +190,8 @@ gulp-plumber which generates error output. But this does not interrupt the work 
 gulp-notify when called with a string message will output that message for every file present in the passed stream so, in the final task of the example, it will be called twice.
 
 
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"browser-sync": "^2.26.12",
-"gulp": "^4.0.2",
-"gulp-autoprefixer": "^7.0.1",
-"gulp-sass": "^4.1.0",
-"gulp-sourcemaps": "^2.6.5",
-"gulp-watch": "^5.0.1",
-
-"gulp-notify": "^3.2.0",
-"gulp-plumber": "^1.2.1"
-}
-}
-
-```
-
-```
 gulpfile.js
+```javascript
 const notify = require('gulp-notify');
 const plumber = require('gulp-plumber');
 gulp.task('scss', function (callback) {
@@ -336,36 +222,8 @@ For more information gulp-notify [this link](https://www.npmjs.com/package/gulp-
 
 For include *.html files in index.html
 
-```
-Package.json
-{
-"name": "codetime-gulp",
-"version": "1.0.0",
-"description": "",
-"main": "index.js",
-"scripts": {
-"test": "echo \"Error: no test specified\" && exit 1"
-},
-"author": "CodeTime",
-"license": "ISC",
-"dependencies": {
-"browser-sync": "^2.26.12",
-"gulp": "^4.0.2",
-"gulp-autoprefixer": "^7.0.1",
-"gulp-notify": "^3.2.0",
-"gulp-plumber": "^1.2.1",
-"gulp-sass": "^4.1.0",
-"gulp-sourcemaps": "^2.6.5",
-"gulp-watch": "^5.0.1",
-
-"gulp-file-include": "^2.2.2"
-}
-}
-
-```
-
-```
 gulpfile.js
+```javascript
 const fileinclude = require('gulp-file-include');
 gulp.task('html', function(callback) {
 return gulp.src('./build/*.html')
