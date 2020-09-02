@@ -1,5 +1,26 @@
-# Gulp function and packages
+# Gulp tasks , function and packages
 
+## Gulp tasks
+- command `gulp`
+    - `default = watching` is the main task, runs `build`, `browserSync` and `watchFiles`.
+    - `build` Deleting `app` and `build` folders, then builds all files and folders, runs tasks copy, images, sprites: png, sprites: svg, pug, scss, js.
+    - `browserSync` Starts the Browsersync server.
+    - `watchFiles` Starts tracking files, so that when they change, they are automatically rebuilt.
+```javascript
+    1.  Deleting ' app ' and ` build ` folders.
+    2.  Creating ` app ` and ` build ` folders and copy all nessesery files from ` src `.
+    3.  Starting ` browserSync `for real time visual see all changes in `*.html and other files` .
+    4.  Waching all folders in ` src ` and if there some change copy all chanches, to destenations.
+```
+## Extra options:
+-If need to creat **favicons** 
+- `1` Copy file in `src/img` folder.
+- `2` File must be renamed to `favicon.png`.
+- `3` Use command `gulp favicon` to create files.
+- `4` All necessary codes will auto field in index.html.
+- `5` If need to delete favicons use command `gulp delfavicon`.
+
+## Installed Packages:
 - For uninstall use command	
 	- *`npm uninstall`* `(Package-Name)`  
 
@@ -12,7 +33,7 @@
 - [gulp-plumber / gulp-notify](#gulp-plumber_gulp-notify)
 - [gulp-file-include](#gulp-file-include)
 - [del](#del)
-- [favicons](#favicons)
+- [gulp-favicons](#gulp-favicons)
 
 #### **browser-sync**
 
@@ -34,9 +55,6 @@ baseDir: "./build/"
 We can use **`browser-sync`** by command
 `browser-sync`
 For more information [this link](https://www.npmjs.com/package/browser-sync).
-
-
-
 
 
 
@@ -98,8 +116,6 @@ For more information [this link](https://www.npmjs.com/package/gulp-sass).
 
 #### **gulp-autoprefixer**
 
-***gulp-autoprefixer***
-
 Autoprefixer is able to cut down on a lot of the workload involved in making our grids IE-compatible, it can’t fix everything. It can only translate things that IE can understand. These are the many critical things that you need to be aware of if you don’t want to open the site up in IE one day and have it blow up in your face.
 
 gulpfile.js
@@ -120,9 +136,6 @@ callback();
 For more information [this link](https://www.npmjs.com/search?q=gulp-autoprefixer).
 
 #### **gulp-sourcemaps**
-
-***gulp-sourcemaps***
-
 
 It automatically creates source maps from your code. A source map is used to tell you which file and line in your original code a part of minified code comes from. So sourcemaps can be very helpful when debugging minified Angular apps in the browser
 
@@ -149,8 +162,6 @@ For more information [this link](https://www.npmjs.com/package/gulp-sourcemaps).
 
 #### **scss_watch**
 
-***Scss watch***
-
  It's what converts your Sass files into CSS and auto-compiles your Sass every time it changes. Following is a more general command that looks for your Sass files and watches for changes inside the directory containing your Sass files: sass --watch .
 
 gulpfile.js
@@ -166,8 +177,6 @@ gulp.task('default', gulp.parallel('server', 'watch', 'scss'));
 
 
 #### **gulp-plumber_gulp-notify**
-
-***gulp-plumber and gulp-notify***
 
 gulp-plumber which generates error output. But this does not interrupt the work of Gulp.
 
@@ -202,8 +211,6 @@ For more information gulp-notify [this link](https://www.npmjs.com/package/gulp-
 
 #### **gulp-file-include**
 
-***gulp-file-include***
-
 For include *.html files in index.html
 
 gulpfile.js
@@ -233,8 +240,6 @@ For more information [this link](https://www.npmjs.com/package/gulp-file-include
 
 #### **del**
 
-***del***
-
 Delete files and directories 'app'  'build'
 
 gulpfile.js
@@ -257,25 +262,75 @@ For more information [this link](https://www.npmjs.com/package/del).
 
 
 
-#### **favicons**
-
-***favicons***
+#### **gulp-favicons**
 
 For generating favicons and their associated files.
 
 gulpfile.js
 ```javascript
+const favicons = require("favicons").stream;
+const log = require("fancy-log");
 
+gulp.task("favicon", function () {
+  return gulp.src([source_folder + '/img/favicon.png'])
+    .pipe(favicons({
+      path: "/img/favicon/",                                // Path for overriding default icons path. `string`
+      appName: null,                            // Your application's name. `string`
+      appShortName: null,                       // Your application's short_name. `string`. Optional. If not set, appName will be used
+      appDescription: null,                     // Your application's description. `string`
+      developerName: null,                      // Your (or your developer's) name. `string`
+      developerURL: null,                       // Your (or your developer's) URL. `string`
+      dir: "auto",                              // Primary text direction for name, short_name, and description
+      lang: "en-US",                            // Primary language for name and short_name
+      background: "#fff",                       // Background colour for flattened icons. `string`
+      theme_color: "#fff",                      // Theme color user for example in Android's task switcher. `string`
+      appleStatusBarStyle: "black-translucent", // Style for Apple status bar: "black-translucent", "default", "black". `string`
+      display: "standalone",                    // Preferred display mode: "fullscreen", "standalone", "minimal-ui" or "browser". `string`
+      orientation: "any",                       // Default orientation: "any", "natural", "portrait" or "landscape". `string`
+      scope: "/",                               // set of URLs that the browser considers within your app
+      start_url: "/?homescreen=1",              // Start URL when launching the application from a device. `string`
+      version: "1.0",                           // Your application's version string. `string`
+      logging: false,                           // Print logs to console? `boolean`
+      pixel_art: false,                         // Keeps pixels "sharp" when scaling up, for pixel art.  Only supported in offline mode.
+      loadManifestWithCredentials: false,       // Browsers don't send cookies when fetching a manifest, enable this to fix that. `boolean`
+      url: null,
+      html: "_favicon.html",
+      pipeHTML: true,
+      replace: true,
+      icons: {
+        // Platform Options:
+        // - offset - offset in percentage
+        // - background:
+        //   * false - use default
+        //   * true - force use default, e.g. set background for Android icons
+        //   * color - set background for the specified icons
+        //   * mask - apply mask in order to create circle icon (applied by default for firefox). `boolean`
+        //   * overlayGlow - apply glow effect after mask has been applied (applied by default for firefox). `boolean`
+        //   * overlayShadow - apply drop shadow after mask has been applied .`boolean`
+        //
+        android: true,              // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        appleIcon: true,            // Create Apple touch icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        appleStartup: true,         // Create Apple startup images. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        coast: true,                // Create Opera Coast icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        favicons: true,             // Create regular favicons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        firefox: true,              // Create Firefox OS icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        windows: true,              // Create Windows 8 tile icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        yandex: true                // Create Yandex browser icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+      }
+    }))
+    .on("error", log)
+    .pipe(dest([source_folder + '/img/favicon/']));
+});
 ```
 
 
 
-For more information [this link]( ).
+For more information [this link](https://www.npmjs.com/package/favicons).
 
 
 #### ** **
 
-*** ***
+
 
  
 
@@ -291,7 +346,7 @@ For more information [this link]( ).
 
 #### ** **
 
-*** ***
+
 
  
 

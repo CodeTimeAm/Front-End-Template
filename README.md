@@ -7,7 +7,7 @@
 - Step [Gulp Sass Troubleshoot](documentation/gulp-sass-troubleshoot.md)
 - Step I [Cheking github](documentation/checking-github.md)
 
-# [Gulp function and packages](documentation/gulp-function.md)
+# [Gulp tasks , function and packages](documentation/gulp-function.md)
 
 # Step II Creating Branch
 
