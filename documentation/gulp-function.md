@@ -7,6 +7,7 @@
 - [gulp-autoprefixer](#gulp-sourcemaps)
 - [Scss watch](#scss_watch)
 - [gulp-plumber / gulp-notify](#gulp-plumber_gulp-notify)
+- [gulp-file-include](#gulp-file-include)
 
 
 #### **browser-sync**
@@ -81,28 +82,25 @@ Package.json
 }
 }
 ```
-
-```
 gulpfile.js
-const gulp = require('gulp');
+```javascript
+const gulp        = require('gulp');
 const browserSync = require('browser-sync').create();
-const watch = require('gulp-watch');
-gulp.task('watch', function () {
-watch('./build/*.html', gulp.parallel(browserSync.reload))
+const watch       = require('gulp-watch');
+gulp.task('watch', function() {
+    watch('./build/*.html', gulp.parallel(browserSync.reload))
 });
-gulp.task('server', function () {
-browserSync.init({
-server: {
-baseDir: "./build/"
-}
-})
+gulp.task('server', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./build/"
+        }
+    })
 });
 gulp.task('default', gulp.parallel('server', 'watch'));
 ```
-```
-We can use gulp-watch by command
-gulp watch
-```
+We can use **`gulp-watch`** by command
+`gulp watch`
 
 For more information [this link](https://www.npmjs.com/package/gulp-watch).
 
@@ -332,23 +330,62 @@ For more information gulp-notify [this link](https://www.npmjs.com/package/gulp-
 
 
 
-#### ** **
+#### **gulp-file-include**
 
-*** ***
+***gulp-file-include***
 
- 
-
-```
- 
+For include *.html files in index.html
 
 ```
+Package.json
+{
+"name": "codetime-gulp",
+"version": "1.0.0",
+"description": "",
+"main": "index.js",
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1"
+},
+"author": "CodeTime",
+"license": "ISC",
+"dependencies": {
+"browser-sync": "^2.26.12",
+"gulp": "^4.0.2",
+"gulp-autoprefixer": "^7.0.1",
+"gulp-notify": "^3.2.0",
+"gulp-plumber": "^1.2.1",
+"gulp-sass": "^4.1.0",
+"gulp-sourcemaps": "^2.6.5",
+"gulp-watch": "^5.0.1",
+
+"gulp-file-include": "^2.2.2"
+}
+}
 
 ```
- 
+
+```
+gulpfile.js
+const fileinclude = require('gulp-file-include');
+gulp.task('html', function(callback) {
+return gulp.src('./build/*.html')
+.pipe( plumber({
+errorHandler: notify.onError(function(err){
+return {
+title: 'HTML include',
+sound: false,
+message: err.message
+}
+})
+}))
+.pipe( fileinclude({ prefix: '@@' }) )
+.pipe( gulp.dest('./app/') )
+callback();
+});
 ```
 
 
-For more information [this link]( ).
+For more information [this link](https://www.npmjs.com/package/gulp-file-include).
 
 
 
