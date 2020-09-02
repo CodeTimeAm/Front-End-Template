@@ -8,12 +8,12 @@
     - `watchFiles` Starts tracking files, so that when they change, they are automatically rebuilt.
 ```javascript
     1.  Deleting ' app ' and ` build ` folders.
-    2.  Creating ` app ` and ` build ` folders and copy all nessesery files from ` src `.
+    2.  Creating ` app ` and ` build ` folders and copy all nessesery files rom ` src `.
     3.  Starting ` browserSync `for real time visual see all changes in `*.html and other files` .
     4.  Waching all folders in ` src ` and if there some change copy all chanches, to destenations.
 ```
 ## Extra options:
--If need to creat **favicons** 
+#### If need to creat **favicons** 
 - `1` Copy file in `src/img` folder.
 - `2` File must be renamed to `favicon.png`.
 - `3` Use command `gulp favicon` to create files.
