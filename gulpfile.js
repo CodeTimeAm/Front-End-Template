@@ -2,7 +2,7 @@ const project_folder = "build";
 const source_folder = "src";
 const project_app_folder = "app";
 
-let path = {
+const path = {
   build: {
     html: project_folder + "/",
     css: project_folder + "/css",
@@ -26,9 +26,6 @@ let path = {
     img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
   },
   clean: [project_folder , project_app_folder],
-
-
-
 };
 
 const { src, dest } = require('gulp'),
@@ -129,7 +126,7 @@ gulp.task("delfavicon", function () {
 });
 
 gulp.task("favicon", function () {
-  return gulp.src([source_folder + '/img/favicon{png,ico}'])
+  return gulp.src([source_folder + '/img/favicon.{png,ico}'])
     .pipe(favicons({
       path: "/img/favicon/",                                // Path for overriding default icons path. `string`
       appName: 'CodeTime',                            // Your application's name. `string`
