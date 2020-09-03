@@ -28,7 +28,7 @@
 
 ---
 
-#### ***`gulp imgsprite`*** command if need to creat **` sprites`**  
+#### ***`gulp imgSprite`*** command if need to creat **` sprites`**  
 - `1` Copy files in `src/img/sprite/png/`  folder.
 - `2` Use command `gulp imgsprite` to generate and create in `src/img/sprite/` `sprite.png` and in `src/scss/` `_sprite.scss` , files.
 - `3` Using sprite ...

@@ -43,7 +43,8 @@ const { src, dest } = require('gulp'),
     log = require("fancy-log"),
     inject = require("gulp-inject-string"),
     spritesmith = require('gulp.spritesmith'),
-    merge = require('merge');
+    merge = require('merge'),
+    svgSprite = require("gulp-svg-sprite");
 
 
 
@@ -125,7 +126,7 @@ function images() {
 
 /* sprite
 ====================================================*/
-gulp.task('imgsprite', async function () {
+gulp.task('imgSprite', async function () {
     let spriteData = gulp.src('src/img/sprite/png/*.{jpg,jpeg,png,gif}')
         .pipe(plumber())
         .pipe(spritesmith({
@@ -141,6 +142,40 @@ gulp.task('imgsprite', async function () {
 });
 
 
+/* SVG sprite
+====================================================*/
+gulp.task('svgSprite', function () {
+    return gulp.src([source_folder + '/img/sprite/svg/*.svg'])
+        .pipe(svgSprite({
+            // config = {
+            //     shape: {
+            //         dimension: { // Set maximum dimensions
+            //             maxWidth: 32,
+            //             maxHeight: 32
+            //         },
+            //         spacing: { // Add padding
+            //             padding: 10
+            //         },
+            //     },
+            mode: {
+                stack: {
+                    sprite: "../sprite/inons.svg",  //sprite file name
+                    example: true
+                },
+                view: { // Activate the «view» mode
+                    bust: false,
+                    render: {
+                        scss: true // Activate Sass output (with default options)
+                    }
+                },
+                symbol: true // Activate the «symbol» mode
+            },
+            
+        }
+        ))
+        // .pipe(svgSprite(config))
+        .pipe(dest(path.build.img));
+});
 
 
 /* watch
@@ -278,15 +313,14 @@ const clean = () => del(path.clean);
 /* default
 ====================================================*/
 let build = gulp.series(clean, gulp.parallel(html, js, css, images));
-let watching = gulp.parallel(build, browserSync, watchFiles, 'imgsprite');
+let watching = gulp.parallel(build, browserSync, watchFiles, 'imgSprite', 'svgSprite');
 let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
 
 
 
 /* 
 ===============================*/
-// exports.delfavicon = delfavicon;
-// exports.sprite = sprite;
+
 exports.watchFiles = watchFiles;
 exports.clean = clean;
 exports.images = images;
