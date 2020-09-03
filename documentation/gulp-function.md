@@ -14,11 +14,13 @@
 ```
 ## Extra options:
 #### If need to creat **favicons** 
-- `1` Copy file in `src/img` folder.
-- `2` File must be renamed to `favicon.png`.
+- `1` Copy file in `src/img`  folder.
+- `2` File must be renamed to `favicon.` `png, jpg, jepg, svg `.
 - `3` Use command `gulp favicon` to create files.
 - `4` All necessary codes will auto field in index.html.
-- `5` If need to delete favicons use command `gulp delfavicon`.
+- `5` If need only delete favicons use command `gulp delfavicon`.
+- `6` If need only generate favicons use command `gulp faviconGenerate`.
+- `7` If need only add meta ( insert favicon code ) in `*.html `use command `gulp faviconAddMeta`.
 
 ## Installed Packages:
 - For uninstall use command	

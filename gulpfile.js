@@ -123,7 +123,7 @@ gulp.task("delfavicon", function () {
 });
 
 gulp.task("faviconGenerate", async function (callback) {
-    return gulp.src([source_folder + '/img/favicon.{png, jpg, svg}'])
+    return gulp.src([source_folder + '/img/favicon.{png, jpg,jepg, svg}'])
         .pipe(favicons({
             path: "/img/favicon/",                                // Path for overriding default icons path. `string`
             appName: 'CodeTime',                            // Your application's name. `string`
@@ -236,7 +236,7 @@ const clean = () => del(path.clean);
 
 let build = gulp.series(clean, gulp.parallel(html, js, css, images));
 let watching = gulp.parallel(build, browserSync, watchFiles);
-let favicon = gulp.series('faviconGenerate', 'faviconAddMeta');
+let favicon = gulp.series('delfavicon','faviconGenerate', 'faviconAddMeta');
 
 // exports.delfavicon = delfavicon;
 // exports.favicon = favicon;
