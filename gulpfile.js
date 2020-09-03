@@ -14,17 +14,16 @@ let path = {
 
     src: {
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        // html: "**/*.html",
-        css: source_folder + "/scss/style.scss",
-        js: source_folder + "/js/script.js",
-        img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
-        fonts: source_folder + "/fonts/*.ttf",
+        css: "./" + source_folder + "/scss/style.scss",
+        js: "./" + source_folder + "/js/script.js",
+        img: "./" + source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+        fonts: "./" + source_folder + "/fonts/*.ttf",
     },
-    watch: {  //What need to waching
-        html: source_folder + "/**/*html",
-        css: source_folder + "/scss/**/*.scss",
-        js: source_folder + "/js/**/*.js",
-        img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+    watch: { 
+        html: "./" + source_folder + "/**/*html",
+        css: "./" + source_folder + "/scss/**/*.scss",
+        js: "./" + source_folder + "/js/**/*.js",
+        img: "./" + source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
     },
     clean: [project_folder, project_app_folder],
 };
@@ -61,12 +60,10 @@ function html() {
             errorHandler: notify.onError(function (err) {
             })
         }))
-
         .pipe(fileinclude({prefix: '@@'}))
         .pipe(dest(path.build.html))
         .pipe(dest(path.build.app_html))
         .pipe(browsersync.stream())
-        .pipe(gulp.dest(path.src.html));
 };
 
 
@@ -244,7 +241,7 @@ let favicon = gulp.series('faviconGenerate', 'faviconAddMeta');
 // exports.delfavicon = delfavicon;
 // exports.favicon = favicon;
 // exports.watchFiles = watchFiles;
-// exports.index = index;
+exports.clean = clean;
 exports.images = images;
 exports.js = js;
 exports.css = css;
