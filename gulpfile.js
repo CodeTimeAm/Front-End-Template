@@ -16,19 +16,19 @@ let path = {
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
         css: "./" + source_folder + "/scss/style.scss",
         js: "./" + source_folder + "/js/script.js",
-        img: "./" + source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
         fonts: "./" + source_folder + "/fonts/*.ttf",
     },
-    watch: { 
+    watch: {
         html: "./" + source_folder + "/**/*html",
         css: "./" + source_folder + "/scss/**/*.scss",
         js: "./" + source_folder + "/js/**/*.js",
-        img: "./" + source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
+        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
     },
     clean: [project_folder, project_app_folder],
 };
 
-const {src, dest} = require('gulp'),
+const { src, dest } = require('gulp'),
     gulp = require('gulp'),
     browsersync = require('browser-sync').create(),
     watch = require('gulp-watch'),
@@ -41,9 +41,14 @@ const {src, dest} = require('gulp'),
     del = require("del"),
     favicons = require("favicons").stream,
     log = require("fancy-log"),
-    inject = require("gulp-inject-string");
+    inject = require("gulp-inject-string"),
+    spritesmith = require('gulp.spritesmith'),
+    merge = require('merge');
 
 
+
+/* browser-sync
+=========================*/
 function browserSync(params) {
     return browsersync.init({
         server: {
@@ -53,20 +58,22 @@ function browserSync(params) {
     });
 };
 
-
+/* html:build
+====================================================*/
 function html() {
     return src(path.src.html)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
         }))
-        .pipe(fileinclude({prefix: '@@'}))
-        .pipe(dest(path.build.html))
+        .pipe(fileinclude({ prefix: '@@' }))
         .pipe(dest(path.build.app_html))
+        .pipe(dest(path.build.html))
         .pipe(browsersync.stream())
 };
 
-
+/* css:build
+====================================================*/
 function css() {
     return src(path.src.css)
         .pipe(
@@ -86,15 +93,18 @@ function css() {
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer({
-                overrideBrowserslist: ["last 4 version"]
-            })
+            overrideBrowserslist: ["last 4 version"]
+        })
         )
         .pipe(dest(path.build.css))
+        .pipe(dest('./src/css/'))
         .pipe(sourcemaps.write())
         .pipe(dest(path.build.css))
+        .pipe(dest('./src/css/'))
         .pipe(browsersync.stream());
 };
-
+/* js build
+====================================================*/
 function js() {
     return src(path.src.js)
         .pipe(fileinclude())
@@ -102,14 +112,39 @@ function js() {
         .pipe(browsersync.stream());
 };
 
+/* image build
+====================================================*/
 function images() {
     return src(path.src.img)
-        .pipe(dest(path.build.img))
-        .pipe(src(path.src.img))
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream());
 };
 
+
+
+
+/* sprite
+====================================================*/
+gulp.task('imgsprite', async function () {
+    let spriteData = gulp.src('src/img/sprite/png/*.{jpg,jpeg,png,gif}')
+        .pipe(plumber())
+        .pipe(spritesmith({
+            imgName: 'sprite.png',
+            cssName: '_sprite.scss',
+            cssFormat: 'scss',
+            algorithm: 'top-down',
+            imgPath: '../img/sprite/sprite.png',
+            padding: 10
+        }));
+    spriteData.img.pipe(gulp.dest('src/img/sprite/'));
+    spriteData.css.pipe(gulp.dest('src/scss/'));
+});
+
+
+
+
+/* watch
+====================================================*/
 function watchFiles(params) {
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
@@ -118,12 +153,16 @@ function watchFiles(params) {
 };
 
 
+
+
+/* favicon:build  /clean
+====================================================*/
 gulp.task("delfavicon", function () {
-    return del([source_folder + '/img/favicon/*.{png,xml,ico,json,webapp,html}'])
+    return del([source_folder + '/img/favicon/*.{png, jpg, jepg, svg, xml, ico, json, webapp, html}'])
 });
 
 gulp.task("faviconGenerate", async function (callback) {
-    return gulp.src([source_folder + '/img/favicon.{png, jpg,jepg, svg}'])
+    return gulp.src([source_folder + '/img/favicon.{png, jpg, jepg, svg}'])
         .pipe(favicons({
             path: "/img/favicon/",                                // Path for overriding default icons path. `string`
             appName: 'CodeTime',                            // Your application's name. `string`
@@ -231,16 +270,24 @@ gulp.task('faviconAddMeta', function (callback) {
 });
 
 
-
+/* clean
+====================================================*/
 const clean = () => del(path.clean);
 
-let build = gulp.series(clean, gulp.parallel(html, js, css, images));
-let watching = gulp.parallel(build, browserSync, watchFiles);
-let favicon = gulp.series('delfavicon','faviconGenerate', 'faviconAddMeta');
 
+/* default
+====================================================*/
+let build = gulp.series(clean, gulp.parallel(html, js, css, images));
+let watching = gulp.parallel(build, browserSync, watchFiles, 'imgsprite');
+let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
+
+
+
+/* 
+===============================*/
 // exports.delfavicon = delfavicon;
-// exports.favicon = favicon;
-// exports.watchFiles = watchFiles;
+// exports.sprite = sprite;
+exports.watchFiles = watchFiles;
 exports.clean = clean;
 exports.images = images;
 exports.js = js;
@@ -250,4 +297,3 @@ exports.build = build;
 exports.watching = watching;
 exports.favicon = favicon;
 exports.default = watching;
-// exports.faviconAddMeta = faviconAddMeta;

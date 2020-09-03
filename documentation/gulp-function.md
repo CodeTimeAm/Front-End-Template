@@ -3,7 +3,9 @@
 ## Gulp tasks
 - command `gulp`
     - `default = watching` is the main task, runs `build`, `browserSync` and `watchFiles`.
-    - `build` Deleting `app` and `build` folders, then builds all files and folders, runs tasks copy, images, sprites: png, sprites: svg, pug, scss, js.
+    - `build` Deleting `app` and `build` folders, then builds all files and folders, 
+        - runs tasks copy, images, sprites: png, sprites: svg, pug, scss, js.
+        - runs tasks imgsprite generate `sprite.png` and `_sprite.scss`
     - `browserSync` Starts the Browsersync server.
     - `watchFiles` Starts tracking files, so that when they change, they are automatically rebuilt.
 ```javascript
@@ -12,15 +14,34 @@
     3.  Starting ` browserSync `for real time visual see all changes in `*.html and other files` .
     4.  Waching all folders in ` src ` and if there some change copy all chanches, to destenations.
 ```
+---
+
 ## Extra options:
-#### If need to creat **favicons** 
+#### ***`gulp favicon`*** command if need to creat ***`favicons`*** 
 - `1` Copy file in `src/img`  folder.
 - `2` File must be renamed to `favicon.` `png, jpg, jepg, svg `.
 - `3` Use command `gulp favicon` to create files.
-- `4` All necessary codes will auto field in index.html.
+- `4` All necessary codes will auto field in all `*.html.`
 - `5` If need only delete favicons use command `gulp delfavicon`.
 - `6` If need only generate favicons use command `gulp faviconGenerate`.
 - `7` If need only add meta ( insert favicon code ) in `*.html `use command `gulp faviconAddMeta`.
+
+---
+
+#### ***`gulp imgsprite`*** command if need to creat **` sprites`**  
+- `1` Copy files in `src/img/sprite/png/`  folder.
+- `2` Use command `gulp imgsprite` to generate and create in `src/img/sprite/` `sprite.png` and in `src/scss/` `_sprite.scss` , files.
+- `3` Using sprite ...
+```scss
+.myclass {
+
+    @include sprite($sprite);
+}
+```
+- `4` `$sprite` you can see all sprites variables in `_style.scss`.
+
+
+---
 
 ## Installed Packages:
 - For uninstall use command	
@@ -36,6 +57,8 @@
 - [gulp-file-include](#gulp-file-include)
 - [del](#del)
 - [gulp-favicons](#gulp-favicons)
+
+---
 
 #### **browser-sync**
 
