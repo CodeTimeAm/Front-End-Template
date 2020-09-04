@@ -97,8 +97,6 @@ function css() {
             overrideBrowserslist: ["last 4 version"]
         })
         )
-        .pipe(dest(path.build.css))
-        .pipe(dest('./src/css/'))
         .pipe(sourcemaps.write())
         .pipe(dest(path.build.css))
         .pipe(dest('./src/css/'))
@@ -127,7 +125,7 @@ function images() {
 /* sprite
 ====================================================*/
 gulp.task('imgSprite', async function () {
-    let spriteData = gulp.src('src/img/sprite/png/*.{jpg,jpeg,png,gif}')
+    let spriteData = gulp.src('src/img/sprite/png/*.png')
         .pipe(plumber())
         .pipe(spritesmith({
             imgName: 'sprite.png',
@@ -170,7 +168,7 @@ gulp.task('svgSprite', function () {
                 },
                 symbol: true // Activate the «symbol» mode
             },
-            
+
         }
         ))
         // .pipe(svgSprite(config))
