@@ -25,12 +25,4 @@
 // Sprit
 @import "./sprite";
 
-.main {
-	display: inline-block;
-	@include sprite($icon-bt-right);
-}
 
-.st {
-	display: inline-block;
-	@include sprite($icon-bt-left);
-}
