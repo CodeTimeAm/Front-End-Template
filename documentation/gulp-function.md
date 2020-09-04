@@ -4,7 +4,7 @@
 - command `gulp`
     - `default = watching` is the main task, runs `build`, `browserSync` and `watchFiles`.
     - `build` Deleting `app` and `build` folders, then builds all files and folders, 
-        - runs tasks copy, images, sprites: png, sprites: svg, pug, scss, js.
+        - runs tasks `copy` and ( `compress` ), images, sprites: png, sprites: svg, pug, scss, js.
         - runs tasks imgsprite generate `sprite.png` and `_sprite.scss`
     - `browserSync` Starts the Browsersync server.
     - `watchFiles` Starts tracking files, so that when they change, they are automatically rebuilt.

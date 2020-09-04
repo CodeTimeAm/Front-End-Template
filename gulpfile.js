@@ -45,28 +45,10 @@ const { src, dest } = require('gulp'),
     spritesmith = require('gulp.spritesmith'),
     merge = require('merge-stream'),
     svgSprite = require("gulp-svg-sprite"),
-    yargs = require('yargs'),
     imagemin = require('gulp-imagemin');
 
 
-/* yargs
-=========================*/
-let argv = yargs.default({
-    cache: true,
-    debug: true,
-    fix: false,
-    minifyHtml: null,
-    minifyCss: null,
-    minifyJs: null,
-    minifySvg: null,
-    notify: true,
-    open: true,
-    port: 3000,
-    spa: false,
-    throwErrors: false,
-}).argv;
 
-argv.minify = !!argv.minify;
 
 
 /* browser-sync
@@ -139,18 +121,26 @@ function images() {
         .pipe(dest(path.build.img))
         .pipe(src(path.src.img))
         .pipe(
-            imagemin({
+            imagemin([
+            imagemin.gifsicle({ interlaced: true }),
+            imagemin.mozjpeg({ quality: 75, progressive: true }),
+            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.svgo({
+                plugins: [
+                    { removeViewBox: true },
+                    { cleanupIDs: false }
+                ]
+            })
+            ],
+            {
                 progressive: true,
                 svgoPlugins: [{ removeViewBox: false }],
                 interlaced: true,
                 optimizationLevel: 3 // 0 to 7
-            })
-        )
+            }))
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream());
 };
-
-
 
 
 /* sprite
