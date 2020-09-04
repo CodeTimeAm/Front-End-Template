@@ -43,8 +43,9 @@ const { src, dest } = require('gulp'),
     log = require("fancy-log"),
     inject = require("gulp-inject-string"),
     spritesmith = require('gulp.spritesmith'),
-    merge = require('merge'),
-    svgSprite = require("gulp-svg-sprite");
+    merge = require('merge-stream'),
+    svgSprite = require("gulp-svg-sprite"),
+    yargs = require('yargs');
 
 
 
