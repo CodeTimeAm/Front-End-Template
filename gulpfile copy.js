@@ -29,6 +29,11 @@ let path = {
 };
 
 const { src, dest } = require('gulp'),
+    gulpLoadPlugins = require('gulp-load-plugins').
+    yargs = require('yargs'),
+    del = require("del");
+
+
     gulp = require('gulp'),
     browsersync = require('browser-sync').create(),
     watch = require('gulp-watch'),
@@ -38,15 +43,12 @@ const { src, dest } = require('gulp'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
     fileinclude = require('gulp-file-include'),
-    del = require("del"),
     favicons = require("favicons").stream,
     log = require("fancy-log"),
     inject = require("gulp-inject-string"),
     spritesmith = require('gulp.spritesmith'),
     merge = require('merge-stream'),
     svgSprite = require("gulp-svg-sprite"),
-    yargs = require('yargs'),
-    imagemin = require('gulp-imagemin');
 
 
 /* yargs
@@ -66,7 +68,16 @@ let argv = yargs.default({
     throwErrors: false,
 }).argv;
 
-argv.minify = !!argv.minify;
+
+/* browser-sync
+=========================*/
+let $ = gulpLoadPlugins({
+    overridePattern: false,
+    pattern: [
+        'autoprefixer',
+        'browser-sync',
+    ],
+});
 
 
 /* browser-sync
@@ -136,16 +147,6 @@ function js() {
 ====================================================*/
 function images() {
     return src(path.src.img)
-        .pipe(dest(path.build.img))
-        .pipe(src(path.src.img))
-        .pipe(
-            imagemin({
-                progressive: true,
-                svgoPlugins: [{ removeViewBox: false }],
-                interlaced: true,
-                optimizationLevel: 3 // 0 to 7
-            })
-        )
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream());
 };
