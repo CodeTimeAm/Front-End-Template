@@ -66,6 +66,7 @@ function browserSync(params) {
         server: {
             baseDir: "./" + project_folder + "/"
         },
+        files: ['./**.html', './**.png'],
         notify: false
     });
 };
@@ -90,7 +91,7 @@ function html() {
                 extname: ".min.html"
             })
         )
-        .pipe(dest(path.build.app_html))
+        // .pipe(dest(path.build.app_html))
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream())
 };
@@ -99,14 +100,13 @@ function html() {
 
 /* pug
 ====================================================*/
-gulp.task('pug', async function buildHTML(callback) {
+gulp.task('pug', async function buildHTML() {
     return gulp.src("./src/pug/*.pug")
         .pipe(pug({
             pretty: true
         }))
         .pipe(dest("./src/"))
-        .pipe(browsersync.stream())
-    callback();
+    // .pipe(browsersync.stream())
 });
 
 /* css:build
@@ -388,7 +388,7 @@ const clean = () => del(path.clean);
 /* default
 ====================================================*/
 let build = gulp.series(clean, gulp.parallel(html, js, css, images));
-let watching = gulp.parallel(build, browserSync, watchFiles, 'imgSprite', 'svgSprite');
+let watching = gulp.parallel(build, watchFiles, 'imgSprite', 'svgSprite', browserSync);
 let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
 
 
