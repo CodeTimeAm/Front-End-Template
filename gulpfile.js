@@ -26,7 +26,7 @@ let path = {
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
     },
     // clean: [project_folder, project_app_folder],
-    clean: [project_folder, project_app_folder, source_folder + "/scss/_sprite.scss"],
+    clean: [project_folder, project_app_folder],
 };
 
 const { src, dest } = require('gulp'),
@@ -56,17 +56,6 @@ const { src, dest } = require('gulp'),
     
 
 
-const AUTOPREFIXER_BROWSERS = [
-    'ie >= 10',
-    'ie_mob >= 10',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
-    'opera >= 23',
-    'ios >= 7',
-    'android >= 4.4',
-    'bb >= 10'
-];
 
 
 /* browser-sync
@@ -214,36 +203,35 @@ gulp.task('imgSprite', async function () {
 
 /* SVG sprite
 ====================================================*/
+config = {
+    shape: {
+        dimension: { // Set maximum dimensions
+            maxWidth: 32,
+            maxHeight: 32
+        },
+        spacing: { // Add padding
+            padding: 10
+        },
+    },
+    mode: {
+        stack: {
+            sprite: "../inons.svg",  //sprite file name
+            example: true
+        },
+        view: { // Activate the «view» mode
+            bust: false,
+            render: {
+                scss: true // Activate Sass output (with default options)
+            }
+        },
+        symbol: true // Activate the «symbol» mode
+    },
+}
+
 gulp.task('svgSprite', function () {
     return gulp.src([source_folder + '/img/sprite/svg/*.svg'])
-        .pipe(svgSprite({
-            // config = {
-            //     shape: {
-            //         dimension: { // Set maximum dimensions
-            //             maxWidth: 32,
-            //             maxHeight: 32
-            //         },
-            //         spacing: { // Add padding
-            //             padding: 10
-            //         },
-            //     },
-            mode: {
-                stack: {
-                    sprite: "../sprite/inons.svg",  //sprite file name
-                    example: true
-                },
-                view: { // Activate the «view» mode
-                    bust: false,
-                    render: {
-                        scss: true // Activate Sass output (with default options)
-                    }
-                },
-                symbol: true // Activate the «symbol» mode
-            },
-
-        }
-        ))
-        // .pipe(svgSprite(config))
+        // .pipe(svgSprite())
+        .pipe(svgSprite(config))
         .pipe(dest(path.build.img));
 });
 
