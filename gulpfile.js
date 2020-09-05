@@ -102,7 +102,6 @@ function html() {
                 extname: ".min.html"
             })
         )
-        // .pipe(dest(path.build.app_html))
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream())
 };
@@ -177,6 +176,10 @@ function css() {
 function js() {
     return src(path.src.js)
         .pipe(fileinclude())
+        .pipe(plumber({
+            errorHandler: notify.onError(function (err) {
+            })
+        }))
         .pipe(dest(path.build.js))
         .pipe(uglify())
         .pipe(
