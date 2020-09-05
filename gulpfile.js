@@ -29,8 +29,10 @@ let path = {
     clean: [project_folder, project_app_folder],
 };
 
+const gulp = require('gulp');
+const pug = require('gulp-pug');
+
 const { src, dest } = require('gulp'),
-    gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     browsersync = require('browser-sync').create(),
     del = require("del"),
@@ -53,9 +55,6 @@ const { src, dest } = require('gulp'),
     svgSprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch');
-    
-
-
 
 
 /* browser-sync
@@ -93,6 +92,19 @@ function html() {
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream())
 };
+
+
+
+/* pug
+====================================================*/
+gulp.task('pug', async function buildHTML(callback) {
+    return gulp.src("src/pug/pages/*.pug")
+        .pipe(pug({
+            pretty: true
+        }))
+        .pipe(gulp.dest("src"))
+    callback();
+});
 
 /* css:build
 ====================================================*/
@@ -179,7 +191,6 @@ function images() {
                     optimizationLevel: 3 // 0 to 7
                 }))
         .pipe(dest(path.build.img))
-        .pipe(browsersync.stream());
 };
 
 
@@ -236,6 +247,7 @@ gulp.task('svgSprite', function () {
 });
 
 
+
 /* watch
 ====================================================*/
 function watchFiles(params) {
@@ -245,6 +257,7 @@ function watchFiles(params) {
     gulp.watch([path.watch.img], images);
     gulp.watch([source_folder + '/img/sprite/svg/*.svg'], gulp.series('svgSprite'));
     gulp.watch('src/img/sprite/png/*.png', gulp.series('imgSprite'));
+    gulp.watch('src/pug/*.pug', gulp.series('pug'));
 };
 
 
@@ -380,6 +393,7 @@ let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
 
 /* 
 ===============================*/
+
 
 exports.watchFiles = watchFiles;
 exports.clean = clean;
