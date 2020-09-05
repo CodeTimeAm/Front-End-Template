@@ -1,11 +1,13 @@
 # Before start
 
 - 1 command: `npm i`
-- second command: `gulp sass:watch`
+- second  ***`READ ALL DOCUMENTATION`***
 
 
 - Step [Gulp Sass Troubleshoot](documentation/gulp-sass-troubleshoot.md)
 - Step I [Cheking github](documentation/checking-github.md)
+
+# [Gulp tasks , function and packages](documentation/gulp-function.md)
 
 # Step II Creating Branch
 

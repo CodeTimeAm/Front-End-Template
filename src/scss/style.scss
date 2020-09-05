@@ -4,10 +4,8 @@
 //@import "./base";
 // Grid
 
-
 // Typography
 // @import "./fonts";
-
 
 @mixin font($font_name, $file_name, $weight, $style) {
 	@font-face {
@@ -24,5 +22,7 @@
 // Mixins
 @import "./mixins/mixins";
 
+// Sprit
+@import "./sprite";
 
 

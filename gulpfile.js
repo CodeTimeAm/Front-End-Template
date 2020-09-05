@@ -1,257 +1,393 @@
-let project_folder = require("path").basename(__dirname);
-let source_folder = "src";
-
-let fs = require("fs");
+const project_folder = "build";
+const source_folder = "src";
+const project_app_folder = "app";
 
 let path = {
-  build: {
-    html: project_folder + "/",
-    // css: [project_folder + "/css/", source_folder + "/css/",],
-    css: project_folder + "/css/",
-    js: project_folder + "/js/",
-    img: project_folder + "/img/",
-    fonts: project_folder + "/fonts/",
-  },
-  src: {
-    html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-    css: source_folder + "/scss/style.scss",
-    js: source_folder + "/js/script.js",
-    img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
-    fonts: source_folder + "/fonts/*.ttf",
-  },
-  watch: {
-    html: source_folder + "/**/*html",
-    css: source_folder + "/scss/**/*.scss",
-    js: source_folder + "/js/**/*.js",
-    img: source_folder + "/img/**/*.{jpg,png,svg,gif,ico,webp}",
-  },
-  clean: "./" + project_folder + "/",
-};
-
-let { src, dest } = require("gulp"),
-  gulp = require("gulp"),
-  browsersync = require("browser-sync").create(),
-  fileinclude = require("gulp-file-include"),
-  del = require("del"),
-  scss = require("gulp-sass"),
-  autoprefixer = require("gulp-autoprefixer"),
-  group_media = require("gulp-group-css-media-queries"),
-  clean_css = require("gulp-clean-css"),
-  rename = require("gulp-rename"),
-  uglify = require("gulp-uglify-es").default,
-  imagemin = require("gulp-imagemin"),
-  webphtml = require("gulp-webp-html"),
-  webpcss = require("gulp-webp-css"),
-  svgSprite = require("gulp-svg-sprite"),
-  ttf2woff = require("gulp-ttf2woff"),
-  ttf2woff2 = require("gulp-ttf2woff2"),
-  fonter = require("gulp-fonter");
-// spritesmith = require("gulp.spritesmith");
-
-function browserSync(params) {
-  browsersync.init({
-    server: {
-      baseDir: "./" + project_folder + "/",
+    build: {
+        html: project_folder + "/",
+        css: project_folder + "/css",
+        js: project_folder + "/js",
+        img: project_folder + "/img",
+        fonts: project_folder + "/fonts",
+        app_html: project_app_folder + "/",
     },
-    port: 3000,
-    notify: false,
-  });
-}
 
-function html() {
-  return src(path.src.html)
-    .pipe(fileinclude())
-    .pipe(webphtml())
-    .pipe(dest(path.build.html))
-    .pipe(browsersync.stream());
-}
-
-function css() {
-  return (
-    src(path.src.css)
-      .pipe(
-        scss({
-          outputStyle: "expanded",
-        })
-      )
-      .pipe(group_media())
-      .pipe(
-        autoprefixer({
-          overrideBrowserslist: ["last 5 version"],
-          cascade: true,
-        })
-      )
-      .pipe(dest("./src/css"))
-      // .pipe(webpcss())
-      .pipe(dest(path.build.css))
-      // .pipe(dest(path.src.css))
-      .pipe(clean_css())
-      .pipe(
-        rename({
-          extname: ".min.css",
-        })
-      )
-      .pipe(dest(path.build.css))
-      .pipe(browsersync.stream())
-  );
-}
-
-function js() {
-  return src(path.src.js)
-    .pipe(fileinclude())
-    .pipe(dest(path.build.js))
-    .pipe(uglify())
-    .pipe(
-      rename({
-        extname: ".min.js",
-      })
-    )
-    .pipe(dest(path.build.js))
-    .pipe(browsersync.stream());
-}
-
-function images() {
-  return src(path.src.img)
-    .pipe(dest(path.build.img))
-    .pipe(src(path.src.img))
-    .pipe(
-      imagemin({
-        progressive: true,
-        svgoPlugins: [{ removeViewBox: false }],
-        interlaced: true,
-        optimizationLevel: 3, // 0 to 7
-      })
-    )
-    .pipe(dest(path.build.img))
-    .pipe(browsersync.stream());
-}
-
-function fonts() {
-  src(path.src.fonts)
-    .pipe(ttf2woff())
-    .pipe(dest(path.build.fonts));
-  return src(path.src.fonts)
-    .pipe(ttf2woff2())
-    .pipe(dest(path.build.fonts));
+    src: {
+        html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
+        css: "./" + source_folder + "/scss/style.scss",
+        js: "./" + source_folder + "/js/script.js",
+        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+        fonts: "./" + source_folder + "/fonts/*.ttf",
+    },
+    watch: {
+        html: "./" + source_folder + "/**/*html",
+        css: "./" + source_folder + "/scss/**/*.scss",
+        js: "./" + source_folder + "/js/**/*.js",
+        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+    },
+    // clean: [project_folder, project_app_folder],
+    clean: [project_folder, project_app_folder],
 };
 
-gulp.task("otf2ttf", function () {
-  return src([source_folder + "/fonts/*.otf"])
-    .pipe(
-      fonter({
-        formats: ["ttf"],
-      })
-    )
-    .pipe(dest(source_folder + "/fonts/"));
-});
+const { src, dest } = require('gulp'),
+    gulp = require('gulp'),
+    autoprefixer = require('gulp-autoprefixer'),
+    browsersync = require('browser-sync').create(),
+    del = require("del"),
+    clean_css = require("gulp-clean-css"),
+    csso = require('gulp-csso'),
+    favicons = require("favicons").stream,
+    fileinclude = require('gulp-file-include'),
+    group_media = require("gulp-group-css-media-queries"),
+    htmlmin = require('gulp-htmlmin'),
+    inject = require("gulp-inject-string"),
+    imagemin = require('gulp-imagemin'),
+    log = require("fancy-log"),
+    merge = require('merge-stream'),
+    notify = require('gulp-notify'),
+    plumber = require('gulp-plumber'),
+    rename = require("gulp-rename"),
+    sass = require('gulp-sass'),
+    sourcemaps = require('gulp-sourcemaps'),
+    spritesmith = require('gulp.spritesmith'),
+    svgSprite = require("gulp-svg-sprite"),
+    uglify = require('gulp-uglify'),
+    watch = require('gulp-watch');
+    
 
-gulp.task("svgSprite", function () {
-  return gulp
-    .src([source_folder + "/img/sprite/svg/*.svg"])
-    .pipe(
-      svgSprite({
-        mode: {
-          stack: {
-            sprite: "../icons/inons.svg", //sprite file name
-            example: true,
-          },
+
+
+
+/* browser-sync
+=========================*/
+function browserSync(params) {
+    return browsersync.init({
+        server: {
+            baseDir: "./" + project_folder + "/"
         },
-      })
-    )
-    .pipe(dest(path.build.img));
+        notify: false
+    });
+};
+
+/* html:build
+====================================================*/
+function html() {
+    return src(path.src.html)
+        .pipe(plumber({
+            errorHandler: notify.onError(function (err) {
+            })
+        }))
+        .pipe(fileinclude({ prefix: '@@' }))
+        .pipe(dest(path.build.app_html))
+        .pipe(dest(path.build.html))
+        .pipe(htmlmin({
+            collapseWhitespace: true,
+            removeComments: true
+        }))
+        .pipe(
+            rename({
+                extname: ".min.html"
+            })
+        )
+        .pipe(dest(path.build.app_html))
+        .pipe(dest(path.build.html))
+        .pipe(browsersync.stream())
+};
+
+/* css:build
+====================================================*/
+function css() {
+    return src(path.src.css)
+        .pipe(
+            sass({
+                outputStyle: "expanded",
+                outputStyle: 'nested',
+                precision: 10,
+                includePaths: ['.']
+                // onError: console.error.bind(console, 'Sass error:'
+            })
+        )
+        .pipe(
+            group_media()
+        )
+        .pipe(plumber({
+            errorHandler: notify.onError(function (err) {
+                return {
+                    title: 'Styles',
+                    sound: false,
+                    message: err.message
+                }
+            })
+        }))
+        .pipe(sourcemaps.init())
+        .pipe(sass())
+        .pipe(autoprefixer({
+            overrideBrowserslist: ["last 4 version"],
+            cascade: true
+        })
+        )
+        .pipe(sourcemaps.write())
+        .pipe(dest(path.build.css))
+        .pipe(csso())
+        .pipe(
+            rename({
+                extname: ".min.css"
+            })
+        )
+        .pipe(dest(path.build.css))
+        .pipe(dest('./src/css/'))
+        .pipe(browsersync.stream());
+};
+/* js build
+====================================================*/
+function js() {
+    return src(path.src.js)
+        .pipe(fileinclude())
+        .pipe(dest(path.build.js))
+        .pipe(uglify())
+        .pipe(
+            rename({
+                extname: ".min.js"
+            })
+        )
+        .pipe(dest(path.build.js))
+        .pipe(browsersync.stream());
+};
+
+/* image build
+====================================================*/
+function images() {
+    return src(path.src.img)
+        .pipe(dest(path.build.img))
+        .pipe(src(path.src.img))
+        .pipe(
+            imagemin([
+                imagemin.gifsicle({ interlaced: true }),
+                imagemin.mozjpeg({ quality: 75, progressive: true }),
+                imagemin.optipng({ optimizationLevel: 5 }),
+                imagemin.svgo({
+                    plugins: [
+                        { removeViewBox: true },
+                        { cleanupIDs: false }
+                    ]
+                })
+            ],
+                {
+                    progressive: true,
+                    svgoPlugins: [{ removeViewBox: false }],
+                    interlaced: true,
+                    optimizationLevel: 3 // 0 to 7
+                }))
+        .pipe(dest(path.build.img))
+        .pipe(browsersync.stream());
+};
+
+
+/* sprite
+====================================================*/
+gulp.task('imgSprite', async function () {
+    let spriteData = gulp.src('src/img/sprite/png/*.png')
+        .pipe(plumber())
+        .pipe(spritesmith({
+            imgName: 'sprite.png',
+            cssName: '_sprite.scss',
+            cssFormat: 'scss',
+            algorithm: 'top-down',
+            imgPath: '../img/sprite/sprite.png',
+            padding: 10
+        }));
+    spriteData.img.pipe(gulp.dest('src/img/sprite/'));
+    spriteData.css.pipe(gulp.dest('src/scss/'));
 });
 
-// gulp.task("sprite", function () {
-//   // Generate our spritesheet
-//   var spriteData = gulp.src(source_folder + "/img/sprite/*.png").pipe(
-//     spritesmith({
-//       imgName: "sprite.png",
-//       cssName: "sprite.css",
-//     })
-//   );
 
-//   // Pipe image stream through image optimizer and onto disk
-//   // var imgStream = sprite.img
-//     // DEV: We must buffer our stream into a Buffer for `imagemin`
-//   return spriteData
-//     .pipe(dest(source_folder + "/img/sprite/png/"));
-//     .pipe(dest(source_folder + "/css/"));
+/* SVG sprite
+====================================================*/
+config = {
+    shape: {
+        dimension: { // Set maximum dimensions
+            maxWidth: 32,
+            maxHeight: 32
+        },
+        spacing: { // Add padding
+            padding: 10
+        },
+    },
+    mode: {
+        stack: {
+            sprite: "../inons.svg",  //sprite file name
+            example: true
+        },
+        view: { // Activate the «view» mode
+            bust: false,
+            render: {
+                scss: true // Activate Sass output (with default options)
+            }
+        },
+        symbol: true // Activate the «symbol» mode
+    },
+}
+
+gulp.task('svgSprite', function () {
+    return gulp.src([source_folder + '/img/sprite/svg/*.svg'])
+        // .pipe(svgSprite())
+        .pipe(svgSprite(config))
+        .pipe(dest(path.build.img));
+});
 
 
-//   // Pipe CSS stream through CSS optimizer and onto disk
-//   var cssStream = sprite.css
-//     .pipe(csso())
-//     .pipe(gulp.dest(source_folder + "/css/"));
-
-//   // Return a merged stream to handle both `end` events
-//   return merge(imgStream, cssStream);
-// });
-
-function fontsStyle(params) {
-
-  let file_content = fs.readFileSync(source_folder + '/scss/fonts.scss');
-  if (file_content == '') {
-    fs.writeFile(source_folder + '/scss/fonts.scss', '', cb);
-    return fs.readdir(path.build.fonts, function (err, items) {
-      if (items) {
-        let c_fontname;
-        for (var i = 0; i < items.length; i++) {
-          let fontname = items[i].split('.');
-          fontname = fontname[0];
-          if (c_fontname != fontname) {
-            fs.appendFile(source_folder + '/scss/fonts.scss', '@include font("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
-          }
-          c_fontname = fontname;
-        }
-      }
-    })
-  }
-};
-
-function cb() {
-
-};
-
+/* watch
+====================================================*/
 function watchFiles(params) {
-  gulp.watch([path.watch.html], html);
-  gulp.watch([path.watch.css], css);
-  gulp.watch([path.watch.js], js);
-  gulp.watch([path.watch.img], images);
-}
+    gulp.watch([path.watch.html], html);
+    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.img], images);
+    gulp.watch([source_folder + '/img/sprite/svg/*.svg'], gulp.series('svgSprite'));
+    gulp.watch('src/img/sprite/png/*.png', gulp.series('imgSprite'));
+};
 
-function clean(params) {
-  return del(path.clean);
-}
 
-let build = gulp.series(
-  clean,
-  gulp.parallel(js, css, html, images, fonts));    //fontsStyle
-let watch = gulp.parallel(build, watchFiles, browserSync);
 
-exports.fontsStyle = fontsStyle;
-exports.fonts = fonts;
+
+/* favicon:build  /clean
+====================================================*/
+gulp.task("delfavicon", function () {
+    return del([source_folder + '/img/favicon/*.{png, jpg, jepg, svg, xml, ico, json, webapp, html}'])
+});
+
+gulp.task("faviconGenerate", async function (callback) {
+    return gulp.src([source_folder + '/img/favicon.{png, jpg, jepg, svg}'])
+        .pipe(favicons({
+            path: "/img/favicon/",                                // Path for overriding default icons path. `string`
+            appName: 'CodeTime',                            // Your application's name. `string`
+            appShortName: null,                       // Your application's short_name. `string`. Optional. If not set, appName will be used
+            appDescription: null,                     // Your application's description. `string`
+            developerName: null,                      // Your (or your developer's) name. `string`
+            developerURL: null,                       // Your (or your developer's) URL. `string`
+            dir: "auto",                              // Primary text direction for name, short_name, and description
+            lang: "en-US",                            // Primary language for name and short_name
+            background: "#fff",                       // Background colour for flattened icons. `string`
+            theme_color: "#fff",                      // Theme color user for example in Android's task switcher. `string`
+            appleStatusBarStyle: "black-translucent", // Style for Apple status bar: "black-translucent", "default", "black". `string`
+            display: "standalone",                    // Preferred display mode: "fullscreen", "standalone", "minimal-ui" or "browser". `string`
+            orientation: "any",                       // Default orientation: "any", "natural", "portrait" or "landscape". `string`
+            scope: "/",                               // set of URLs that the browser considers within your app
+            start_url: "/?homescreen=1",              // Start URL when launching the application from a device. `string`
+            version: "1.0",                           // Your application's version string. `string`
+            logging: false,                           // Print logs to console? `boolean`
+            pixel_art: false,                         // Keeps pixels "sharp" when scaling up, for pixel art.  Only supported in offline mode.
+            loadManifestWithCredentials: false,       // Browsers don't send cookies when fetching a manifest, enable this to fix that. `boolean`
+            url: null,
+            html: null,
+            pipeHTML: true,
+            replace: true,
+            icons: {
+                // Platform Options:
+                // - offset - offset in percentage
+                // - background:
+                //   * false - use default
+                //   * true - force use default, e.g. set background for Android icons
+                //   * color - set background for the specified icons
+                //   * mask - apply mask in order to create circle icon (applied by default for firefox). `boolean`
+                //   * overlayGlow - apply glow effect after mask has been applied (applied by default for firefox). `boolean`
+                //   * overlayShadow - apply drop shadow after mask has been applied .`boolean`
+                //
+                android: true,              // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                appleIcon: true,            // Create Apple touch icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                appleStartup: true,         // Create Apple startup images. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                coast: true,                // Create Opera Coast icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                favicons: true,             // Create regular favicons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                firefox: true,              // Create Firefox OS icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                windows: true,              // Create Windows 8 tile icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+                yandex: true                // Create Yandex browser icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+            }
+        }))
+        .on("error", log)
+        .pipe(dest([source_folder + '/img/favicon/']));
+    callback();
+});
+
+
+gulp.task('faviconAddMeta', function (callback) {
+    gulp.src('src/*.html')
+        .pipe(inject.beforeEach('</head>', '<link rel="shortcut icon" href="./img/favicon/favicon.ico">\n' +
+            '<link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">\n' +
+            '<link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">\n' +
+            '<link rel="icon" type="image/png" sizes="48x48" href="./img/favicon/favicon-48x48.png">\n' +
+            '<link rel="manifest" href="./img/favicon/manifest.json">\n' +
+            '<meta name="mobile-web-app-capable" content="yes">\n' +
+            '<meta name="theme-color" content="#fff">\n' +
+            '<meta name="application-name" content="CodeTime">\n' +
+            '<link rel="apple-touch-icon" sizes="57x57" href="./img/favicon/apple-touch-icon-57x57.png">\n' +
+            '<link rel="apple-touch-icon" sizes="60x60" href="./img/favicon/apple-touch-icon-60x60.png">\n' +
+            '<link rel="apple-touch-icon" sizes="72x72" href="./img/favicon/apple-touch-icon-72x72.png">\n' +
+            '<link rel="apple-touch-icon" sizes="76x76" href="./img/favicon/apple-touch-icon-76x76.png">\n' +
+            '<link rel="apple-touch-icon" sizes="114x114" href="./img/favicon/apple-touch-icon-114x114.png">\n' +
+            '<link rel="apple-touch-icon" sizes="120x120" href="./img/favicon/apple-touch-icon-120x120.png">\n' +
+            '<link rel="apple-touch-icon" sizes="144x144" href="./img/favicon/apple-touch-icon-144x144.png">\n' +
+            '<link rel="apple-touch-icon" sizes="152x152" href="./img/favicon/apple-touch-icon-152x152.png">\n' +
+            '<link rel="apple-touch-icon" sizes="167x167" href="./img/favicon/apple-touch-icon-167x167.png">\n' +
+            '<link rel="apple-touch-icon" sizes="180x180" href="./img/favicon/apple-touch-icon-180x180.png">\n' +
+            '<link rel="apple-touch-icon" sizes="1024x1024" href="./img/favicon/apple-touch-icon-1024x1024.png">\n' +
+            '<meta name="apple-mobile-web-app-capable" content="yes">\n' +
+            '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n' +
+            '<meta name="apple-mobile-web-app-title" content="CodeTime">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"    href="./img/favicon/apple-touch-startup-image-640x1136.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"    href="./img/favicon/apple-touch-startup-image-750x1334.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"    href="./img/favicon/apple-touch-startup-image-828x1792.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"    href="./img/favicon/apple-touch-startup-image-1125x2436.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"    href="./img/favicon/apple-touch-startup-image-1242x2208.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"    href="./img/favicon/apple-touch-startup-image-1242x2688.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"   href="./img/favicon/apple-touch-startup-image-1536x2048.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"   href="./img/favicon/apple-touch-startup-image-1668x2224.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"   href="./img/favicon/apple-touch-startup-image-1668x2388.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"  href="./img/favicon/apple-touch-startup-image-2048x2732.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"  href="./img/favicon/apple-touch-startup-image-1620x2160.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"   href="./img/favicon/apple-touch-startup-image-1136x640.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"   href="./img/favicon/apple-touch-startup-image-1334x750.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"   href="./img/favicon/apple-touch-startup-image-1792x828.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"   href="./img/favicon/apple-touch-startup-image-2436x1125.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"   href="./img/favicon/apple-touch-startup-image-2208x1242.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"   href="./img/favicon/apple-touch-startup-image-2688x1242.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"  href="./img/favicon/apple-touch-startup-image-2048x1536.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"  href="./img/favicon/apple-touch-startup-image-2224x1668.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"  href="./img/favicon/apple-touch-startup-image-2388x1668.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" href="./img/favicon/apple-touch-startup-image-2732x2048.png">\n' +
+            '<link rel="apple-touch-startup-image" media="(device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"  href="./img/favicon/apple-touch-startup-image-2160x1620.png">\n' +
+            '<link rel="icon" type="image/png" sizes="228x228" href="./img/favicon/coast-228x228.png">\n' +
+            '<meta name="msapplication-TileColor" content="#fff">\n' +
+            '<meta name="msapplication-TileImage" content="./img/favicon/mstile-144x144.png">\n' +
+            '<meta name="msapplication-config" content="./img/favicon/browserconfig.xml">\n' +
+            '<link rel="yandex-tableau-widget" href="./img/favicon/yandex-browser-manifest.json"></link>'))
+        .pipe(gulp.dest('src/'));
+    callback();
+});
+
+
+/* clean
+====================================================*/
+const clean = () => del(path.clean);
+
+
+/* default
+====================================================*/
+let build = gulp.series(clean, gulp.parallel(html, js, css, images));
+let watching = gulp.parallel(build, browserSync, watchFiles, 'imgSprite', 'svgSprite');
+let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
+
+
+
+/* 
+===============================*/
+
+exports.watchFiles = watchFiles;
+exports.clean = clean;
 exports.images = images;
 exports.js = js;
 exports.css = css;
 exports.html = html;
 exports.build = build;
-exports.watch = watch;
-exports.default = watch;
-
-// npm i browser-sync --save-dev
-// npm i del --save-dev
-// npm i gulp-sass --save-dev
-// npm i gulp-autoprefixer --save-dev
-// npm i --save-dev gulp-group-css-media-queries
-// npm i --save-dev gulp-clean-css
-// npm i --save-dev gulp-rename
-// npm i --save-dev gulp-uglify-es
-// npm i --save-dev gulp-imagemin
-// npm i --save-dev gulp-webp-html
-// npm i --save-dev gulp-webpcss
-// npm i --save-dev gulp-svg-sprite
-// npm i --save-dev gulp-ttf2woff gulp-ttf2woff2
-// npm i --save-dev gulp-fonter
-
-// webp = require("gulp-webp"),       //remove
-// webpcss = require("gulp-webpcss"); //remove
+exports.watching = watching;
+exports.favicon = favicon;
+exports.default = watching;

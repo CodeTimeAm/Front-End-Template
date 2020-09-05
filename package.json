@@ -1,46 +1,46 @@
 {
-  "name": "sass--galp",
+  "name": "codetime-template",
   "version": "1.0.0",
-  "description": "- 1 command: `npm i` - second command: `gulp sass:watch`",
+  "description": "- 1 command: `npm i`\r - second command: `gulp sass:watch`",
   "main": "index.js",
-  "dependencies": {
-    "node-sass": "^4.14.1",
-    "sass": "^1.26.10"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.26.12",
-    "del": "^5.1.0",
-    "fibers": "^5.0.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-file-include": "^2.2.2",
-    "gulp-fonter": "^0.3.0",
-    "gulp-group-css-media-queries": "^1.2.2",
-    "gulp-imagemin": "^7.1.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-svg-sprite": "^1.5.0",
-    "gulp-ttf2woff": "^1.1.1",
-    "gulp-ttf2woff2": "^3.0.0",
-    "gulp-uglify-es": "^2.0.0",
-    "gulp-webp-css": "^1.1.0",
-    "gulp-webp-html": "^1.0.2",
-    "gulp-webpcss": "^1.1.1",
-    "gulp.spritesmith": "^6.11.0",
-    "rename": "^1.0.4"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CodeTime-13-08-2020/sass--galp.git"
+    "url": "git+https://github.com/CodeTime-13-08-2020/codetime-template.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CodeTime-13-08-2020/sass--galp.git/issues"
+    "url": "https://github.com/CodeTime-13-08-2020/codetime-template/issues"
   },
-  "homepage": "https://github.com/CodeTime-13-08-2020/sass--galp.git#readme"
+  "homepage": "https://github.com/CodeTime-13-08-2020/codetime-template#readme",
+  "dependencies": {
+    "browser-sync": "^2.26.12",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-csso": "^2.0.0",
+    "gulp-favicons": "^2.4.0",
+    "gulp-file-include": "^2.2.2",
+    "gulp-group-css-media-queries": "^1.2.2",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-inject-string": "^1.1.2",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-watch": "^5.0.1",
+    "gulp.spritesmith": "^6.11.0",
+    "gulp-uglify": "^2.0.0",
+    "merge-stream": "^2.0.0"
+  },
+  "devDependencies": {
+    "gulp-svg-sprite": "^1.5.0"
+  }
 }
