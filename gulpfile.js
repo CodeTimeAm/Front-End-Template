@@ -211,7 +211,6 @@ gulp.task('imgSprite', async function () {
     spriteData.css.pipe(gulp.dest('src/scss/'));
 });
 
-
 /* SVG sprite
 ====================================================*/
 config = {
