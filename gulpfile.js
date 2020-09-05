@@ -1,3 +1,5 @@
+const { reload } = require('browser-sync');
+
 const project_folder = "build";
 const source_folder = "src";
 const project_app_folder = "app";
@@ -29,10 +31,9 @@ let path = {
     clean: [project_folder, project_app_folder],
 };
 
-const gulp = require('gulp');
-const pug = require('gulp-pug');
 
 const { src, dest } = require('gulp'),
+    gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     browsersync = require('browser-sync').create(),
     del = require("del"),
@@ -54,7 +55,8 @@ const { src, dest } = require('gulp'),
     spritesmith = require('gulp.spritesmith'),
     svgSprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
-    watch = require('gulp-watch');
+    watch = require('gulp-watch'),
+    pug = require('gulp-pug');
 
 
 /* browser-sync
@@ -98,11 +100,12 @@ function html() {
 /* pug
 ====================================================*/
 gulp.task('pug', async function buildHTML(callback) {
-    return gulp.src("src/pug/pages/*.pug")
+    return gulp.src("./src/pug/*.pug")
         .pipe(pug({
             pretty: true
         }))
-        .pipe(gulp.dest("src"))
+        .pipe(dest("./src/"))
+        .pipe(browsersync.stream())
     callback();
 });
 
@@ -250,13 +253,13 @@ gulp.task('svgSprite', function () {
 /* watch
 ====================================================*/
 function watchFiles(params) {
+    gulp.watch('src/pug/*.pug', gulp.series('pug'));
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.img], images);
     gulp.watch([source_folder + '/img/sprite/svg/*.svg'], gulp.series('svgSprite'));
     gulp.watch('src/img/sprite/png/*.png', gulp.series('imgSprite'));
-    gulp.watch('src/pug/*.pug', gulp.series('pug'));
 };
 
 
@@ -393,7 +396,7 @@ let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
 /* 
 ===============================*/
 
-
+exports.watch = watch;
 exports.watchFiles = watchFiles;
 exports.clean = clean;
 exports.images = images;
