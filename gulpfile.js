@@ -1,8 +1,8 @@
-const { reload } = require('browser-sync');
+
 
 const project_folder = "build";
 const source_folder = "src";
-const project_app_folder = "app";
+// const project_app_folder = "app";
 
 let path = {
     build: {
@@ -11,24 +11,34 @@ let path = {
         js: project_folder + "/js",
         img: project_folder + "/img",
         fonts: project_folder + "/fonts",
-        app_html: project_app_folder + "/",
+        // app_html: project_app_folder + "/",
+        png: source_folder + "/img/sprite",
+        png_css: source_folder + "/scss",
+        pug: source_folder + "/",
     },
 
     src: {
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
+        pug: "./" + source_folder + "/pug/index.pug",
         css: "./" + source_folder + "/scss/style.scss",
         js: "./" + source_folder + "/js/script.js",
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+        svg: "./" + source_folder + "/img/sprite/svg/**/*.svg",
+        png: "./" + source_folder + "/img/sprite/png/**/*.png",
         fonts: "./" + source_folder + "/fonts/*.ttf",
     },
     watch: {
         html: "./" + source_folder + "/**/*html",
+        pug: source_folder + "/pug/**/*.pug",
+        pug_css: "./" + source_folder + "/pug/**/*.scss",
         css: "./" + source_folder + "/scss/**/*.scss",
         js: "./" + source_folder + "/js/**/*.js",
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+        svg: source_folder + "/img/sprite/svg/**/*.svg",
+        png: source_folder + "/img/sprite/png/**/*.png",
     },
     // clean: [project_folder, project_app_folder],
-    clean: [project_folder, project_app_folder],
+    clean: [project_folder],
 };
 
 
@@ -56,17 +66,18 @@ const { src, dest } = require('gulp'),
     svgSprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
+    // { reload } = require('browser-sync'),
     pug = require('gulp-pug');
 
 
 /* browser-sync
 =========================*/
-function browserSync(params) {
+async function browserSync(params) {
     return browsersync.init({
         server: {
             baseDir: "./" + project_folder + "/"
         },
-        files: ['./**.html', './**.png'],
+        // files: ['./**.html', './**.png'],
         notify: false
     });
 };
@@ -80,7 +91,7 @@ function html() {
             })
         }))
         .pipe(fileinclude({ prefix: '@@' }))
-        .pipe(dest(path.build.app_html))
+        // .pipe(dest(path.build.app_html))
         .pipe(dest(path.build.html))
         .pipe(htmlmin({
             collapseWhitespace: true,
@@ -100,12 +111,19 @@ function html() {
 
 /* pug
 ====================================================*/
+
+
 gulp.task('pug', async function buildHTML() {
-    return gulp.src("./src/pug/*.pug")
+    return gulp.src(path.src.pug)
+        // return gulp.src("./src/pug/*.pug")   
+        .pipe(plumber({
+            errorHandler: notify.onError(function (err) {
+            })
+        }))
         .pipe(pug({
             pretty: true
         }))
-        .pipe(dest("./src/"))
+        .pipe(dest(path.build.pug))
     // .pipe(browsersync.stream())
 });
 
@@ -143,6 +161,7 @@ function css() {
         )
         .pipe(sourcemaps.write())
         .pipe(dest(path.build.css))
+        .pipe(dest('./src/css/'))
         .pipe(csso())
         .pipe(
             rename({
@@ -194,13 +213,14 @@ function images() {
                     optimizationLevel: 3 // 0 to 7
                 }))
         .pipe(dest(path.build.img))
+        .pipe(browsersync.stream());
 };
 
 
 /* sprite
 ====================================================*/
 gulp.task('imgSprite', async function () {
-    let spriteData = gulp.src('src/img/sprite/png/*.png')
+    let spriteData = gulp.src(path.src.png)
         .pipe(plumber())
         .pipe(spritesmith({
             imgName: 'sprite.png',
@@ -210,13 +230,13 @@ gulp.task('imgSprite', async function () {
             imgPath: '../img/sprite/sprite.png',
             padding: 10
         }));
-    spriteData.img.pipe(gulp.dest('src/img/sprite/'));
-    spriteData.css.pipe(gulp.dest('src/scss/'));
+    spriteData.img.pipe(gulp.dest(path.build.png));
+    spriteData.css.pipe(gulp.dest(path.build.png_css));
 });
 
 /* SVG sprite
 ====================================================*/
-config = {
+svgconfig = {
     shape: {
         dimension: { // Set maximum dimensions
             maxWidth: 32,
@@ -228,7 +248,7 @@ config = {
     },
     mode: {
         stack: {
-            sprite: "../inons.svg",  //sprite file name
+            sprite: "../icons.svg",  //sprite file name
             example: true
         },
         view: { // Activate the «view» mode
@@ -242,9 +262,9 @@ config = {
 }
 
 gulp.task('svgSprite', function () {
-    return gulp.src([source_folder + '/img/sprite/svg/*.svg'])
+    return gulp.src(path.src.svg)
         // .pipe(svgSprite())
-        .pipe(svgSprite(config))
+        .pipe(svgSprite(svgconfig))
         .pipe(dest(path.build.img));
 });
 
@@ -252,14 +272,15 @@ gulp.task('svgSprite', function () {
 
 /* watch
 ====================================================*/
-function watchFiles(params) {
-    gulp.watch('src/pug/*.pug', gulp.series('pug'));
+async function watchFiles(params) {
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.img], images);
-    gulp.watch([source_folder + '/img/sprite/svg/*.svg'], gulp.series('svgSprite'));
-    gulp.watch('src/img/sprite/png/*.png', gulp.series('imgSprite'));
+    gulp.watch([path.watch.svg], gulp.series('svgSprite'));
+    gulp.watch([path.watch.png], gulp.series('imgSprite'));
+    gulp.watch([path.watch.pug], gulp.series('pug'));
+    gulp.watch([path.watch.pug_css], css);
 };
 
 
@@ -387,7 +408,7 @@ const clean = () => del(path.clean);
 
 /* default
 ====================================================*/
-let build = gulp.series(clean, gulp.parallel(html, js, css, images));
+let build = gulp.series(clean, gulp.parallel(html, js, css, images, 'pug', html,));
 let watching = gulp.parallel(build, watchFiles, 'imgSprite', 'svgSprite', browserSync);
 let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
 
@@ -395,6 +416,8 @@ let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
 
 /* 
 ===============================*/
+
+
 
 exports.watch = watch;
 exports.watchFiles = watchFiles;
