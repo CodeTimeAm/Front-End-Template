@@ -2,7 +2,6 @@
 
 const project_folder = "build";
 const source_folder = "src";
-// const project_app_folder = "app";
 
 let path = {
     build: {
@@ -11,7 +10,6 @@ let path = {
         js: project_folder + "/js",
         img: project_folder + "/img",
         fonts: project_folder + "/fonts",
-        // app_html: project_app_folder + "/",
         png: source_folder + "/img/sprite",
         png_css: source_folder + "/scss",
         pug: source_folder + "/",
@@ -131,20 +129,6 @@ async function pug() {
         .pipe(dest(path.build.pug))
     // .pipe(browsersync.stream())
 };
-
-// gulp.task('pug', async function buildHTML() {
-//     return gulp.src(path.src.pug)
-//         // return gulp.src("./src/pug/*.pug")   
-//         .pipe(plumber({
-//             errorHandler: notify.onError(function (err) {
-//             })
-//         }))
-//         .pipe(pug({
-//             pretty: true
-//         }))
-//         .pipe(dest(path.build.pug))
-//     // .pipe(browsersync.stream())
-// });
 
 /* css:build
 ====================================================*/
@@ -271,20 +255,6 @@ async function imgSprite() {
     spriteData.css.pipe(gulp.dest(path.build.png_css));
 };
 
-// gulp.task('imgSprite', async function () {
-//     let spriteData = gulp.src(path.src.png)
-//         .pipe(plumber())
-//         .pipe(spritesmith({
-//             imgName: 'sprite.png',
-//             cssName: '_sprite.scss',
-//             cssFormat: 'scss',
-//             algorithm: 'top-down',
-//             imgPath: '../img/sprite/sprite.png',
-//             padding: 10
-//         }));
-//     spriteData.img.pipe(gulp.dest(path.build.png));
-//     spriteData.css.pipe(gulp.dest(path.build.png_css));
-// });
 
 /* SVG sprite
 ====================================================*/
@@ -320,15 +290,6 @@ function svgSprite() {
         .pipe(dest(path.build.img));
 };
 
-// gulp.task('svgSprite', function () {
-//     return gulp.src(path.src.svg)
-//         // .pipe(svgsprite())
-//         .pipe(svgsprite(svgconfig))
-//         .pipe(dest(path.build.img));
-// });
-
-
-
 /* watch
 ====================================================*/
 async function watchFiles(params) {
@@ -351,10 +312,6 @@ async function watchFiles(params) {
 function delfavicon() {
     return del(path.clean.favi)
 };
-// gulp.task("delfavicon", function () {
-//     // return del([source_folder + '/img/favicon/*.*'])
-//     return del(path.clean.favi)
-// });
 
 async function faviconGenerate() {
     return src(path.watch.favi)
@@ -481,11 +438,11 @@ const faviconwatch = gulp.series(delfavicon, faviconGenerate);
 
 /* ===============================*/
 
+exports.favicon = favicon;
+exports.faviconwatch = faviconwatch;
 exports.faviconAddMeta = faviconAddMeta;
 exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
-exports.faviconwatch = faviconwatch;
-exports.favicon = favicon;
 exports.svgSprite = svgSprite;
 exports.imgSprite = imgSprite;
 exports.pug = pug;
