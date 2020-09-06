@@ -15,6 +15,7 @@ let path = {
         png: source_folder + "/img/sprite",
         png_css: source_folder + "/scss",
         pug: source_folder + "/",
+        favi: source_folder + '/img/favicon',
     },
 
     src: {
@@ -28,7 +29,7 @@ let path = {
         fonts: "./" + source_folder + "/fonts/*.ttf",
     },
     watch: {
-        html: "./" + source_folder + "/**/*html",
+        html: "./" + source_folder + "/**/*.html",
         pug: source_folder + "/pug/**/*.pug",
         pug_css: "./" + source_folder + "/pug/**/*.scss",
         css: "./" + source_folder + "/scss/**/*.scss",
@@ -36,9 +37,13 @@ let path = {
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
         svg: source_folder + "/img/sprite/svg/**/*.svg",
         png: source_folder + "/img/sprite/png/**/*.png",
+        favi: source_folder + '/img/**/favicon.png',
     },
     // clean: [project_folder, project_app_folder],
-    clean: [project_folder],
+    clean: {
+        proj: [project_folder],
+        favi: [source_folder + '/img/favicon/*.*'],
+    },
 };
 
 
@@ -63,11 +68,13 @@ const { src, dest } = require('gulp'),
     sass = require('gulp-sass'),
     sourcemaps = require('gulp-sourcemaps'),
     spritesmith = require('gulp.spritesmith'),
-    svgSprite = require("gulp-svg-sprite"),
+    svgsprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
     // { reload } = require('browser-sync'),
-    pug = require('gulp-pug');
+    Pug = require('gulp-pug'),
+    stylelint = require('stylelint');
+
 
 
 /* browser-sync
@@ -111,20 +118,33 @@ function html() {
 /* pug
 ====================================================*/
 
-
-gulp.task('pug', async function buildHTML() {
+async function pug() {
     return gulp.src(path.src.pug)
         // return gulp.src("./src/pug/*.pug")   
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
         }))
-        .pipe(pug({
+        .pipe(Pug({
             pretty: true
         }))
         .pipe(dest(path.build.pug))
     // .pipe(browsersync.stream())
-});
+};
+
+// gulp.task('pug', async function buildHTML() {
+//     return gulp.src(path.src.pug)
+//         // return gulp.src("./src/pug/*.pug")   
+//         .pipe(plumber({
+//             errorHandler: notify.onError(function (err) {
+//             })
+//         }))
+//         .pipe(pug({
+//             pretty: true
+//         }))
+//         .pipe(dest(path.build.pug))
+//     // .pipe(browsersync.stream())
+// });
 
 /* css:build
 ====================================================*/
@@ -170,6 +190,21 @@ function css() {
         .pipe(dest(path.build.css))
         .pipe(dest('./src/css/'))
         .pipe(browsersync.stream());
+};
+
+/* scss lint
+====================================================*/
+function lintScss() {
+    return gulp.src(path.watch.css).
+        pipe(stylelint({
+            reporters: [
+                {
+                    failAfterError: true,
+                    formatter: 'string',
+                    console: true,
+                },
+            ],
+        }));
 };
 /* js build
 ====================================================*/
@@ -219,10 +254,9 @@ function images() {
         .pipe(browsersync.stream());
 };
 
-
 /* sprite
 ====================================================*/
-gulp.task('imgSprite', async function () {
+async function imgSprite() {
     let spriteData = gulp.src(path.src.png)
         .pipe(plumber())
         .pipe(spritesmith({
@@ -235,7 +269,22 @@ gulp.task('imgSprite', async function () {
         }));
     spriteData.img.pipe(gulp.dest(path.build.png));
     spriteData.css.pipe(gulp.dest(path.build.png_css));
-});
+};
+
+// gulp.task('imgSprite', async function () {
+//     let spriteData = gulp.src(path.src.png)
+//         .pipe(plumber())
+//         .pipe(spritesmith({
+//             imgName: 'sprite.png',
+//             cssName: '_sprite.scss',
+//             cssFormat: 'scss',
+//             algorithm: 'top-down',
+//             imgPath: '../img/sprite/sprite.png',
+//             padding: 10
+//         }));
+//     spriteData.img.pipe(gulp.dest(path.build.png));
+//     spriteData.css.pipe(gulp.dest(path.build.png_css));
+// });
 
 /* SVG sprite
 ====================================================*/
@@ -264,12 +313,19 @@ svgconfig = {
     },
 }
 
-gulp.task('svgSprite', function () {
+function svgSprite() {
     return gulp.src(path.src.svg)
-        // .pipe(svgSprite())
-        .pipe(svgSprite(svgconfig))
+        // .pipe(svgsprite())
+        .pipe(svgsprite(svgconfig))
         .pipe(dest(path.build.img));
-});
+};
+
+// gulp.task('svgSprite', function () {
+//     return gulp.src(path.src.svg)
+//         // .pipe(svgsprite())
+//         .pipe(svgsprite(svgconfig))
+//         .pipe(dest(path.build.img));
+// });
 
 
 
@@ -280,10 +336,11 @@ async function watchFiles(params) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.img], images);
-    gulp.watch([path.watch.svg], gulp.series('svgSprite'));
-    gulp.watch([path.watch.png], gulp.series('imgSprite'));
-    gulp.watch([path.watch.pug], gulp.series('pug'));
+    gulp.watch([path.watch.svg], svgSprite);
+    gulp.watch([path.watch.png], imgSprite);
+    gulp.watch([path.watch.pug], pug);
     gulp.watch([path.watch.pug_css], css);
+    gulp.watch([path.watch.favi], faviconwatch);
 };
 
 
@@ -291,65 +348,71 @@ async function watchFiles(params) {
 
 /* favicon:build  /clean
 ====================================================*/
-gulp.task("delfavicon", function () {
-    return del([source_folder + '/img/favicon/*.{png, jpg, jepg, svg, xml, ico, json, webapp, html}'])
-});
+function delfavicon() {
+    return del(path.clean.favi)
+};
+// gulp.task("delfavicon", function () {
+//     // return del([source_folder + '/img/favicon/*.*'])
+//     return del(path.clean.favi)
+// });
 
-gulp.task("faviconGenerate", async function (callback) {
-    return gulp.src([source_folder + '/img/favicon.{png, jpg, jepg, svg}'])
-        .pipe(favicons({
-            path: "/img/favicon/",                                // Path for overriding default icons path. `string`
-            appName: 'CodeTime',                            // Your application's name. `string`
-            appShortName: null,                       // Your application's short_name. `string`. Optional. If not set, appName will be used
-            appDescription: null,                     // Your application's description. `string`
-            developerName: null,                      // Your (or your developer's) name. `string`
-            developerURL: null,                       // Your (or your developer's) URL. `string`
-            dir: "auto",                              // Primary text direction for name, short_name, and description
-            lang: "en-US",                            // Primary language for name and short_name
-            background: "#fff",                       // Background colour for flattened icons. `string`
-            theme_color: "#fff",                      // Theme color user for example in Android's task switcher. `string`
-            appleStatusBarStyle: "black-translucent", // Style for Apple status bar: "black-translucent", "default", "black". `string`
-            display: "standalone",                    // Preferred display mode: "fullscreen", "standalone", "minimal-ui" or "browser". `string`
-            orientation: "any",                       // Default orientation: "any", "natural", "portrait" or "landscape". `string`
-            scope: "/",                               // set of URLs that the browser considers within your app
-            start_url: "/?homescreen=1",              // Start URL when launching the application from a device. `string`
-            version: "1.0",                           // Your application's version string. `string`
-            logging: false,                           // Print logs to console? `boolean`
-            pixel_art: false,                         // Keeps pixels "sharp" when scaling up, for pixel art.  Only supported in offline mode.
-            loadManifestWithCredentials: false,       // Browsers don't send cookies when fetching a manifest, enable this to fix that. `boolean`
-            url: null,
-            html: null,
-            pipeHTML: true,
-            replace: true,
-            icons: {
-                // Platform Options:
-                // - offset - offset in percentage
-                // - background:
-                //   * false - use default
-                //   * true - force use default, e.g. set background for Android icons
-                //   * color - set background for the specified icons
-                //   * mask - apply mask in order to create circle icon (applied by default for firefox). `boolean`
-                //   * overlayGlow - apply glow effect after mask has been applied (applied by default for firefox). `boolean`
-                //   * overlayShadow - apply drop shadow after mask has been applied .`boolean`
-                //
-                android: true,              // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                appleIcon: true,            // Create Apple touch icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                appleStartup: true,         // Create Apple startup images. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                coast: true,                // Create Opera Coast icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                favicons: true,             // Create regular favicons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                firefox: true,              // Create Firefox OS icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                windows: true,              // Create Windows 8 tile icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-                yandex: true                // Create Yandex browser icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
-            }
-        }))
+async function faviconGenerate() {
+    return src(path.watch.favi)
+        .pipe(favicons(favconfig))
         .on("error", log)
-        .pipe(dest([source_folder + '/img/favicon/']));
-    callback();
-});
+        .pipe(dest(path.build.favi));
+};
+
+favconfig = {
+    path: "/img/favicon/",                                // Path for overriding default icons path. `string`
+    appName: 'CodeTime',                            // Your application's name. `string`
+    appShortName: null,                       // Your application's short_name. `string`. Optional. If not set, appName will be used
+    appDescription: null,                     // Your application's description. `string`
+    developerName: null,                      // Your (or your developer's) name. `string`
+    developerURL: null,                       // Your (or your developer's) URL. `string`
+    dir: "auto",                              // Primary text direction for name, short_name, and description
+    lang: "en-US",                            // Primary language for name and short_name
+    background: "#fff",                       // Background colour for flattened icons. `string`
+    theme_color: "#fff",                      // Theme color user for example in Android's task switcher. `string`
+    appleStatusBarStyle: "black-translucent", // Style for Apple status bar: "black-translucent", "default", "black". `string`
+    display: "standalone",                    // Preferred display mode: "fullscreen", "standalone", "minimal-ui" or "browser". `string`
+    orientation: "any",                       // Default orientation: "any", "natural", "portrait" or "landscape". `string`
+    scope: "/",                               // set of URLs that the browser considers within your app
+    start_url: "/?homescreen=1",              // Start URL when launching the application from a device. `string`
+    version: "1.0",                           // Your application's version string. `string`
+    logging: false,                           // Print logs to console? `boolean`
+    pixel_art: false,                         // Keeps pixels "sharp" when scaling up, for pixel art.  Only supported in offline mode.
+    loadManifestWithCredentials: false,       // Browsers don't send cookies when fetching a manifest, enable this to fix that. `boolean`
+    url: null,
+    html: null,
+    pipeHTML: true,
+    replace: true,
+    icons: {
+        // Platform Options:
+        // - offset - offset in percentage
+        // - background:
+        //   * false - use default
+        //   * true - force use default, e.g. set background for Android icons
+        //   * color - set background for the specified icons
+        //   * mask - apply mask in order to create circle icon (applied by default for firefox). `boolean`
+        //   * overlayGlow - apply glow effect after mask has been applied (applied by default for firefox). `boolean`
+        //   * overlayShadow - apply drop shadow after mask has been applied .`boolean`
+        //
+        android: true,              // Create Android homescreen icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        appleIcon: true,            // Create Apple touch icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        appleStartup: true,         // Create Apple startup images. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        coast: true,                // Create Opera Coast icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        favicons: true,             // Create regular favicons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        firefox: true,              // Create Firefox OS icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        windows: true,              // Create Windows 8 tile icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+        yandex: true                // Create Yandex browser icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
+    }
+}
 
 
-gulp.task('faviconAddMeta', function (callback) {
-    gulp.src('src/*.html')
+
+function faviconAddMeta () {
+    return src(path.watch.html)
         .pipe(inject.beforeEach('</head>', '<link rel="shortcut icon" href="./img/favicon/favicon.ico">\n' +
             '<link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">\n' +
             '<link rel="icon" type="image/png" sizes="32x32" href="./img/favicon/favicon-32x32.png">\n' +
@@ -399,29 +462,34 @@ gulp.task('faviconAddMeta', function (callback) {
             '<meta name="msapplication-TileImage" content="./img/favicon/mstile-144x144.png">\n' +
             '<meta name="msapplication-config" content="./img/favicon/browserconfig.xml">\n' +
             '<link rel="yandex-tableau-widget" href="./img/favicon/yandex-browser-manifest.json"></link>'))
-        .pipe(gulp.dest('src/'));
-    callback();
-});
+        .pipe(dest(path.build.pug));
+};
 
 
 /* clean
 ====================================================*/
-const clean = () => del(path.clean);
+const clean = () => del(path.clean.proj);
 
 
 /* default
 ====================================================*/
-let build = gulp.series(clean, gulp.parallel(html, js, css, images, 'pug', html,));
-let watching = gulp.parallel(build, watchFiles, 'imgSprite', 'svgSprite', browserSync);
-let favicon = gulp.series('delfavicon', 'faviconGenerate', 'faviconAddMeta');
+const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug, html,));
+const watching = gulp.parallel(build, watchFiles, imgSprite, svgSprite, browserSync);
+const favicon = gulp.series(delfavicon, faviconGenerate, faviconAddMeta);
+const faviconwatch = gulp.series(delfavicon, faviconGenerate);
 
 
+/* ===============================*/
 
-/* 
-===============================*/
-
-
-
+exports.faviconAddMeta = faviconAddMeta;
+exports.faviconGenerate = faviconGenerate;
+exports.delfavicon = delfavicon;
+exports.faviconwatch = faviconwatch;
+exports.favicon = favicon;
+exports.svgSprite = svgSprite;
+exports.imgSprite = imgSprite;
+exports.pug = pug;
+exports.lintScss = lintScss;
 exports.watch = watch;
 exports.watchFiles = watchFiles;
 exports.clean = clean;
@@ -431,5 +499,4 @@ exports.css = css;
 exports.html = html;
 exports.build = build;
 exports.watching = watching;
-exports.favicon = favicon;
 exports.default = watching;
