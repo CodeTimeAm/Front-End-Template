@@ -67,7 +67,6 @@ const {src, dest} = require('gulp'),
     stylelint = require('stylelint'),
     shorthand = require('gulp-shorthand'),
     pugLinter = require('gulp-pug-linter'),
-    htmlValidator = require('gulp-w3c-html-validator'),
     bemValidator = require('gulp-html-bem-validator'),
     through2 = require('through2');
 
@@ -99,18 +98,6 @@ function html() {
         .pipe(browsersync.stream())
 }
 
-/* html validateHtml
-====================================================*/
-function validateHtml() {
-    const handleFile = (file, encoding, callback) => {
-        callback(null, file);
-        if (!file.w3cjs.success)
-            throw Error('HTML validation error(s) found');
-    };
-    return src(path.watch.html)
-        .pipe(htmlValidator())
-        .pipe(dest(path.build.html))
-}
 
 /* BEM validate – welcome to hell
 ====================================================*/
@@ -369,7 +356,7 @@ const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug, html)
 const watching = gulp.parallel(build, watchFiles, imgSprite, svgSprite, browserSync);
 const favicon = gulp.series(delfavicon, faviconGenerate);
 const faviconWatch = gulp.series(delfavicon, faviconGenerate);
-const validate = gulp.series(validateBem, validateHtml);
+const validate = gulp.series(validateBem);
 
 /* watch
 ====================================================*/
@@ -390,7 +377,6 @@ async function watchFiles(params) {
 
 exports.validate = validate;
 exports.validateBem = validateBem;
-exports.validateHtml = validateHtml;
 exports.favicon = favicon;
 exports.faviconWatch = faviconWatch;
 exports.faviconGenerate = faviconGenerate;
