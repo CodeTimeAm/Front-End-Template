@@ -10,12 +10,11 @@ let path = {
         fonts: project_folder + "/fonts",
         png: source_folder + "/img/sprite",
         pug_css: source_folder + "/scss",
-        pug: source_folder + "/",
+        pug: project_folder + "/",
         favi: source_folder + '/img/favicon',
     },
     src: {
-        // html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        pug: "./" + source_folder + "/pug/index.pug",
+        pug: [source_folder + "/*.pug", "!" + source_folder + ["/template/*.pug", "/section/*.pug", "/mixin/*.pug"]],
         css: "./" + source_folder + "/scss/style.scss",
         js: "./" + source_folder + "/js/script.js",
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
@@ -119,7 +118,7 @@ async function pug() {
         .pipe(Pug({
             pretty: true
         }))
-        .pipe(dest(path.build.pug))
+        .pipe(dest(path.src.pug))
 }
 
 /* pug Linter
@@ -164,7 +163,6 @@ function css() {
         .pipe(sourcemaps.write())
         .pipe(shorthand())
         .pipe(dest(path.build.css))
-        .pipe(dest('./src/css/'))
         .pipe(csso())
         .pipe(
             rename({
@@ -172,7 +170,6 @@ function css() {
             })
         )
         .pipe(dest(path.build.css))
-        .pipe(dest('./src/css/'))
         .pipe(browsersync.stream());
 }
 
