@@ -354,7 +354,7 @@ const clean = () => del(path.clean.proj);
 /* default
 ====================================================*/
 const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug, html));
-const watching = gulp.parallel(build, watchFiles, imgSprite, svgSprite, browserSync);
+const watching = gulp.series(build, gulp.parallel(watchFiles, imgSprite, svgSprite, browserSync));
 const favicon = gulp.series(delfavicon, faviconGenerate);
 const faviconWatch = gulp.series(delfavicon, faviconGenerate);
 const validate = gulp.series(validateBem);
