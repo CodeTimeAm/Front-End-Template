@@ -298,21 +298,6 @@ function svgSprite() {
         .pipe(dest(path.build.img));
 }
 
-/* watch
-====================================================*/
-async function watchFiles(params) {
-    gulp.watch([path.watch.html], html);
-    gulp.watch([path.watch.css], css);
-    gulp.watch([path.watch.js], js);
-    gulp.watch([path.watch.img], images);
-    gulp.watch([path.watch.svg], svgSprite);
-    gulp.watch([path.watch.png], imgSprite);
-    gulp.watch([path.watch.pug], pug);
-    gulp.watch([path.watch.pug_css], css);
-    gulp.watch([path.watch.favi], faviconWatch);
-    params();
-}
-
 /* favicon:clean
 ====================================================*/
 function delfavicon() {
@@ -321,13 +306,6 @@ function delfavicon() {
 
 /* favicon:build  / generate
 ====================================================*/
-async function faviconGenerate() {
-    return src(path.watch.favi)
-        .pipe(favicons(favconfig))
-        .on("error", log)
-        .pipe(dest(path.build.favi));
-}
-
 favconfig = {
     path: "/img/favicon/",                    // Path for overriding default icons path. `string`
     appName: 'CodeTime',                      // Your application's name. `string`
@@ -374,10 +352,16 @@ favconfig = {
     }
 };
 
+async function faviconGenerate() {
+    return src(path.watch.favi)
+        .pipe(favicons(favconfig))
+        .on("error", log)
+        .pipe(dest(path.build.favi));
+}
+
 /* clean
 ====================================================*/
 const clean = () => del(path.clean.proj);
-
 
 /* default
 ====================================================*/
@@ -387,8 +371,22 @@ const favicon = gulp.series(delfavicon, faviconGenerate);
 const faviconWatch = gulp.series(delfavicon, faviconGenerate);
 const validate = gulp.series(validateBem, validateHtml);
 
-/* =================================================*/
+/* watch
+====================================================*/
+async function watchFiles(params) {
+    gulp.watch([path.watch.html], html);
+    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.img], images);
+    gulp.watch([path.watch.svg], svgSprite);
+    gulp.watch([path.watch.png], imgSprite);
+    gulp.watch([path.watch.pug], pug);
+    gulp.watch([path.watch.pug_css], css);
+    gulp.watch([path.watch.favi], faviconWatch);
+    params();
+}
 
+/* =================================================*/
 
 exports.validate = validate;
 exports.validateBem = validateBem;
