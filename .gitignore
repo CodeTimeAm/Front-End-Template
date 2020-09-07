@@ -837,4 +837,3 @@ bower_components
 
 # End of https://www.toptal.com/developers/gitignore/api/yarn,bower
 package-lock.json
-build/
