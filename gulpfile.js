@@ -110,7 +110,7 @@ function validateBem() {
 /* pug
 ====================================================*/
 async function pug() {
-    return src(path.watch.pug)
+    return src("src/pug/*.pug")
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
@@ -118,7 +118,8 @@ async function pug() {
         .pipe(Pug({
             pretty: true
         }))
-        .pipe(dest(path.src.pug))
+        .pipe(dest(path.build.html))
+        .pipe(browsersync.stream())
 }
 
 /* pug Linter
@@ -359,7 +360,6 @@ const validate = gulp.series(validateBem);
 /* watch
 ====================================================*/
 async function watchFiles(params) {
-    gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.img], images);
