@@ -11,7 +11,7 @@ let path = {
         png: source_folder + "/img/sprite",
         pug_css: source_folder + "/scss",
         pug: project_folder + "/",
-        favi: source_folder + '/img/favicon',
+        favicon: source_folder + '/img/favicon',
     },
     src: {
         pug: [source_folder + "/*.pug", "!" + source_folder + ["/template/*.pug", "/section/*.pug", "/mixin/*.pug"]],
@@ -31,12 +31,12 @@ let path = {
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
         svg: source_folder + "/img/sprite/svg/**/*.svg",
         png: source_folder + "/img/sprite/png/**/*.png",
-        favi: source_folder + '/img/**/favicon.png',
+        favicon: source_folder + '/img/**/favicon.png',
     },
     // clean: [project_folder, project_app_folder],
     clean: {
         proj: [project_folder],
-        favi: [source_folder + '/img/favicon/*.*'],
+        favicon: [source_folder + '/img/favicon/*.*'],
     },
 };
 
@@ -286,7 +286,7 @@ function svgSprite() {
 /* favicon:clean
 ====================================================*/
 function delfavicon() {
-    return del(path.clean.favi)
+    return del(path.clean.favicon)
 }
 
 /* favicon:build  / generate
@@ -338,10 +338,10 @@ favconfig = {
 };
 
 async function faviconGenerate() {
-    return src(path.watch.favi)
+    return src(path.watch.favicon)
         .pipe(favicons(favconfig))
         .on("error", log)
-        .pipe(dest(path.build.favi));
+        .pipe(dest(path.build.favicon));
 }
 
 /* clean
@@ -367,7 +367,7 @@ async function watchFiles(params) {
     gulp.watch([path.watch.png], imgSprite);
     gulp.watch([path.watch.pug], pug);
     gulp.watch([path.watch.pug_css], css);
-    gulp.watch([path.watch.favi], faviconWatch);
+    gulp.watch([path.watch.favicon], faviconWatch);
     params();
 }
 
