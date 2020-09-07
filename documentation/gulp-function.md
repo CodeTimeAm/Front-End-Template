@@ -52,11 +52,15 @@
 - [gulp-sass](#gulp-sass)
 - [gulp-autoprefixer](#gulp-autoprefixer)
 - [gulp-autoprefixer](#gulp-sourcemaps)
-- [Scss watch](#scss_watch)
+- [scss watch](#scss_watch)
 - [gulp-plumber / gulp-notify](#gulp-plumber_gulp-notify)
 - [gulp-file-include](#gulp-file-include)
 - [del](#del)
 - [gulp-favicons](#gulp-favicons)
+
+
+
+- [gulp-shorthand](#gulp-shorthand)
 
 ---
 
@@ -353,18 +357,41 @@ gulp.task("favicon", function () {
 For more information [this link](https://www.npmjs.com/package/favicons).
 
 
-#### ** **
+#### **gulp-shorthand**
 
-
-
- 
+Makes your CSS files lighter and more readable.
 
 gulpfile.js
 ```javascript
-
+var gulp = require('gulp');
+var shorthand = require('gulp-shorthand');
+ 
+gulp.task('default', function () {
+    return gulp.src('src/index.css')
+        .pipe(shorthand())
+        .pipe(gulp.dest('dest'));
+});
 ```
+```scss
+// scss
 
+.our {
+	// .our__team-text
 
+	&__team-text {
+		background-image: url(../img/city.jpg);
+		background-size: auto;
+		background-repeat: no-repeat;
+        background-position: center;
+	}
+```
+```css
+/* css */
+
+.our__team-text {
+  background: url(../img/city.jpg) no-repeat center/auto;
+}
+```
 
 For more information [this link]( ).
 

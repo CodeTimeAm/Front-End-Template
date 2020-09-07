@@ -71,7 +71,8 @@ const { src, dest } = require('gulp'),
     watch = require('gulp-watch'),
     // { reload } = require('browser-sync'),
     Pug = require('gulp-pug'),
-    stylelint = require('stylelint');
+    stylelint = require('stylelint'),
+    shorthand = require('gulp-shorthand')
 
 
 
@@ -163,6 +164,7 @@ function css() {
         })
         )
         .pipe(sourcemaps.write())
+        .pipe(shorthand())
         .pipe(dest(path.build.css))
         .pipe(dest('./src/css/'))
         .pipe(csso())
@@ -285,7 +287,7 @@ svgconfig = {
 
 function svgSprite() {
     return gulp.src(path.src.svg)
-        // .pipe(svgsprite())
+        .pipe(svgsprite())
         .pipe(svgsprite(svgconfig))
         .pipe(dest(path.build.img));
 };
@@ -307,12 +309,13 @@ async function watchFiles(params) {
 
 
 
-/* favicon:build  /clean
+/* favicon:clean
 ====================================================*/
 function delfavicon() {
     return del(path.clean.favi)
 };
-
+/* favicon:build  / generate
+====================================================*/
 async function faviconGenerate() {
     return src(path.watch.favi)
         .pipe(favicons(favconfig))
@@ -366,7 +369,8 @@ favconfig = {
     }
 }
 
-
+/* favicon:add  / meta
+====================================================*/
 
 function faviconAddMeta () {
     return src(path.watch.html)
@@ -436,7 +440,7 @@ const favicon = gulp.series(delfavicon, faviconGenerate, faviconAddMeta);
 const faviconwatch = gulp.series(delfavicon, faviconGenerate);
 
 
-/* ===============================*/
+/* =================================================*/
 
 exports.favicon = favicon;
 exports.faviconwatch = faviconwatch;
