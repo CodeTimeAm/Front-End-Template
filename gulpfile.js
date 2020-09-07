@@ -1,5 +1,3 @@
-
-
 const project_folder = "build";
 const source_folder = "src";
 
@@ -11,11 +9,10 @@ let path = {
         img: project_folder + "/img",
         fonts: project_folder + "/fonts",
         png: source_folder + "/img/sprite",
-        png_css: source_folder + "/scss",
+        pug_css: source_folder + "/scss",
         pug: source_folder + "/",
         favi: source_folder + '/img/favicon',
     },
-
     src: {
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
         pug: "./" + source_folder + "/pug/index.pug",
@@ -50,16 +47,13 @@ const { src, dest } = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     browsersync = require('browser-sync').create(),
     del = require("del"),
-    clean_css = require("gulp-clean-css"),
     csso = require('gulp-csso'),
     favicons = require("favicons").stream,
-    fileinclude = require('gulp-file-include'),
     group_media = require("gulp-group-css-media-queries"),
     htmlmin = require('gulp-htmlmin'),
     inject = require("gulp-inject-string"),
     imagemin = require('gulp-imagemin'),
     log = require("fancy-log"),
-    merge = require('merge-stream'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
     rename = require("gulp-rename"),
@@ -69,7 +63,6 @@ const { src, dest } = require('gulp'),
     svgsprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
-    // { reload } = require('browser-sync'),
     Pug = require('gulp-pug'),
     stylelint = require('stylelint'),
     shorthand = require('gulp-shorthand'),
@@ -87,11 +80,9 @@ async function browserSync(params) {
         server: {
             baseDir: "./" + project_folder + "/"
         },
-        // files: ['./**.html', './**.png'],
         notify: false
     });
-};
-
+}
 /* html:build
 ====================================================*/
 function html() {
@@ -100,8 +91,6 @@ function html() {
             errorHandler: notify.onError(function (err) {
             })
         }))
-        .pipe(fileinclude({ prefix: '@@' }))
-        // .pipe(dest(path.build.app_html))
         .pipe(dest(path.build.html))
         .pipe(htmlmin({
             collapseWhitespace: true,
@@ -114,8 +103,7 @@ function html() {
         )
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream())
-};
-
+}
 /* html validateHtml
 ====================================================*/
 function validateHtml() {
@@ -127,17 +115,14 @@ function validateHtml() {
     return src(path.watch.html)
         .pipe(htmlValidator())
         .pipe(dest(path.build.html))
-};
-
+}
 /* html validateHtml
 ====================================================*/
 function validateBem() {
     return src(path.watch.html)
         .pipe(bemValidator())
         .pipe(dest(path.build.html))
-};
-
-
+}
 /* pug
 ====================================================*/
 
@@ -152,16 +137,14 @@ async function pug() {
         }))
         .pipe(dest(path.build.pug))
     // .pipe(browsersync.stream())
-};
-
+}
 /* pug Linter
 ====================================================*/
 
 function PugLinter() {
     return src(path.src.pug)
         .pipe(pugLinter({ failAfterError: true }))
-};
-
+}
 /* css:build
 ====================================================*/
 function css() {
@@ -207,8 +190,7 @@ function css() {
         .pipe(dest(path.build.css))
         .pipe(dest('./src/css/'))
         .pipe(browsersync.stream());
-};
-
+}
 /* scss lint
 ====================================================*/
 function lintScss() {
@@ -222,12 +204,11 @@ function lintScss() {
                 },
             ],
         }));
-};
+}
 /* js build
 ====================================================*/
 function js() {
     return src(path.src.js)
-        .pipe(fileinclude())
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
@@ -241,8 +222,7 @@ function js() {
         )
         .pipe(dest(path.build.js))
         .pipe(browsersync.stream());
-};
-
+}
 /* image build
 ====================================================*/
 function images() {
@@ -269,8 +249,7 @@ function images() {
                 }))
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream());
-};
-
+}
 /* sprite
 ====================================================*/
 async function imgSprite() {
@@ -285,10 +264,8 @@ async function imgSprite() {
             padding: 10
         }));
     spriteData.img.pipe(gulp.dest(path.build.png));
-    spriteData.css.pipe(gulp.dest(path.build.png_css));
-};
-
-
+    spriteData.css.pipe(gulp.dest(path.build.pug_css));
+}
 /* SVG sprite
 ====================================================*/
 svgconfig = {
@@ -314,15 +291,14 @@ svgconfig = {
         },
         symbol: true // Activate the «symbol» mode
     },
-}
+};
 
 function svgSprite() {
     return gulp.src(path.src.svg)
         .pipe(svgsprite())
         .pipe(svgsprite(svgconfig))
         .pipe(dest(path.build.img));
-};
-
+}
 /* watch
 ====================================================*/
 async function watchFiles(params) {
@@ -335,16 +311,13 @@ async function watchFiles(params) {
     gulp.watch([path.watch.pug], pug);
     gulp.watch([path.watch.pug_css], css);
     gulp.watch([path.watch.favi], faviconwatch);
-};
-
-
-
-
+    params();
+}
 /* favicon:clean
 ====================================================*/
 function delfavicon() {
     return del(path.clean.favi)
-};
+}
 /* favicon:build  / generate
 ====================================================*/
 async function faviconGenerate() {
@@ -352,8 +325,7 @@ async function faviconGenerate() {
         .pipe(favicons(favconfig))
         .on("error", log)
         .pipe(dest(path.build.favi));
-};
-
+}
 favconfig = {
     path: "/img/favicon/",                                // Path for overriding default icons path. `string`
     appName: 'CodeTime',                            // Your application's name. `string`
@@ -398,7 +370,7 @@ favconfig = {
         windows: true,              // Create Windows 8 tile icons. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
         yandex: true                // Create Yandex browser icon. `boolean` or `{ offset, background, mask, overlayGlow, overlayShadow }` or an array of sources
     }
-}
+};
 
 /* favicon:add  / meta
 ====================================================*/
@@ -455,9 +427,7 @@ function faviconAddMeta() {
             '<meta name="msapplication-config" content="./img/favicon/browserconfig.xml">\n' +
             '<link rel="yandex-tableau-widget" href="./img/favicon/yandex-browser-manifest.json"></link>'))
         .pipe(dest(path.build.pug));
-};
-
-
+}
 /* clean
 ====================================================*/
 const clean = () => del(path.clean.proj);
