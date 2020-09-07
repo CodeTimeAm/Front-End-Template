@@ -14,7 +14,7 @@ let path = {
         favicon: source_folder + '/img/favicon',
     },
     src: {
-        pug: [source_folder + "/*.pug", "!" + source_folder + ["/template/*.pug", "/section/*.pug", "/mixin/*.pug"]],
+        pug: "./" + source_folder + "/pug/*.pug",
         css: "./" + source_folder + "/scss/style.scss",
         js: "./" + source_folder + "/js/script.js",
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
@@ -110,7 +110,7 @@ function validateBem() {
 /* pug
 ====================================================*/
 async function pug() {
-    return src("src/pug/*.pug")
+    return src(path.src.pug)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
