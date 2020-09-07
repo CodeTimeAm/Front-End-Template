@@ -68,7 +68,8 @@ const {src, dest} = require('gulp'),
     shorthand = require('gulp-shorthand'),
     pugLinter = require('gulp-pug-linter'),
     bemValidator = require('gulp-html-bem-validator'),
-    through2 = require('through2');
+    through2 = require('through2'),
+    argv = require('yargs').argv;
 
 
 /* browser-sync
