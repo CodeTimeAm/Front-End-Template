@@ -61,7 +61,10 @@
 
 
 - [gulp-shorthand](#gulp-shorthand)
-
+- [gulp-w3c-html-validator](#gulp-w3c-html-validator)
+- [gulp-html-bem-validator](#gulp-html-bem-validator)
+- [through2](#through2)
+- [pugLinter](#pugLinter)
 ---
 
 #### **browser-sync**
@@ -393,7 +396,111 @@ gulp.task('default', function () {
 }
 ```
 
-For more information [this link]( ).
+For more information [this link](https://www.npmjs.com/package/gulp-shorthand).
+
+
+#### **gulp-w3c-html-validator**
+
+
+
+ 
+
+gulpfile.js
+```javascript
+const gulp =          require('gulp');
+const htmlValidator = require('gulp-w3c-html-validator');
+ 
+// Tasks
+const task = {
+   validateHtml() {
+      return gulp.src('target/**/*.html')
+         .pipe(htmlValidator())
+         .pipe(htmlValidator.reporter());
+      },
+   };
+ 
+// Gulp
+gulp.task('validate-html', task.validateHtml);
+```
+
+
+
+For more information [this link](https://www.npmjs.com/package/gulp-w3c-html-validator).
+
+
+#### **gulp-html-bem-validator**
+
+
+
+gulpfile.js
+```javascript
+var gulp = require('gulp');
+var gulpHtmlBemValidator = require('gulp-html-bem-validator');
+ 
+gulp.task('html-bem-validator', () => {
+  gulp.src('pages/*.html')
+    .pipe(gulpHtmlBemValidator())
+    .pipe(gulp.dest('build/'));
+});
+```
+```html
+  <ul class="car">
+      <li class="car__item"></li>
+      <li class="cat__item"></li>
+      <li class="car__items"></li>
+      <li class="car__new"></li>
+      <li class="car__item"></li>
+    </ul>
+```
+![Screenshot](png/bem.png)
+
+For more information [this link](https://www.npmjs.com/package/gulp-html-bem-validator).
+
+#### **through2**
+
+
+
+gulpfile.js
+```javascript
+fs.createReadStream('ex.txt')
+  .pipe(through2(function (chunk, enc, callback) {
+    for (let i = 0; i < chunk.length; i++)
+      if (chunk[i] == 97)
+        chunk[i] = 122 // swap 'a' for 'z'
+ 
+    this.push(chunk)
+ 
+    callback()
+   }))
+  .pipe(fs.createWriteStream('out.txt'))
+  .on('finish', () => doSomethingSpecial())
+```
+
+
+
+For more information [this link](https://www.npmjs.com/package/through2).
+
+#### **pugLinter**
+
+
+
+ 
+
+gulpfile.js
+```javascript
+const gulp = require('gulp');
+const pugLinter = require('gulp-pug-linter');
+ 
+gulp.task('lint:template', () => (
+  gulp
+    .src('./**/*.pug')
+    .pipe(pugLinter({ failAfterError: true }))
+));
+```
+
+
+
+For more information [this link](https://www.npmjs.com/package/gulp-pug-linter).
 
 
 #### ** **
@@ -412,3 +519,32 @@ gulpfile.js
 For more information [this link]( ).
 
 
+#### ** **
+
+
+
+ 
+
+gulpfile.js
+```javascript
+
+```
+
+
+
+For more information [this link]( ).
+
+#### ** **
+
+
+
+ 
+
+gulpfile.js
+```javascript
+
+```
+
+
+
+For more information [this link]( ).

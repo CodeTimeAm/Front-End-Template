@@ -72,7 +72,11 @@ const { src, dest } = require('gulp'),
     // { reload } = require('browser-sync'),
     Pug = require('gulp-pug'),
     stylelint = require('stylelint'),
-    shorthand = require('gulp-shorthand')
+    shorthand = require('gulp-shorthand'),
+    pugLinter = require('gulp-pug-linter'),
+    htmlValidator = require('gulp-w3c-html-validator'),
+    bemValidator = require('gulp-html-bem-validator'),
+    through2 = require('through2');
 
 
 
@@ -112,14 +116,33 @@ function html() {
         .pipe(browsersync.stream())
 };
 
+/* html validateHtml
+====================================================*/
+function validateHtml() {
+    const handleFile = (file, encoding, callback) => {
+        callback(null, file);
+        if (!file.w3cjs.success)
+            throw Error('HTML validation error(s) found');
+    };
+    return src(path.watch.html)
+        .pipe(htmlValidator())
+        .pipe(dest(path.build.html))
+};
+
+/* html validateHtml
+====================================================*/
+function validateBem() {
+    return src(path.watch.html)
+        .pipe(bemValidator())
+        .pipe(dest(path.build.html))
+};
 
 
 /* pug
 ====================================================*/
 
 async function pug() {
-    return gulp.src(path.src.pug)
-        // return gulp.src("./src/pug/*.pug")   
+    return src(path.watch.pug)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
@@ -129,6 +152,14 @@ async function pug() {
         }))
         .pipe(dest(path.build.pug))
     // .pipe(browsersync.stream())
+};
+
+/* pug Linter
+====================================================*/
+
+function PugLinter() {
+    return src(path.src.pug)
+        .pipe(pugLinter({ failAfterError: true }))
 };
 
 /* css:build
@@ -372,7 +403,7 @@ favconfig = {
 /* favicon:add  / meta
 ====================================================*/
 
-function faviconAddMeta () {
+function faviconAddMeta() {
     return src(path.watch.html)
         .pipe(inject.beforeEach('</head>', '<link rel="shortcut icon" href="./img/favicon/favicon.ico">\n' +
             '<link rel="icon" type="image/png" sizes="16x16" href="./img/favicon/favicon-16x16.png">\n' +
@@ -438,10 +469,14 @@ const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug, html,
 const watching = gulp.parallel(build, watchFiles, imgSprite, svgSprite, browserSync);
 const favicon = gulp.series(delfavicon, faviconGenerate, faviconAddMeta);
 const faviconwatch = gulp.series(delfavicon, faviconGenerate);
-
+const validate = gulp.series(validateBem, validateHtml);
 
 /* =================================================*/
 
+
+exports.validate = validate;
+exports.validateBem = validateBem;
+exports.validateHtml = validateHtml;
 exports.favicon = favicon;
 exports.faviconwatch = faviconwatch;
 exports.faviconAddMeta = faviconAddMeta;
@@ -449,6 +484,7 @@ exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
 exports.svgSprite = svgSprite;
 exports.imgSprite = imgSprite;
+exports.PugLinter = PugLinter;
 exports.pug = pug;
 exports.lintScss = lintScss;
 exports.watch = watch;
