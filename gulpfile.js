@@ -35,7 +35,7 @@ let path = {
     },
     // clean: [project_folder, project_app_folder],
     clean: {
-        proj: [project_folder],
+        project: [project_folder],
         favicon: [source_folder + '/img/favicon/*.*'],
     },
 };
@@ -346,7 +346,7 @@ async function faviconGenerate() {
 
 /* clean
 ====================================================*/
-const clean = () => del(path.clean.proj);
+const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
