@@ -14,7 +14,7 @@ let path = {
         favi: source_folder + '/img/favicon',
     },
     src: {
-        html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
+        // html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
         pug: "./" + source_folder + "/pug/index.pug",
         css: "./" + source_folder + "/scss/style.scss",
         js: "./" + source_folder + "/js/script.js",
@@ -24,7 +24,7 @@ let path = {
         fonts: "./" + source_folder + "/fonts/*.ttf",
     },
     watch: {
-        html: "./" + source_folder + "/**/*.html",
+        html: "./" + project_folder + "/**/*.html",
         pug: source_folder + "/pug/**/*.pug",
         pug_css: "./" + source_folder + "/pug/**/*.scss",
         css: "./" + source_folder + "/scss/**/*.scss",
@@ -86,7 +86,7 @@ async function browserSync(params) {
 /* html:build
 ====================================================*/
 function html() {
-    return src(path.src.html)
+    return src(path.watch.html)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
@@ -353,7 +353,7 @@ const clean = () => del(path.clean.proj);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug, html));
+const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug));
 const watching = gulp.series(build, gulp.parallel(watchFiles, imgSprite, svgSprite, browserSync));
 const favicon = gulp.series(delfavicon, faviconGenerate);
 const faviconWatch = gulp.series(delfavicon, faviconGenerate);
