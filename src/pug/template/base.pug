@@ -6,6 +6,7 @@ html(lang='en')
 		meta(charset='UTF-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1, viewport-fit=cover')
 		meta(name='description', content='CodeTime Front End start template')
+		//- Favicon
 		link(rel='icon', type='image/png', sizes='16x16', href='./img/favicon/favicon-16x16.png')
 		link(rel='icon', type='image/png', sizes='32x32', href='./img/favicon/favicon-32x32.png')
 		link(rel='icon', type='image/png', sizes='48x48', href='./img/favicon/favicon-48x48.png')
@@ -55,10 +56,20 @@ html(lang='en')
 		meta(name='msapplication-config', content='./img/favicon/browserconfig.xml')
 		link(rel='yandex-tableau-widget', href='./img/favicon/yandex-browser-manifest.json')
 		| '))
+		//- Facebook meta
+		meta(property='og:type', content='website')
+		meta(property='og:url', content='https://codetime.am')
+		meta(property='og:title', content='CodeTime - Keep Calm and Code Your Life')
+		meta(property='og:image', content='https://codetime.am/logo.png')
+		meta(property='og:description', content='CodeTime web-development & web-teaching company')
+		meta(property='og:site_name', content='CodeTime')
+		meta(property='og:locale', content='hy')
+		// Next tags are optional but recommended
+		meta(property='og:image:width', content='250')
+		meta(property='og:image:height', content='250')
 
-
-title CodeTime Front End Template
-	link(rel='stylesheet', href='css/style.css')
+	title CodeTime Front End Template
+		link(rel='stylesheet', href='css/style.css')
 body
 	block content
 	block scripts
