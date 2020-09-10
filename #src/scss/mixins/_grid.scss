@@ -9,6 +9,16 @@ $col_quantity: 12;
 $grid: $col_quantity;
 $gridofsett: $col_quantity;
 
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
 .container {
   width: 100%;
   padding-right: $gutter / 2 + px;
@@ -35,6 +45,8 @@ $gridofsett: $col_quantity;
     width: 100%;
     padding-right: $gutter / 2 + px;
     padding-left: $gutter / 2 + px;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 

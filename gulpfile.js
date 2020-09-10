@@ -11,7 +11,7 @@ const path = {
         js: project_folder + "/js",
         png: source_folder + "/img/sprite",
         pug_css: source_folder + "/scss",
-        pug: project_folder + "/",
+        pug: project_folder  + "/",
     },
     clean: {
         favicon: [source_folder + '/img/favicon/*.*'],
@@ -21,10 +21,10 @@ const path = {
         css: "./" + source_folder + "/scss/style.scss",
         fonts: "./" + source_folder + "/fonts/*.ttf",
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+        img: source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
         js: "./" + source_folder + "/js/script.js",
         png: "./" + source_folder + "/img/sprite/png/**/*.png",
-        pug: [source_folder + "/*.pug", "!" + source_folder + ["/template/*.pug", "/section/*.pug", "/mixin/*.pug"]],
+        pug: [source_folder + "/pug/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
         svg: "./" + source_folder + "/img/sprite/svg/**/*.svg",
     },
     watch: {
@@ -55,6 +55,8 @@ const { src, dest } = require('gulp'),
     imagemin = require('gulp-imagemin'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
+    Pug = require('gulp-pug'),
+    pugLinter = require('gulp-pug-linter'),
     rename = require("gulp-rename"),
     sass = require('gulp-sass'),
     shorthand = require('gulp-shorthand'),
@@ -111,7 +113,7 @@ function validateBem(callback) {
 
 /* pug
 ====================================================*/
-async function pug() {
+async function pug(callback) {
     return src(path.watch.pug)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
@@ -120,7 +122,9 @@ async function pug() {
         .pipe(Pug({
             pretty: true
         }))
-        .pipe(dest(path.src.pug))
+        .pipe(dest(path.build.pug))
+        .pipe(browsersync.stream())
+    callback();
 }
 
 /* pug Linter
@@ -213,10 +217,16 @@ function js(callback) {
 
 /* image build
 ====================================================*/
-function images(callback) {
+function images() {
     return src(path.src.img)
-        .pipe(
-            imagemin([
+        .pipe(dest(path.build.img))
+        .pipe(browsersync.stream())
+}
+/* image min
+====================================================*/
+function imagesMin() {
+    return src(path.src.img)
+        .pipe(imagemin([
                 imagemin.gifsicle({ interlaced: true }),
                 imagemin.mozjpeg({ quality: 75, progressive: true }),
                 imagemin.optipng({ optimizationLevel: 5 }),
@@ -234,8 +244,7 @@ function images(callback) {
                     optimizationLevel: 3 // 0 to 7
                 }))
         .pipe(dest(path.build.img))
-        .pipe(browsersync.stream());
-    callback();
+        .pipe(browsersync.stream())
 }
 
 /* sprite
@@ -358,7 +367,7 @@ const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, gulp.parallel(html, js, css));
+const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug));
 const watching = gulp.series(build, gulp.parallel(watchFiles, browserSync));
 const validate = gulp.series(validateBem);
 const favicon = gulp.series(delfavicon, faviconGenerate);
@@ -393,6 +402,7 @@ exports.lintScss = lintScss;
 exports.watch = watch;
 exports.watchFiles = watchFiles;
 exports.clean = clean;
+exports.imagesMin = imagesMin;
 exports.images = images;
 exports.js = js;
 exports.css = css;
