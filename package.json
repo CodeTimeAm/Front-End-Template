@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/renalex1/template.git"
+    "url": "git+https://github.com/CodeTimeAm/Front-End-Template"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/renalex1/issues"
+    "url": "https://github.com/CodeTimeAm/Front-End-Template/issues"
   },
-  "homepage": "https://github.com/renalex1/#readme",
+  "homepage": "https://github.com/CodeTimeAm/Front-End-Template/#readme",
   "dependencies": {
     "browser-sync": "^2.26.12",
     "del": "^5.1.0",
