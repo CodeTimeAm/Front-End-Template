@@ -1,6 +1,6 @@
 {
   "name": "template",
-  "version": "1.0.0",
+  "version": "v0.2-alpha",
   "description": "- 1 command: `npm i`\r - second command: `gulp`",
   "main": "index.js",
   "scripts": {

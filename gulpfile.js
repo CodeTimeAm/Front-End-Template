@@ -11,7 +11,7 @@ const path = {
         js: project_folder + "/js",
         png: source_folder + "/img/sprite",
         pug_css: source_folder + "/scss",
-        pug: project_folder  + "/",
+        pug: source_folder  + "/",
     },
     clean: {
         favicon: [source_folder + '/img/favicon/*.*'],
@@ -87,18 +87,18 @@ function html(callback) {
             errorHandler: notify.onError(function (err) {
             })
         }))
-        .pipe(dest(path.build.html))
+        // .pipe(dest(path.build.html))
         .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true
         }))
-        .pipe(
-            rename({
-                extname: ".min.html"
-            })
-        )
+        // .pipe(
+        //     rename({
+        //         extname: ".min.html"
+        //     })
+        // )
         .pipe(dest(path.build.html))
-        .pipe(browsersync.stream())
+        .pipe(browsersync.stream());
     callback();
 }
 
@@ -123,7 +123,7 @@ async function pug(callback) {
             pretty: true
         }))
         .pipe(dest(path.build.pug))
-        .pipe(browsersync.stream())
+        .pipe(browsersync.stream());
     callback();
 }
 
