@@ -4,7 +4,12 @@
   "description": "- 1 command: `npm i`\r - second command: `gulp`",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "add": "git add .",
+    "status": "git status",
+    "branch": "git branch -a",
+    "fetch": "git fetch",
+    "pull": "git pull origin master",
+    "push": "git push -u origin master"
   },
   "repository": {
     "type": "git",
