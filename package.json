@@ -4,12 +4,12 @@
   "description": "- 1 command: `npm i`\r - second command: `gulp`",
   "main": "index.js",
   "scripts": {
-    "add": "git add .",
     "status": "git status",
-    "branch": "git branch -a",
-    "fetch": "git fetch",
+    "add": "git add .",
     "pull": "git pull origin master",
-    "push": "git push -u origin master"
+    "push": "git push -u origin master",
+    "fetch": "git fetch",
+    "branch": "git branch -a"
   },
   "repository": {
     "type": "git",
