@@ -1,7 +1,7 @@
-@import "./vendor/normalize/normalize";
-@import "./base";
+@import "./variables";
+@import "./functions";
+@import "./mixins";
+@import "./sprite";
 @import "./fonts";
-@import "./typography";
-@import "./mixins/mixins";
-
-
+@import "./vendor";
+@import "./base";
