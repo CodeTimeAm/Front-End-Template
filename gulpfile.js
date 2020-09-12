@@ -31,7 +31,7 @@ const path = {
         css: "./" + source_folder + "/scss/**/*.scss",
         favicon: source_folder + '/img/**/favicon.png',
         html: project_folder + "/**/*.html",
-        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+        img: "./" + source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
         js: "./" + source_folder + "/js/**/*.js",
         png: source_folder + "/img/sprite/png/**/*.png",
         pug: source_folder + "/pug/**/*.pug",
