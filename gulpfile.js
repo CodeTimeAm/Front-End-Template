@@ -368,14 +368,14 @@ const clean = () => del(path.clean.project);
 /* default
 ====================================================*/
 const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug));
-const watching = gulp.series(build, gulp.parallel(watchFiles, browserSync));
+const watching = gulp.series(build, gulp.parallel(watchPug, browserSync));
+const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
 const favicon = gulp.series(delfavicon, faviconGenerate);
 
-/* watch
+/* watch pug
 ====================================================*/
-async function watchFiles(callback) {
-    // gulp.watch([path.watch.html], html);
+async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.img], images);
@@ -386,6 +386,21 @@ async function watchFiles(callback) {
     gulp.watch([path.watch.favicon], favicon);
     callback();
 }
+
+/* watch html
+====================================================*/
+async function watchHtml(callback) {
+    gulp.watch([path.watch.html], html);
+    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.img], images);
+    gulp.watch([path.watch.svg], svgSprite);
+    gulp.watch([path.watch.png], imgSprite);
+    gulp.watch([path.watch.pug_css], css);
+    gulp.watch([path.watch.favicon], favicon);
+    callback();
+}
+
 
 /* =================================================*/
 
@@ -400,7 +415,8 @@ exports.svgSprite = svgSprite;
 exports.imgSprite = imgSprite;
 exports.lintScss = lintScss;
 exports.watch = watch;
-exports.watchFiles = watchFiles;
+exports.watchPug = watchPug;
+exports.watchHtml = watchHtml;
 exports.clean = clean;
 exports.imagesMin = imagesMin;
 exports.images = images;
@@ -408,5 +424,6 @@ exports.js = js;
 exports.css = css;
 exports.html = html;
 exports.build = build;
+exports.junior = junior;
 exports.watching = watching;
 exports.default = watching;
