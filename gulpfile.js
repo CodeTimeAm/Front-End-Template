@@ -1,5 +1,5 @@
 const project_folder = "build";
-const source_folder = "#src";
+const source_folder = "src";
 
 const path = {
     build: {
@@ -11,7 +11,7 @@ const path = {
         js: project_folder + "/js",
         png: source_folder + "/img/sprite",
         pug_css: source_folder + "/scss",
-        pug: source_folder  + "/",
+        pug: project_folder + "/",
     },
     clean: {
         favicon: [source_folder + '/img/favicon/*.*'],
@@ -21,7 +21,7 @@ const path = {
         css: "./" + source_folder + "/scss/style.scss",
         fonts: "./" + source_folder + "/fonts/*.ttf",
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        img: source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
+        img: source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp,}",
         js: "./" + source_folder + "/js/script.js",
         png: "./" + source_folder + "/img/sprite/png/**/*.png",
         pug: [source_folder + "/pug/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
@@ -30,7 +30,7 @@ const path = {
     watch: {
         css: "./" + source_folder + "/scss/**/*.scss",
         favicon: source_folder + '/img/**/favicon.png',
-        html: "./" + project_folder + "/**/*.html",
+        html: project_folder + "/**/*.html",
         img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
         js: "./" + source_folder + "/js/**/*.js",
         png: source_folder + "/img/sprite/png/**/*.png",
@@ -114,7 +114,7 @@ function validateBem(callback) {
 /* pug
 ====================================================*/
 async function pug(callback) {
-    return src(path.watch.pug)
+    return src(path.src.pug)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
             })
@@ -227,22 +227,22 @@ function images() {
 function imagesMin() {
     return src(path.src.img)
         .pipe(imagemin([
-                imagemin.gifsicle({ interlaced: true }),
-                imagemin.mozjpeg({ quality: 75, progressive: true }),
-                imagemin.optipng({ optimizationLevel: 5 }),
-                imagemin.svgo({
-                    plugins: [
-                        { removeViewBox: true },
-                        { cleanupIDs: false }
-                    ]
-                })
-            ],
-                {
-                    progressive: true,
-                    svgoPlugins: [{ removeViewBox: false }],
-                    interlaced: true,
-                    optimizationLevel: 3 // 0 to 7
-                }))
+            imagemin.gifsicle({ interlaced: true }),
+            imagemin.mozjpeg({ quality: 75, progressive: true }),
+            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.svgo({
+                plugins: [
+                    { removeViewBox: true },
+                    { cleanupIDs: false }
+                ]
+            })
+        ],
+            {
+                progressive: true,
+                svgoPlugins: [{ removeViewBox: false }],
+                interlaced: true,
+                optimizationLevel: 3 // 0 to 7
+            }))
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream())
 }
@@ -382,7 +382,7 @@ async function watchFiles(callback) {
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);
     gulp.watch([path.watch.pug], pug);
-    gulp.watch([path.watch.pug_css],css);
+    gulp.watch([path.watch.pug_css], css);
     gulp.watch([path.watch.favicon], favicon);
     callback();
 }

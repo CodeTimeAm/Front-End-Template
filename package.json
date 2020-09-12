@@ -1,6 +1,6 @@
 {
   "name": "template",
-  "version": "v0.2-alpha",
+  "version": "1.0.0",
   "description": "- 1 command: `npm i`\r - second command: `gulp`",
   "main": "index.js",
   "scripts": {
@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CodeTimeAm/Front-End-Template/issues"
+    "url": "https://github.com/CodeTimeAm/Front-End-Template.git/issues"
   },
-  "homepage": "https://github.com/CodeTimeAm/Front-End-Template/#readme",
+  "homepage": "https://github.com/CodeTimeAm/Front-End-Template.git/#readme",
   "dependencies": {
     "browser-sync": "^2.26.12",
     "del": "^5.1.0",
