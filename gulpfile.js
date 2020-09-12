@@ -21,7 +21,7 @@ const path = {
         css: "./" + source_folder + "/scss/style.scss",
         fonts: "./" + source_folder + "/fonts/*.ttf",
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        img: source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp,}",
+        img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp,}",
         js: "./" + source_folder + "/js/script.js",
         png: "./" + source_folder + "/img/sprite/png/**/*.png",
         pug: [source_folder + "/pug/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
