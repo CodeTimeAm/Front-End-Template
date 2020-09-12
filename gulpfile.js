@@ -35,7 +35,7 @@ const path = {
         js: "./" + source_folder + "/js/**/*.js",
         png: source_folder + "/img/sprite/png/**/*.png",
         pug: source_folder + "/pug/**/*.pug",
-        pug_css: + source_folder + "/pug/**/*.scss",
+        pug_css: source_folder + "/pug/**/*.scss",
         svg: source_folder + "/img/sprite/svg/**/*.svg",
     },
 };
