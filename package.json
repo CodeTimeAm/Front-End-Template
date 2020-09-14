@@ -9,7 +9,8 @@
     "pull": "git pull origin master",
     "push": "git push -u origin master",
     "fetch": "git fetch",
-    "branch": "git branch -a"
+    "branch": "git branch -a",
+    "checkoutMaster": "git checkout master"
   },
   "repository": {
     "type": "git",
