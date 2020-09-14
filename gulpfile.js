@@ -261,7 +261,7 @@ async function imgSprite(callback) {
             padding: 10
         }));
     spriteData.img.pipe(gulp.dest(path.build.png));
-    spriteData.css.pipe(gulp.dest(path.build.css));
+    spriteData.css.pipe(gulp.dest(path.build.pug_css));
     callback();
 }
 
@@ -368,7 +368,7 @@ const clean = () => del(path.clean.project);
 /* default
 ====================================================*/
 const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug));
-const watching = gulp.series(build, gulp.parallel(watchPug, browserSync));
+const watching = gulp.series(build, gulp.parallel(imgSprite,watchPug, browserSync));
 const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
 const favicon = gulp.series(delfavicon, faviconGenerate);
