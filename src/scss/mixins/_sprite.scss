@@ -16,21 +16,9 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
 // HTML
 <i class="icon icon-home"></i>
 */
-.icon-icon-contract {
-  background-image: url(../img/sprite/sprite.png);
-  background-position: 0px -79px;
-  width: 34px;
-  height: 34px;
-}
-.icon-icon-garanty {
-  background-image: url(../img/sprite/sprite.png);
-  background-position: 0px -38px;
-  width: 32px;
-  height: 31px;
-}
-.icon-icon-sertificate {
+.icon-contract {
   background-image: url(../img/sprite/sprite.png);
   background-position: 0px 0px;
   width: 34px;
-  height: 28px;
+  height: 34px;
 }

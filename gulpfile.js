@@ -292,9 +292,9 @@ async function imgSprite(callback) {
         .pipe(plumber())
         .pipe(spritesmith({
             imgName: 'sprite.png',
-            Name:'',
             cssName: '_sprite.scss',
             cssFormat: 'css',
+            cssSpritesheetName: 'alex'
             algorithm: 'top-down',
             imgPath: '../img/sprite/sprite.png',
             padding: 10
