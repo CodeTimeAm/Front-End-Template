@@ -1,0 +1,65 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+.icon-contract {
+  background-image: url(../img/sprite/sprite.png);
+  background-position: 0px -158px;
+  width: 34px;
+  height: 34px;
+}
+.icon-garanty {
+  background-image: url(../img/sprite/sprite.png);
+  background-position: 0px -76px;
+  width: 32px;
+  height: 31px;
+}
+.icon-icon-contract {
+  background-image: url(../img/sprite/sprite.png);
+  background-position: 0px -202px;
+  width: 34px;
+  height: 34px;
+}
+.icon-icon-garanty {
+  background-image: url(../img/sprite/sprite.png);
+  background-position: 0px -117px;
+  width: 32px;
+  height: 31px;
+}
+.icon-icon-sertificate {
+  background-image: url(../img/sprite/sprite.png);
+  background-position: 0px 0px;
+  width: 34px;
+  height: 28px;
+}
+.icon-sertificate {
+  background-image: url(../img/sprite/sprite.png);
+  background-position: 0px -38px;
+  width: 34px;
+  height: 28px;
+}
+
+
+  
+.icon-calendar, .icon-gift, .icon-personalProject, .icon-clock, .icon-course
+{ display: inline-block; background: url('../img/sprites.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+
+.icon-calendar { background-position: -0px -0px; width: 35px; height: 35px; }
+.icon-gift { background-position: -0px -35px; width: 32px; height: 32px; }
+.icon-personalProject { background-position: -0px -67px; width: 32px; height: 32px; }
+.icon-clock { background-position: -0px -99px; width: 30px; height: 30px; }
+.icon-course { background-position: -0px -129px; width: 30px; height: 30px; }

@@ -6,12 +6,11 @@ const path = {
         css: project_folder + "/css",
         favicon: source_folder + '/img/favicon',
         fonts: project_folder + "/fonts",
-        fontsWoff: source_folder + "/fonts",
         html: project_folder + "/",
         img: project_folder + "/img",
         js: project_folder + "/js",
         png: source_folder + "/img/sprite",
-        pug_css: source_folder + "/scss",
+        png_css: source_folder + "/scss",
         pug: project_folder + "/",
     },
     clean: {
@@ -20,8 +19,7 @@ const path = {
     },
     src: {
         css: source_folder + "/scss/style.scss",
-        fonts: source_folder + "/fonts/*.{woff,woff2}",
-        fontsTtf: source_folder + "/fonts/*.ttf",
+        fonts: source_folder + "/fonts/",
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
         img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
         js: source_folder + "/js/script.js",
@@ -32,7 +30,7 @@ const path = {
     watch: {
         css: source_folder + "/scss/**/*.scss",
         favicon: source_folder + '/img/**/favicon.png',
-        fonts: source_folder + "/fonts/*.{woff,woff2,ttf}",
+        fonts: source_folder + "/fonts/",
         fontsOtf: source_folder + "/fonts/*.otf",
         html: project_folder + "/**/*.html",
         img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
@@ -224,33 +222,33 @@ function js(callback) {
 
 /* fonts build
 ====================================================*/
-function fonts(callback) {
-    return src(path.src.fonts)
+function fontsCopy(callback) {
+    return src([[path.src.fonts] + "*.{woff,woff2}"])
         .pipe(dest(path.build.fonts))
     callback();
 }
 
-/* fonts TTF to WOFF
+/* fonts TTF to WOFF WOFF2
 ====================================================*/
 function fontsWoff(callback) {
-    src(path.src.fontsTtf)
+    src([[path.src.fonts] + "*.ttf"])
         .pipe(ttf2woff())
-        .pipe(dest(path.build.fontsWoff));
-    return src(path.src.fontsTtf)
+        .pipe(dest(path.src.fonts))
+    return src([[path.src.fonts] + "*.ttf"])
         .pipe(ttf2woff2())
-        .pipe(dest(path.build.fontsWoff))
+        .pipe(dest(path.src.fonts))
     callback();
 }
 
 /* fonts OTF to TTF
 ====================================================*/
 function fontsOtf(callback) {
-    return src([source_folder + "/fonts/*.otf"])
+    return src([[path.src.fonts] + "*.otf"])
         .pipe(
             fonter({
-            formats: ["ttf"],
+                formats: ["ttf"],
             }))
-        .pipe(dest(source_folder + "/fonts/"));
+        .pipe(dest(path.src.fonts));
     callback();
 }
 
@@ -294,6 +292,7 @@ async function imgSprite(callback) {
         .pipe(plumber())
         .pipe(spritesmith({
             imgName: 'sprite.png',
+            Name:'',
             cssName: '_sprite.scss',
             cssFormat: 'css',
             algorithm: 'top-down',
@@ -301,7 +300,7 @@ async function imgSprite(callback) {
             padding: 10
         }));
     spriteData.img.pipe(gulp.dest(path.build.png));
-    spriteData.css.pipe(gulp.dest(path.build.pug_css));
+    spriteData.css.pipe(gulp.dest([path.build.png_css] + "/mixins/"));
     callback();
 }
 
@@ -407,19 +406,22 @@ const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, gulp.parallel(html, js, css, fonts, fontsOtf, images, pug));
-const watching = gulp.series(build, gulp.parallel(imgSprite,watchPug, browserSync));
+const build = gulp.series(clean, fontsOtf, fontsWoff,
+        gulp.parallel(html, js, css, images, pug, fontsCopy));
+const watching = gulp.series(build, gulp.parallel(imgSprite, watchPug, browserSync));
 const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
 const favicon = gulp.series(delfavicon, faviconGenerate);
+const fonts = gulp.series(fontsOtf, fontsWoff, fontsCopy);
 
 /* watch pug
 ====================================================*/
 async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
-    gulp.watch([path.watch.fonts], fonts);
-    gulp.watch([path.watch.fontsOtf], fontsOtf);
+    gulp.watch([path.src.fonts + "*.woff", path.src.fonts + "*.woff2"], fontsCopy);
+    gulp.watch([path.src.fonts + "*.ttf"], fontsWoff);
+    gulp.watch([path.src.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);
@@ -435,6 +437,9 @@ async function watchHtml(callback) {
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
+    gulp.watch([path.src.fonts + "*.woff", path.src.fonts + "*.woff2"], fontsCopy);
+    gulp.watch([path.src.fonts + "*.ttf"], fontsWoff);
+    gulp.watch([path.src.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);
@@ -451,6 +456,7 @@ exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
 exports.PugLinter = PugLinter;
 exports.pug = pug;
+exports.fontsCopy = fontsCopy;
 exports.fonts = fonts;
 exports.fontsOtf = fontsOtf;
 exports.fontsWoff = fontsWoff;
