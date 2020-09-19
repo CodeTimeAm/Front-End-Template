@@ -58,6 +58,8 @@ const { src, dest } = require('gulp'),
     Pug = require('gulp-pug'),
     pugLinter = require('gulp-pug-linter'),
     rename = require("gulp-rename"),
+    ttf2woff = require("gulp-ttf2woff"),
+    ttf2woff2 = require("gulp-ttf2woff2"),
     sass = require('gulp-sass'),
     shorthand = require('gulp-shorthand'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -215,6 +217,17 @@ function js(callback) {
     callback();
 }
 
+/* fonts
+====================================================*/
+function fonts() {
+    src(path.src.fonts)
+        .pipe(ttf2woff())
+        .pipe(dest(path.build.fonts));
+    return src(path.src.fonts)
+        .pipe(ttf2woff2())
+        .pipe(dest(path.build.fonts));
+}
+
 /* image build
 ====================================================*/
 function images() {
@@ -255,7 +268,7 @@ async function imgSprite(callback) {
         .pipe(spritesmith({
             imgName: 'sprite.png',
             cssName: '_sprite.scss',
-            cssFormat: 'scss',
+            cssFormat: 'css',
             algorithm: 'top-down',
             imgPath: '../img/sprite/sprite.png',
             padding: 10
@@ -409,6 +422,7 @@ exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
 exports.PugLinter = PugLinter;
 exports.pug = pug;
+exports.fonts = fonts;
 exports.validate = validate;
 exports.validateBem = validateBem;
 exports.svgSprite = svgSprite;

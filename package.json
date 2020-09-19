@@ -45,6 +45,8 @@
     "gulp-sass": "^4.1.0",
     "gulp-shorthand": "^1.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "gulp-ttf2woff": "^1.1.1",
+    "gulp-ttf2woff2": "^3.0.0",
     "gulp-uglify": "^2.0.0",
     "gulp-watch": "^5.0.1",
     "gulp.spritesmith": "^6.11.0",
