@@ -32,6 +32,7 @@
     "gulp-csso": "^2.0.0",
     "gulp-favicons": "^2.4.0",
     "gulp-file-include": "^2.2.2",
+    "gulp-fonter": "^0.3.0",
     "gulp-group-css-media-queries": "^1.2.2",
     "gulp-html-bem-validator": "^1.0.5",
     "gulp-htmlmin": "^3.0.0",

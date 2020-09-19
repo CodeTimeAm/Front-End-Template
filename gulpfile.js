@@ -6,6 +6,7 @@ const path = {
         css: project_folder + "/css",
         favicon: source_folder + '/img/favicon',
         fonts: project_folder + "/fonts",
+        fontsWoff: source_folder + "/fonts",
         html: project_folder + "/",
         img: project_folder + "/img",
         js: project_folder + "/js",
@@ -18,21 +19,24 @@ const path = {
         project: [project_folder],
     },
     src: {
-        css: "./" + source_folder + "/scss/style.scss",
-        fonts: "./" + source_folder + "/fonts/*.ttf",
+        css: source_folder + "/scss/style.scss",
+        fonts: source_folder + "/fonts/*.{woff,woff2}",
+        fontsTtf: source_folder + "/fonts/*.ttf",
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
-        img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp,}",
-        js: "./" + source_folder + "/js/script.js",
-        png: "./" + source_folder + "/img/sprite/png/**/*.png",
+        img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
+        js: source_folder + "/js/script.js",
+        png: source_folder + "/img/sprite/png/**/*.png",
         pug: [source_folder + "/pug/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
-        svg: "./" + source_folder + "/img/sprite/svg/**/*.svg",
+        svg: source_folder + "/img/sprite/svg/**/*.svg",
     },
     watch: {
-        css: "./" + source_folder + "/scss/**/*.scss",
+        css: source_folder + "/scss/**/*.scss",
         favicon: source_folder + '/img/**/favicon.png',
+        fonts: source_folder + "/fonts/*.{woff,woff2,ttf}",
+        fontsOtf: source_folder + "/fonts/*.otf",
         html: project_folder + "/**/*.html",
-        img: "./" + source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
-        js: "./" + source_folder + "/js/**/*.js",
+        img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
+        js: source_folder + "/js/**/*.js",
         png: source_folder + "/img/sprite/png/**/*.png",
         pug: source_folder + "/pug/**/*.pug",
         pug_css: source_folder + "/pug/**/*.scss",
@@ -48,6 +52,7 @@ const { src, dest } = require('gulp'),
     del = require("del"),
     csso = require('gulp-csso'),
     favicons = require("favicons").stream,
+    fonter = require("gulp-fonter"),
     log = require("fancy-log"),
     group_media = require("gulp-group-css-media-queries"),
     htmlmin = require('gulp-htmlmin'),
@@ -217,16 +222,38 @@ function js(callback) {
     callback();
 }
 
-/* fonts
+/* fonts build
 ====================================================*/
-function fonts() {
-    src(path.src.fonts)
-        .pipe(ttf2woff())
-        .pipe(dest(path.build.fonts));
+function fonts(callback) {
     return src(path.src.fonts)
-        .pipe(ttf2woff2())
-        .pipe(dest(path.build.fonts));
+        .pipe(dest(path.build.fonts))
+    callback();
 }
+
+/* fonts TTF to WOFF
+====================================================*/
+function fontsWoff(callback) {
+    src(path.src.fontsTtf)
+        .pipe(ttf2woff())
+        .pipe(dest(path.build.fontsWoff));
+    return src(path.src.fontsTtf)
+        .pipe(ttf2woff2())
+        .pipe(dest(path.build.fontsWoff))
+    callback();
+}
+
+/* fonts OTF to TTF
+====================================================*/
+function fontsOtf(callback) {
+    return src([source_folder + "/fonts/*.otf"])
+        .pipe(
+            fonter({
+            formats: ["ttf"],
+            }))
+        .pipe(dest(source_folder + "/fonts/"));
+    callback();
+}
+
 
 /* image build
 ====================================================*/
@@ -380,7 +407,7 @@ const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug));
+const build = gulp.series(clean, gulp.parallel(html, js, css, fonts, fontsOtf, images, pug));
 const watching = gulp.series(build, gulp.parallel(imgSprite,watchPug, browserSync));
 const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
@@ -391,6 +418,8 @@ const favicon = gulp.series(delfavicon, faviconGenerate);
 async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.fonts], fonts);
+    gulp.watch([path.watch.fontsOtf], fontsOtf);
     gulp.watch([path.watch.img], images);
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);
@@ -423,6 +452,8 @@ exports.delfavicon = delfavicon;
 exports.PugLinter = PugLinter;
 exports.pug = pug;
 exports.fonts = fonts;
+exports.fontsOtf = fontsOtf;
+exports.fontsWoff = fontsWoff;
 exports.validate = validate;
 exports.validateBem = validateBem;
 exports.svgSprite = svgSprite;
