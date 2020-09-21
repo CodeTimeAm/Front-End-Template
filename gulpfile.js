@@ -1,6 +1,8 @@
 const project_folder = "build";
 const source_folder = "src";
 
+let fs = require('fs');
+
 const path = {
     build: {
         css: project_folder + "/css",
@@ -251,6 +253,33 @@ function fontsOtf(callback) {
     callback();
 }
 
+/* fonts OTF to TTF
+====================================================*/
+async function fontsStyle(callback) {
+
+    let file_content = fs.readFileSync(source_folder + '/scss/_fonts.scss');
+    if (file_content == '') {
+        fs.writeFile(source_folder + '/scss/_fonts.scss', '', cb);
+        return fs.readdir(path.build.fonts, function (err, items) {
+            if (items) {
+                let c_fontname;
+                for (var i = 0; i < items.length; i++) {
+                    let fontname = items[i].split('.');
+                    fontname = fontname[0];
+                    if (c_fontname != fontname) {
+                        fs.appendFile(source_folder + '/scss/_fonts.scss', '@include fontface("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
+                    }
+                    c_fontname = fontname;
+                }
+            }
+        })
+    }
+    callback();
+};
+
+function cb() {
+};
+
 
 /* image build
 ====================================================*/
@@ -403,8 +432,7 @@ const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, fontsOtf, fontsWoff,
-    gulp.parallel(html, js, css, images, pug, fontsCopy));
+const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug), fontsOtf, fontsWoff, fontsCopy);
 const watching = gulp.series(build, gulp.parallel(imgSprite, svgSprite, watchPug, browserSync));
 const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
@@ -455,6 +483,7 @@ exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
 exports.PugLinter = PugLinter;
 exports.pug = pug;
+exports.fontsStyle = fontsStyle;
 exports.fontsCopy = fontsCopy;
 exports.fonts = fonts;
 exports.fontsOtf = fontsOtf;
