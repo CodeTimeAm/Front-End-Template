@@ -55,7 +55,6 @@ const { src, dest } = require('gulp'),
     log = require("fancy-log"),
     group_media = require("gulp-group-css-media-queries"),
     htmlmin = require('gulp-htmlmin'),
-    inject = require("gulp-inject-string"),
     imagemin = require('gulp-imagemin'),
     notify = require('gulp-notify'),
     plumber = require('gulp-plumber'),
@@ -76,19 +75,18 @@ const { src, dest } = require('gulp'),
 
 /* browser-sync
 =========================*/
-async function browserSync(callback) {
+async function browserSync() {
     return browsersync.init({
         server: {
             baseDir: "./" + project_folder + "/"
         },
         notify: false
     });
-    callback();
 }
 
 /* html:build
 ====================================================*/
-function html(callback) {
+function html() {
     return src(path.src.html)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
@@ -106,21 +104,19 @@ function html(callback) {
         // )
         .pipe(dest(path.build.html))
         .pipe(browsersync.stream());
-    callback();
 }
 
 /* BEM validate – welcome to hell
 ====================================================*/
-function validateBem(callback) {
+function validateBem() {
     return src(path.watch.html)
         .pipe(bemValidator())
         .pipe(dest(path.build.html))
-    callback();
 }
 
 /* pug
 ====================================================*/
-async function pug(callback) {
+async function pug() {
     return src(path.src.pug)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
@@ -131,7 +127,6 @@ async function pug(callback) {
         }))
         .pipe(dest(path.build.pug))
         .pipe(browsersync.stream());
-    callback();
 }
 
 /* pug Linter
@@ -144,7 +139,7 @@ function PugLinter() {
 
 /* css:build
 ====================================================*/
-function css(callback) {
+function css() {
     return src(path.src.css)
         .pipe(
             sass({
@@ -184,12 +179,11 @@ function css(callback) {
         )
         .pipe(dest(path.build.css))
         .pipe(browsersync.stream())
-    callback();
 }
 
 /* scss lint
 ====================================================*/
-function lintScss(callback) {
+function lintScss() {
     return gulp.src(path.watch.css).pipe(stylelint({
         reporters: [
             {
@@ -199,12 +193,11 @@ function lintScss(callback) {
             },
         ],
     }));
-    callback();
 }
 
 /* js build
 ====================================================*/
-function js(callback) {
+function js() {
     return src(path.src.js)
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
@@ -219,39 +212,35 @@ function js(callback) {
         )
         .pipe(dest(path.build.js))
         .pipe(browsersync.stream());
-    callback();
 }
 
 /* fonts build
 ====================================================*/
-function fontsCopy(callback) {
+function fontsCopy() {
     return src([[path.src.fonts] + "*.{woff,woff2}"])
         .pipe(dest(path.build.fonts))
-    callback();
 }
 
 /* fonts TTF to WOFF WOFF2
 ====================================================*/
-function fontsWoff(callback) {
+function fontsWoff() {
     src([[path.src.fonts] + "*.ttf"])
         .pipe(ttf2woff())
         .pipe(dest(path.src.fonts))
     return src([[path.src.fonts] + "*.ttf"])
         .pipe(ttf2woff2())
         .pipe(dest(path.src.fonts))
-    callback();
 }
 
 /* fonts OTF to TTF
 ====================================================*/
-function fontsOtf(callback) {
+function fontsOtf() {
     return src([[path.src.fonts] + "*.otf"])
         .pipe(
             fonter({
                 formats: ["ttf"],
             }))
         .pipe(dest(path.src.fonts));
-    callback();
 }
 
 /* fonts @include fontface
@@ -259,7 +248,7 @@ function fontsOtf(callback) {
 async function fontsStyle(callback) {
 
     let file_content = fs.readFileSync(source_folder + '/scss/_fonts.scss');
-    if (file_content == '') {
+    if (file_content === '') {
         fs.writeFile(source_folder + '/scss/_fonts.scss', '', cb);
         return fs.readdir(path.build.fonts, function (err, items) {
             if (items) {
@@ -267,7 +256,7 @@ async function fontsStyle(callback) {
                 for (var i = 0; i < items.length; i++) {
                     let fontname = items[i].split('.');
                     fontname = fontname[0];
-                    if (c_fontname != fontname) {
+                    if (c_fontname !== fontname) {
                         fs.appendFile(source_folder + '/scss/_fonts.scss', '@include fontface("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
                     }
                     c_fontname = fontname;
@@ -276,10 +265,10 @@ async function fontsStyle(callback) {
         })
     }
     callback();
-};
+}
 
 function cb() {
-};
+}
 
 
 /* image build
@@ -359,11 +348,10 @@ svgconfig = {
     },
 };
 
-function svgSprite(callback) {
+function svgSprite() {
     return gulp.src(path.src.svg)
         .pipe(svgsprite(svgconfig))
         .pipe(dest(path.build.sprite));
-    callback();
 }
 
 /* favicon:clean
@@ -431,14 +419,13 @@ async function faviconGenerate() {
 ====================================================*/
 let zipname = require("path").basename(__dirname);
 
-function zip(callback) {
+function zip() {
     return src('build/**/*.*')
         .pipe(zipping('archive.zip'))
         .pipe(rename({
             basename: zipname
         }))
         .pipe(dest('build/'))
-    callback();
 }
 
 /* clean
@@ -459,7 +446,7 @@ const fonts = gulp.series(fontsOtf, fontsWoff, fontsCopy);
 async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
-    gulp.watch([path.watch.fonts + "*.woff", 
+    gulp.watch([path.watch.fonts + "*.woff",
     path.src.fonts + "*.woff2"], fontsCopy);
     gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
     gulp.watch([path.watch.fonts + "*.otf"], fonts);
