@@ -71,7 +71,8 @@ const { src, dest } = require('gulp'),
     stylelint = require('stylelint'),
     svgsprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
-    watch = require('gulp-watch');
+    watch = require('gulp-watch'),
+    zipping = require('gulp-zip');
 
 /* browser-sync
 =========================*/
@@ -253,7 +254,7 @@ function fontsOtf(callback) {
     callback();
 }
 
-/* fonts OTF to TTF
+/* fonts @include fontface
 ====================================================*/
 async function fontsStyle(callback) {
 
@@ -428,6 +429,20 @@ async function faviconGenerate() {
 
 /* clean
 ====================================================*/
+let zipname = require("path").basename(__dirname);
+
+function zip(callback) {
+    return src('build/**/*.*')
+        .pipe(zipping('archive.zip'))
+        .pipe(rename({
+            basename: zipname
+        }))
+        .pipe(dest('build/'))
+    callback();
+}
+
+/* clean
+====================================================*/
 const clean = () => del(path.clean.project);
 
 /* default
@@ -504,5 +519,7 @@ exports.css = css;
 exports.html = html;
 exports.build = build;
 exports.junior = junior;
+exports.zipping = zipping;
+exports.zip = zip;
 exports.watching = watching;
 exports.default = watching;
