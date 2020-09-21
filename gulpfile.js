@@ -9,7 +9,7 @@ const path = {
         html: project_folder + "/",
         img: project_folder + "/img",
         js: project_folder + "/js",
-        png: source_folder + "/img/sprite",
+        sprite: source_folder + "/img",
         png_css: source_folder + "/scss",
         pug: project_folder + "/",
     },
@@ -31,7 +31,6 @@ const path = {
         css: source_folder + "/scss/**/*.scss",
         favicon: source_folder + '/img/**/favicon.png',
         fonts: source_folder + "/fonts/",
-        fontsOtf: source_folder + "/fonts/*.otf",
         html: project_folder + "/**/*.html",
         img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
         js: source_folder + "/js/**/*.js",
@@ -291,15 +290,14 @@ async function imgSprite(callback) {
     let spriteData = gulp.src(path.src.png)
         .pipe(plumber())
         .pipe(spritesmith({
-            imgName: 'sprite.png',
-            cssName: '_sprite.scss',
+            imgName: 'sprites.png',
+            cssName: '_sprites.scss',
             cssFormat: 'css',
-            cssSpritesheetName: 'alex'
             algorithm: 'top-down',
-            imgPath: '../img/sprite/sprite.png',
+            imgPath: '../img/sprites.png',
             padding: 10
         }));
-    spriteData.img.pipe(gulp.dest(path.build.png));
+    spriteData.img.pipe(gulp.dest(path.build.sprite));
     spriteData.css.pipe(gulp.dest([path.build.png_css] + "/mixins/"));
     callback();
 }
@@ -318,24 +316,23 @@ svgconfig = {
     },
     mode: {
         stack: {
-            sprite: "../icons.svg",  //sprite file name
-            example: true
+            sprite: "../sprites.svg",  //sprite file name
+            // example: true
         },
-        view: { // Activate the «view» mode
-            bust: false,
-            render: {
-                scss: true // Activate Sass output (with default options)
-            }
-        },
-        symbol: true // Activate the «symbol» mode
+        // view: { // Activate the «view» mode
+        //     bust: false,
+        //     render: {
+        //         scss: true // Activate Sass output (with default options)
+        //     }
+        // },
+        // symbol: true // Activate the «symbol» mode
     },
 };
 
 function svgSprite(callback) {
     return gulp.src(path.src.svg)
-        .pipe(svgsprite())
         .pipe(svgsprite(svgconfig))
-        .pipe(dest(path.build.img));
+        .pipe(dest(path.build.sprite));
     callback();
 }
 
@@ -407,8 +404,8 @@ const clean = () => del(path.clean.project);
 /* default
 ====================================================*/
 const build = gulp.series(clean, fontsOtf, fontsWoff,
-        gulp.parallel(html, js, css, images, pug, fontsCopy));
-const watching = gulp.series(build, gulp.parallel(imgSprite, watchPug, browserSync));
+    gulp.parallel(html, js, css, images, pug, fontsCopy));
+const watching = gulp.series(build, gulp.parallel(imgSprite, svgSprite, watchPug, browserSync));
 const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
 const favicon = gulp.series(delfavicon, faviconGenerate);
@@ -419,9 +416,10 @@ const fonts = gulp.series(fontsOtf, fontsWoff, fontsCopy);
 async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
-    gulp.watch([path.src.fonts + "*.woff", path.src.fonts + "*.woff2"], fontsCopy);
-    gulp.watch([path.src.fonts + "*.ttf"], fontsWoff);
-    gulp.watch([path.src.fonts + "*.otf"], fonts);
+    gulp.watch([path.watch.fonts + "*.woff", 
+    path.src.fonts + "*.woff2"], fontsCopy);
+    gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
+    gulp.watch([path.watch.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);
@@ -437,9 +435,10 @@ async function watchHtml(callback) {
     gulp.watch([path.watch.html], html);
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
-    gulp.watch([path.src.fonts + "*.woff", path.src.fonts + "*.woff2"], fontsCopy);
-    gulp.watch([path.src.fonts + "*.ttf"], fontsWoff);
-    gulp.watch([path.src.fonts + "*.otf"], fonts);
+    gulp.watch([path.watch.fonts + "*.woff",
+    path.src.fonts + "*.woff2"], fontsCopy);
+    gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
+    gulp.watch([path.watch.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);

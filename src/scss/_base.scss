@@ -21,3 +21,7 @@ button:not([disabled]),
 a[role="button"]:not([disabled]) {
   cursor: pointer;
 }
+
+.icon {
+  display: inline-block;
+}
