@@ -66,8 +66,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --color --fix",
-    "*.{css,scss}": "stylelint --color",
     "*.pug": "pug-lint"
   }
 }
