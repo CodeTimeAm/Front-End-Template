@@ -10,7 +10,11 @@
     "push": "git push -u origin master",
     "fetch": "git fetch",
     "branch": "git branch -a",
-    "checkoutMaster": "git checkout master"
+    "checkoutMaster": "git checkout master",
+    "lint:styles": "stylelint \"src/**/*.scss\" --syntax=scss",
+    "lint:styles --fix": "stylelint \"src/**/*.scss\" --syntax=scss --fix",
+    "lint:scripts": "eslint --color ./src/blocks",
+    "lint:scripts --fix": "eslint --fix --color ./src/js"
   },
   "repository": {
     "type": "git",
@@ -72,7 +76,7 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --color",
+    "*.js": "eslint --color --fix",
     "*.{css,scss}": "stylelint --color",
     "*.pug": "pug-lint"
   }
