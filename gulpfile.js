@@ -68,10 +68,51 @@ const { src, dest } = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'),
     spritesmith = require('gulp.spritesmith'),
     stylelint = require('stylelint'),
+    smartgrid = require("smart-grid"),
     svgsprite = require("gulp-svg-sprite"),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch'),
     zipping = require('gulp-zip');
+
+
+/* smartGride
+=========================*/
+async function smartGrid(callback) {
+    smartgrid("./src/scss/vendor", {
+        outputStyle: "scss",
+        filename: "_smart-grid",
+        columns: 12, // number of grid columns
+        offset: "32px", // gutter width - 30px  || % || rem 
+        mobileFirst: true, // mobileFirst ? 'min-width' : 'max-width'
+        mixinNames: {
+            container: "container"
+        },
+        container: {
+            maxWidth: '1200px', // max-width оn very large screen 
+            fields: "30px" // side fields - 30px
+        },
+        breakPoints: {
+            xs: {
+                width: "320px" // 320px
+            },
+            sm: {
+                width: "576px" // 576px
+            },
+            md: {
+                width: "768px" // 768px
+            },
+            lg: {
+                width: "992px" // 992px
+            },
+            // xl: {
+            //     width: "1400px" // 1200px
+            // }
+        }
+    });
+    callback();
+}
+
+
 
 /* browser-sync
 =========================*/
@@ -434,7 +475,7 @@ const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug), fontsOtf, fontsWoff, fontsCopy);
+const build = gulp.series(clean, smartGrid, gulp.parallel(html, js, css, images, pug), fontsOtf, fontsWoff, fontsCopy);
 const watching = gulp.series(build, gulp.parallel(imgSprite, svgSprite, watchPug, browserSync));
 const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
@@ -480,6 +521,8 @@ async function watchHtml(callback) {
 
 /* =================================================*/
 
+
+exports.smartGrid = smartGrid;
 exports.favicon = favicon;
 exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
