@@ -1,7 +1,24 @@
 @import "./variables";
 @import "./functions";
 @import "./mixins";
+// @import "./sprite";
 @import "./fonts";
 @import "./vendor";
 @import "./base";
+// @import "./btn";
 
+@import "../pug/section/lessonsFor/lessonsFor";
+@import "../pug/section/now/now";
+@import "../pug/section/footer/footer";
+@import "../pug/section/copyright/copyright";
+@import "../pug/section/contact/contact";
+@import "../pug/section/contact-list/contact-list";
+@import "../pug/section/social/social";
+@import "../pug/section/map/map";
+
+@import "../pug/section/studyfront/studyFront";
+@import "../pug/section/box/box";
+
+@import "../pug/section/header/header";
+@import "../pug/section/list/list";
+@import "../pug/section/btnGroup/btnGroup";
