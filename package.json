@@ -67,6 +67,6 @@
   },
   "lint-staged": {
     "*.{css,scss}": "stylelint --color --config ./.stylelintrc",
-    "*.pug": "bemValidator"
+    "*.pug": "pug-lint"
   }
 }
