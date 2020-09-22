@@ -67,6 +67,6 @@
   },
   "lint-staged": {
     "*.{css,scss}": "stylelint --color",
-    "*.pug": "validate"
+    "*.pug": "pug-lint"
   }
 }
