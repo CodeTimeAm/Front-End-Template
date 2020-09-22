@@ -66,6 +66,6 @@
     }
   },
   "lint-staged": {
-    "*.pug": "PugLinter"
+    "*.pug": "validate"
   }
 }
