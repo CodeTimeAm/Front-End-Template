@@ -66,6 +66,9 @@
     }
   },
   "lint-staged": {
+    "!(_*).scss": [
+            "stylelint --fix --color --config ./.stylelintrc"
+    ],
     "*.pug": "validate"
   }
 }
