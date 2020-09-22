@@ -66,6 +66,6 @@
     }
   },
   "lint-staged": {
-    "*.pug": "pug-lint"
+    "*.pug": "PugLinter"
   }
 }
