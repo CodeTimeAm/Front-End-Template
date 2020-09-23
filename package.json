@@ -61,6 +61,7 @@
     "husky": "^4.3.0",
     "lint-staged": "^10.4.0",
     "stylelint": "^13.7.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
     "stylelint-order": "^4.1.0"
   },
   "devDependencies": {
