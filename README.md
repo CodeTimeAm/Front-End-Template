@@ -23,4 +23,5 @@
 
 # [Mixins](documentation/mixins.md)
 
+# [Pug-lint used rules](documentation/pug-lint-rules.md)
 
