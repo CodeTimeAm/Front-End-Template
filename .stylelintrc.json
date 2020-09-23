@@ -25,16 +25,26 @@
 				]
 			}
 		],
-		"at-rule-name-case": "lower",
+		"at-rule-name-case": ["lower", {
+				"message": "Допустимы только строчные буквы в имени правила «@»  |  Only lowercase at-rule «@» names are valid"
+		}],
 		"at-rule-name-newline-after": null,
-		"at-rule-name-space-after": "always-single-line",
+		"at-rule-name-space-after": ["always-single-line", {
+				"message": "В однострочных блоках объявления после имен правил «@» всегда должен быть один пробел.  |  There must always be a single space after at-rule «@» names in single-line declaration blocks"
+		}],
 		"at-rule-no-unknown": null,
-		"at-rule-no-vendor-prefix": true,
-		"at-rule-semicolon-newline-after": "always",
-		"at-rule-semicolon-space-before": "never",
+		"at-rule-no-vendor-prefix": [ true, {
+				"message": "Запретить префиксы поставщиков для правил «@»  |  Disallow vendor prefixes for at-rules"
+		}],
+		"at-rule-semicolon-newline-after": ["always", {
+			"message": "После точки с запятой всегда должна быть новая строка  |  There must always be a newline after the semicolon"
+		}],
+		"at-rule-semicolon-space-before": ["never", {
+			"message": "Перед точкой с запятой никогда не должно быть ни одного пробела  |  There must never be a single space before the semicolons"
+		}],
 		"at-rule-whitelist": null,
 		"block-closing-brace-empty-line-before": ["never", {
-			"message": "Перед «}» не должно быть пустой строки"
+			"message": "Перед «}» не должно быть пустой строки  |  There should not be an empty line before «}»"
 		}],
 		"block-closing-brace-newline-after": [
 			"always",
@@ -43,19 +53,29 @@
 					"if",
 					"else"
 				],
-				"message": "После «}» не должно быть переноса"
+				"message": "После «}» не должно быть переноса  |  There should be no hyphenation after «}»"
 			}
 
 		],
 		"block-closing-brace-newline-before": ["always", {
 			"message": "Перед «}» должен быть перенос"
 		}],
-		"block-closing-brace-space-after": "always-single-line",
-		"block-closing-brace-space-before": "always-single-line",
+		"block-closing-brace-space-after": ["always-single-line", {
+			"message": "В однострочных блоках после закрывающей скобки всегда должен быть один пробел  |  There must always be a single space after the closing brace in single-line blocks"
+		}],
+		"block-closing-brace-space-before": ["always-single-line", {
+			"message": "В однострочных блоках перед закрывающей фигурной скобкой всегда должен быть один пробел  |  There must always be a single space before the closing brace in single-line blocks"
+		}],
 		"block-no-empty": [
 			true,
 			{
 				"severity": "warning"
+			},
+			{
+				"message": "Запретить пустые блоки"
+			},
+			{
+				"message": "Disallow empty blocks"
 			}
 		],
 		"block-opening-brace-newline-after": ["always", {
