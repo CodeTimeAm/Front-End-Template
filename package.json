@@ -62,7 +62,9 @@
     "lint-staged": "^10.4.0",
     "stylelint": "^13.7.0",
     "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
-    "stylelint-order": "^4.1.0"
+    "stylelint-order": "^4.1.0",
+    "stylelint-scss": "^3.18.0",
+    "stylelint-selector-bem-pattern": "^2.1.0"
   },
   "devDependencies": {
     "favicons": "^6.2.0",
