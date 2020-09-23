@@ -20,7 +20,6 @@ body {
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  
 }
 
 body {
@@ -52,7 +51,6 @@ header,
 aside {
   display: block;
 }
-
 
 input,
 button,
@@ -86,8 +84,11 @@ a:focus {
   text-decoration: none;
 }
 
-ul,li {
+ul,
+li {
   list-style: none;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 
 img {
