@@ -1,2 +1,3 @@
 build/**/*.css
 src/scss/vendor/**/*
+/**/*.md

@@ -48,13 +48,13 @@
 		"at-rule-semicolon-newline-after": [
 			"always",
 			{
-				"message": "После точки с запятой всегда должна быть новая строка  |  There must always be a newline after the semicolon"
+				"message": "После точки с запятой «;» всегда должна быть новая строка  |  There must always be a newline after the semicolon «;»"
 			}
 		],
 		"at-rule-semicolon-space-before": [
 			"never",
 			{
-				"message": "Перед точкой с запятой никогда не должно быть ни одного пробела  |  There must never be a single space before the semicolons"
+				"message": "Перед точкой с запятой «;» никогда не должно быть ни одного пробела  |  There must never be a single space before the semicolons «;»"
 			}
 		],
 		"at-rule-whitelist": null,
@@ -77,72 +77,82 @@
 		"block-closing-brace-newline-before": [
 			"always",
 			{
-				"message": "Перед «}» должен быть перенос"
+				"message": "Перед «}» должен быть перенос  |  There must always be a newline before «}»"
 			}
 		],
 		"block-closing-brace-space-after": [
 			"always-single-line",
 			{
-				"message": "В однострочных блоках после закрывающей скобки всегда должен быть один пробел  |  There must always be a single space after the closing brace in single-line blocks"
+				"message": "В однострочных блоках после «}» должен быть один пробел  |  There must always be a single space after «}» in single-line blocks"
 			}
 		],
 		"block-closing-brace-space-before": [
 			"always-single-line",
 			{
-				"message": "В однострочных блоках перед закрывающей фигурной скобкой всегда должен быть один пробел  |  There must always be a single space before the closing brace in single-line blocks"
+				"message": "В однострочных блоках перед «}» должен быть один пробел  |  There must always be a single space before the «}» in single-line blocks"
 			}
 		],
 		"block-no-empty": [
 			true,
 			{
-				"severity": "warning"
-			},
-			{
-				"message": "Запретить пустые блоки"
-			},
-			{
-				"message": "Disallow empty blocks"
+				"severity": "warning",
+				"message": "Недопустимы пустой блок  |  Empty block is not allowed"
 			}
 		],
 		"block-opening-brace-newline-after": [
 			"always",
 			{
-				"message": "После «{» должен быть перенос"
+				"message": "После «{» должен быть перенос  |  There must always be a newline after «{»"
 			}
 		],
-		"block-opening-brace-newline-before": "never-single-line",
-		"block-opening-brace-space-after": "always-single-line",
+		"block-opening-brace-newline-before": [
+			"never-single-line",
+			{
+				"message": "Перед «{» всегда должна быть новая строка  |  There must always be a newline before «{»"
+			}
+		],
+		"block-opening-brace-space-after": [
+			"always-single-line",
+			{
+				"message": "В однострочных блоках после «{» всегда должен быть один пробел  |  There must always be a single space after  «{» in single-line blocks"
+			}
+		],
 		"block-opening-brace-space-before": [
 			"always",
 			{
-				"message": "Перед «{» должен быть один пробел"
+				"message": "Перед «{» должен быть один пробел  |  There must always be a single space before «{»"
 			}
 		],
 		"color-hex-case": [
 			"lower",
 			{
 				"severity": "warning",
-				"message": "HEX-цвета нужно указывать строчными буквами"
+				"message": "HEX-цвета нужно указывать строчными буквами  |  Specify lowercase for hex colors"
 			}
 		],
-		"color-hex-length": "short",
+		"color-hex-length": [
+			"short",
+			{
+				"message": "HEX-цвета нужно нужно писать коротко   |  Need to write short for hex colors"
+			}
+		],
 		"color-named": [
 			"never",
 			{
-				"message": "Цвета ключевыми словами нельзя писать"
+				"message": "Цвета ключевыми словами нельзя писать  |  Colors cannot be written with keywords"
 			}
 		],
 		"color-no-hex": null,
 		"color-no-invalid-hex": [
 			true,
 			{
-				"message": "Ошибка в написании HEX-цвета"
+				"message": "Ошибка в написании HEX-цвета  |  Mistake in spelling hex color"
 			}
 		],
 		"no-duplicate-at-import-rules": [
 			true,
 			{
-				"message": "Не должно быть повторного импорта файла"
+				"message": "Не должно быть повторного импорта файла  |  There should be no double import of the file"
 			}
 		],
 		"comment-empty-line-before": [
@@ -157,8 +167,18 @@
 				]
 			}
 		],
-		"comment-no-empty": true,
-		"comment-whitespace-inside": "always",
+		"comment-no-empty": [
+			true,
+			{
+				"message": "Пустые комментарии не допускаются  |  Empty comments not allowed"
+			}
+		],
+		"comment-whitespace-inside": [
+			"always",
+			{
+				"message": "Внутри маркеров всегда должны быть пробелы  |  There must always be whitespace inside the markers"
+			}
+		],
 		"comment-word-blacklist": null,
 		"custom-media-pattern": null,
 		"custom-property-empty-line-before": [
@@ -175,63 +195,83 @@
 			}
 		],
 		"custom-property-pattern": null,
-		"declaration-bang-space-after": "never",
-		"declaration-bang-space-before": "always",
+		"declaration-bang-space-after": [
+			"never",
+			{
+				"message": "После «!» не должно быть пробелов  |  There must never be whitespace after the bang «!»"
+			}
+		],
+		"declaration-bang-space-before": [
+			"always",
+			{
+				"message": "Перед «!» должно быть пробелов  |  There must be whitespace before the bang «!»"
+			}
+		],
 		"declaration-block-no-duplicate-properties": [
 			true,
 			{
-				"message": "Правила не должны повторяться"
+				"message": "Правила не должны повторяться  |  Rules should not be duplicate"
 			}
 		],
 		"declaration-block-no-redundant-longhand-properties": true,
 		"declaration-block-no-shorthand-property-overrides": [
 			true,
 			{
-				"message": "Это свойство перебивает другое"
+				"message": "Это свойство перебивает другое  |  This property interrupts the other"
 			}
 		],
 		"declaration-block-semicolon-newline-after": [
 			"always",
 			{
-				"message": "После точки с запятой необходим перенос"
+				"message": "После точки с запятой «;» необходим перенос  |  After a semicolon «;» transfer needed"
 			}
 		],
 		"declaration-block-semicolon-newline-before": [
 			"never-multi-line",
 			{
-				"message": "Перенос перед символом ; недопустим"
+				"message": "Перенос перед символом «;» недопустим  |  Wrap before the «;» unacceptable"
 			}
 		],
-		"declaration-block-semicolon-space-after": "always-single-line",
+		"declaration-block-semicolon-space-after": [
+			"always-single-line",
+			{
+				"message": "После точки с запятой «;» необходим пробел  |  Before a semicolon «;» space needed"
+			}
+		],
 		"declaration-block-semicolon-space-before": [
 			"never",
 			{
-				"message": "Пробел перед символом ; недопустим"
+				"message": "Пробел перед символом «;» недопустим  |  Space before «;» unacceptable"
 			}
 		],
 		"declaration-block-single-line-max-declarations": [
 			1,
 			{
-				"message": "На одной строке должно быть одно правило"
+				"message": "На одной строке должно быть одно правило  |  There must be one rule on one line"
 			}
 		],
 		"declaration-block-trailing-semicolon": [
 			"always",
 			{
-				"message": "Каждое свойство должно заканчиваться точкой с запятой"
+				"message": "Каждое свойство должно заканчиваться точкой с запятой «;»  |  Each property must end with a semicolon «;»"
 			}
 		],
-		"declaration-colon-newline-after": "always-multi-line",
+		"declaration-colon-newline-after": [
+			"always-multi-line",
+			{
+				"message": "После двоеточия «:» всегда должна быть новая строка, если значение объявления является многострочным.  |  There must always be a newline after the colon  «:» if the declaration's value is multi-line"
+			}
+		],
 		"declaration-colon-space-after": [
 			"always-single-line",
 			{
-				"message": "Следует ставить один пробел после двоеточия"
+				"message": "Следует ставить один пробел после двоеточия «:»  |  Place one space after the colon «:»"
 			}
 		],
 		"declaration-colon-space-before": [
 			"never",
 			{
-				"message": "Не следует ставить пробел перед двоеточием"
+				"message": "Не следует ставить пробел перед двоеточием «:»  |  Do not place one space before the colon «:»"
 			}
 		],
 		"declaration-empty-line-before": [
@@ -254,19 +294,19 @@
 		"font-family-name-quotes": [
 			"always-where-recommended",
 			{
-				"message": "Название шрифта следует брать в кавычки"
+				"message": "Название шрифта следует брать в кавычки  |  The name of the font should be enclosed in quotation marks «()»"
 			}
 		],
 		"font-family-no-duplicate-names": [
 			true,
 			{
-				"message": "Нельзя дублировать один и тот же шрифт"
+				"message": "Нельзя дублировать один и тот же шрифт  |  Cannot duplicate the same font"
 			}
 		],
 		"font-family-no-missing-generic-family-keyword": [
 			true,
 			{
-				"message": "Необходимо указывать sans-serif или serif"
+				"message": "Необходимо указывать sans-serif или serif  |  Must specify sans-serif or serif for font"
 			}
 		],
 		"font-weight-notation": null,
@@ -275,56 +315,66 @@
 		"function-comma-newline-after": [
 			"never-multi-line",
 			{
-				"message": "После переноса запятой быть не должно"
+				"message": "После переноса запятой «,» быть не должно  |  There should be no comma «,» after the transfer"
 			}
 		],
 		"function-comma-newline-before": [
 			"never-multi-line",
 			{
-				"message": "Перед переносом запятой быть не должно"
+				"message": "Перед переносом запятой «,» быть не должно  |  There should be no comma «,» before the transfer"
 			}
 		],
 		"function-comma-space-after": [
 			"always",
 			{
-				"message": "После запятой необходим пробел"
+				"message": "После запятой «,» необходим пробел  |  A space is required after the comma «,»"
 			}
 		],
 		"function-comma-space-before": [
 			"never",
 			{
-				"message": "Перед запятой пробела быть не должно"
+				"message": "Перед запятой «,» пробела быть не должно  |  There should be no space before the comma «,»"
 			}
 		],
 		"function-linear-gradient-no-nonstandard-direction": true,
 		"function-max-empty-lines": [
 			0,
 			{
-				"message": "Пустых строк не должно быть в функциях"
+				"message": "Пустых строк не должно быть в функциях  |  Empty lines should not be in functions"
 			}
 		],
 		"function-name-case": [
 			"lower",
 			{
-				"message": "Имена функций следует писать строчными буквами"
+				"message": "Имена функций следует писать строчными буквами  |  Function names should be written in lowercase"
 			}
 		],
 		"function-parentheses-newline-inside": [
 			"never-multi-line",
 			{
-				"message": "После переноса скобки быть не должно"
+				"message": "После переноса скобки «()» быть не должно  |  There should be no parentheses «()» after the transfer"
 			}
 		],
-		"function-parentheses-space-inside": "never-single-line",
+		"function-parentheses-space-inside": [
+			"never-single-line",
+			{
+				"message": "Внутри скобок «()» однострочных функций никогда не должно быть пробелов  |  There must never be space inside the parentheses «()» of single-line functions"
+			}
+		],
 		"function-url-no-scheme-relative": true,
-		"function-url-quotes": "always",
+		"function-url-quotes": [
+			"always",
+			{
+				"message": "URL-адреса всегда должны указываться  |  Urls must always be quoted"
+			}
+		],
 		"function-url-scheme-blacklist": null,
 		"function-url-scheme-whitelist": null,
 		"function-whitelist": null,
 		"function-whitespace-after": [
 			"always",
 			{
-				"message": "Должны быть пробелы между функциями"
+				"message": "Должны быть пробелы между функциями  |  There must be spaces between functions"
 			}
 		],
 		"indentation": 2,
@@ -332,20 +382,30 @@
 			true,
 			{
 				"severity": "warning",
-				"message": "Применяйте !important с осторожностью"
+				"message": "Применяйте !important с осторожностью  |  Use! Important with care"
 			}
 		],
 		"length-zero-no-unit": [
 			true,
 			{
-				"message": "Единицы измерения не указываются, если значение равно нулю"
+				"message": "Единицы измерения не указываются, если значение равно нулю  |  Units are not specified if the value is zero"
 			}
 		],
 		"max-empty-lines": 1,
 		"max-line-length": 120,
 		"max-nesting-depth": null,
-		"media-feature-colon-space-after": "always",
-		"media-feature-colon-space-before": "never",
+		"media-feature-colon-space-after": [
+			"always",
+			{
+				"message": "В медии после двоеточия всегда должен быть один пробел  |  In media must always be a single space after the colon"
+			}
+		],
+		"media-feature-colon-space-before": [
+			"never",
+			{
+				"message": "В медии перед двоеточия никогда не должно быть пробелов  |  In media must never be space before the colon"
+			}
+		],
 		"media-feature-name-blacklist": null,
 		"media-feature-name-case": "lower",
 		"media-feature-name-no-unknown": true,
@@ -354,7 +414,7 @@
 		"media-feature-parentheses-space-inside": [
 			"never",
 			{
-				"message": "Пробелы после «(» и перед «)» использовать нельзя"
+				"message": "Пробелы после «(» и перед «)» использовать нельзя  |  Spaces after «(» and before «)» cannot be used"
 			}
 		],
 		"media-feature-range-operator-space-after": "always",
@@ -367,7 +427,7 @@
 		"no-duplicate-selectors": [
 			true,
 			{
-				"message": "Один и тот же селектор не должен дублироваться"
+				"message": "Один и тот же селектор не должен дублироваться  |  The same selector must not be duplicated"
 			}
 		],
 		"no-empty-source": [
@@ -380,7 +440,7 @@
 		"no-extra-semicolons": [
 			true,
 			{
-				"message": "Две точки с запятой подряд не должны быть"
+				"message": "Две точки с запятой подряд не должны быть  |  Two semicolons in a row must not be"
 			}
 		],
 		"no-invalid-double-slash-comments": true,
@@ -391,7 +451,7 @@
 		"number-no-trailing-zeros": [
 			true,
 			{
-				"message": "Лишний (необязательный) нуль в дроби"
+				"message": "Лишний (необязательный) нуль в дроби  |  Extra (optional) zero in a fraction"
 			}
 		],
 		"order/order": [
@@ -877,21 +937,21 @@
 			},
 			{
 				"severity": "warning",
-				"message": "Селектор не из имени файла или БЭМ-ошибка"
+				"message": "Селектор не из имени файла или БЭМ-ошибка  |  Selector not from filename or BEM error"
 			}
 		],
 		"property-blacklist": null,
 		"property-case": [
 			"lower",
 			{
-				"message": "Значения свойств следует писать строчными буквами"
+				"message": "Значения свойств следует писать строчными буквами  |  Property values should be written in lowercase letters"
 			}
 		],
 		"property-no-unknown": [
 			true,
 			{
 				"checkPrefixed": true,
-				"message": "Такого свойства не существует"
+				"message": "Такого свойства не существует  |  This property does not exist"
 			}
 		],
 		"property-no-vendor-prefix": true,
@@ -970,7 +1030,7 @@
 				"id"
 			],
 			{
-				"message": "Для стилизации ID использовать нельзя"
+				"message": "Для стилизации ID использовать нельзя  |  For styling ID cannot use"
 			}
 		],
 		"selector-attribute-operator-space-after": "never",
@@ -983,32 +1043,32 @@
 		"selector-descendant-combinator-no-non-space": [
 			true,
 			{
-				"message": "Комбинированные селекторы нужно отделять одним пробелом"
+				"message": "Комбинированные селекторы нужно отделять одним пробелом  |  Combined selectors must be separated by a single space"
 			}
 		],
 		"selector-id-pattern": null,
 		"selector-list-comma-newline-after": [
 			"never-multi-line",
 			{
-				"message": "После запятой необходим перенос строки"
+				"message": "После запятой необходим перенос строки  |  A line break is required after a comma"
 			}
 		],
 		"selector-list-comma-newline-before": [
 			"never-multi-line",
 			{
-				"message": "Перед запятой не должно быть переноса строки"
+				"message": "Перед запятой не должно быть переноса строки  |  There should be no line break before the comma"
 			}
 		],
 		"selector-list-comma-space-after": [
 			"always-single-line",
 			{
-				"message": "После запятой должен быть пробел"
+				"message": "После запятой должен быть пробел  |  There must be a space after the comma"
 			}
 		],
 		"selector-list-comma-space-before": [
 			"never",
 			{
-				"message": "Перед запятой не должно быть пробела"
+				"message": "Перед запятой не должно быть пробела  |  There must be no space before the comma"
 			}
 		],
 		"selector-max-attribute": null,
@@ -1018,7 +1078,7 @@
 		"selector-max-empty-lines": [
 			0,
 			{
-				"message": "Пустые строки в селекторах недопустимы"
+				"message": "Пустые строки в селекторах недопустимы  |  Blank lines in selectors are not allowed"
 			}
 		],
 		"selector-max-id": 1,
@@ -1032,58 +1092,58 @@
 		"selector-pseudo-class-case": [
 			"lower",
 			{
-				"message": "Псевдоклассы необходимо писать строчными буквами"
+				"message": "Псевдоклассы необходимо писать строчными буквами  |  Pseudo-classes must be written in lowercase"
 			}
 		],
 		"selector-pseudo-class-no-unknown": [
 			true,
 			{
-				"message": "Такого псевдокласса не существует"
+				"message": "Такого псевдокласса не существует  |  No such pseudo-class exists"
 			}
 		],
 		"selector-pseudo-class-parentheses-space-inside": [
 			"never",
 			{
-				"message": "Внутри скобок в псевдоселекторах не должно быть пробелов"
+				"message": "Внутри скобок в псевдоселекторах не должно быть пробелов  |  There must be no spaces inside the brackets in pseudo-selectors"
 			}
 		],
 		"selector-pseudo-class-whitelist": null,
 		"selector-pseudo-element-case": [
 			"lower",
 			{
-				"message": "Псевдоэлементы необходимо писать строчными буквами"
+				"message": "Псевдоэлементы необходимо писать строчными буквами  |  Pseudo-elements must be written in lowercase"
 			}
 		],
 		"selector-pseudo-element-colon-notation": "double",
 		"selector-pseudo-element-no-unknown": [
 			true,
 			{
-				"message": "Такого псевдоэлемента не существует"
+				"message": "Такого псевдоэлемента не существует  |  No such pseudo-class exists"
 			}
 		],
 		"selector-type-case": [
 			"lower",
 			{
-				"message": "Селекторы необходимо писать строчными буквами"
+				"message": "Селекторы необходимо писать строчными буквами  |  Selectors must be written in lowercase"
 			}
 		],
 		"selector-type-no-unknown": [
 			true,
 			{
-				"message": "Такого селектора не существует"
+				"message": "Такого селектора не существует  |  No such selector exists"
 			}
 		],
 		"shorthand-property-no-redundant-values": true,
 		"string-no-newline": [
 			true,
 			{
-				"message": "В строчных данных не должно быть переносов"
+				"message": "В строчных данных не должно быть переносов  |  There should be no hyphenation in line data"
 			}
 		],
 		"string-quotes": [
 			"double",
 			{
-				"message": "В проекте двойные кавычки"
+				"message": "В проекте двойные кавычки  |  In the project, double quotes"
 			}
 		],
 		"time-min-milliseconds": 10,
@@ -1100,20 +1160,20 @@
 		"unit-case": [
 			"lower",
 			{
-				"message": "Единицы измерения следует писать строчными"
+				"message": "Единицы измерения следует писать строчными  |  Measurement units should be written in lowercase"
 			}
 		],
 		"unit-no-unknown": [
 			true,
 			{
-				"message": "Не существует таких единиц измерения"
+				"message": "Не существует таких единиц измерения  |  There are no such units of measure"
 			}
 		],
 		"unit-whitelist": null,
 		"value-keyword-case": [
 			"lower",
 			{
-				"message": "Значения свойств следует писать строчными буквами",
+				"message": "Значения свойств следует писать строчными буквами  |  Property values should be written in lowercase letters",
 				"ignoreProperties": [
 					"/font-/"
 				]
@@ -1122,25 +1182,25 @@
 		"value-list-comma-newline-after": [
 			"always-multi-line",
 			{
-				"message": "Значения свойств должны быть без переносов"
+				"message": "Значения свойств должны быть без переносов  |  Property values must be without hyphenation"
 			}
 		],
 		"value-list-comma-newline-before": [
 			"never-multi-line",
 			{
-				"message": "Значения свойств должны быть без переносов"
+				"message": "Значения свойств должны быть без переносов  |  Property values must be without hyphenation"
 			}
 		],
 		"value-list-comma-space-after": [
 			"always-single-line",
 			{
-				"message": "Необходим пробел в значениях после запятой"
+				"message": "Необходим пробел в значениях после запятой  |  Space required after decimal point"
 			}
 		],
 		"value-list-comma-space-before": [
 			"never",
 			{
-				"message": "В значениях перед запятой пробел запрещен"
+				"message": "В значениях перед запятой пробел запрещен  |  Space is not allowed in values before comma"
 			}
 		],
 		"value-list-max-empty-lines": 0,
