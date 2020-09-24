@@ -135,7 +135,7 @@ async function pug() {
 
 function PugLinter() {
     return src(path.src.pug)
-        .pipe(pugLinter({ failAfterError: true }));
+        .pipe(pugLinter({ reporter: 'default' }));
 }
 
 /* css:build
@@ -185,16 +185,19 @@ function css() {
 /* scss lint
 ====================================================*/
 function lintScss() {
-    return gulp.src(path.watch.css).pipe(stylelint({
-        reporters: [
-            {
-                failAfterError: true,
-                formatter: "string",
-                console: true,
-            },
-        ],
-    }));
+    return gulp.src(path.watch.css)
+        .pipe(plumber())
+        .pipe(stylelint({
+            reporters: [
+                {
+                    failAfterError: true,
+                    formatter: "string",
+                    console: true,
+                },
+            ],
+        }));
 }
+
 
 /* js build
 ====================================================*/
@@ -294,12 +297,12 @@ function imagesMin() {
                 ]
             })
         ],
-        {
-            progressive: true,
-            svgoPlugins: [{ removeViewBox: false }],
-            interlaced: true,
-            optimizationLevel: 3 // 0 to 7
-        }))
+            {
+                progressive: true,
+                svgoPlugins: [{ removeViewBox: false }],
+                interlaced: true,
+                optimizationLevel: 3 // 0 to 7
+            }))
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream());
 }
@@ -448,7 +451,7 @@ async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.fonts + "*.woff",
-        path.src.fonts + "*.woff2"], fontsCopy);
+    path.src.fonts + "*.woff2"], fontsCopy);
     gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
     gulp.watch([path.watch.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
@@ -467,7 +470,7 @@ async function watchHtml(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
     gulp.watch([path.watch.fonts + "*.woff",
-        path.src.fonts + "*.woff2"], fontsCopy);
+    path.src.fonts + "*.woff2"], fontsCopy);
     gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
     gulp.watch([path.watch.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
