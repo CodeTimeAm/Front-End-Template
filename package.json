@@ -14,7 +14,8 @@
     "lint:styles": "stylelint \"src/**/*.scss\" --syntax=scss",
     "lint:styles --fix": "stylelint \"src/**/*.scss\" --syntax=scss --fix",
     "lint:scripts": "eslint --color ./src/js",
-    "lint:scripts --fix": "eslint --fix --color ./src/js"
+    "lint:scripts --fix": "eslint --fix --color ./src/js",
+    "lint:pug": "pug-lint --config .pug-lintrc.json"
   },
   "repository": {
     "type": "git",
@@ -60,7 +61,7 @@
     "htmlhint": "^0.14.1",
     "husky": "^4.3.0",
     "lint-staged": "^10.4.0",
-    "stylelint": "^13.7.0",
+    "stylelint": "^13.7.2",
     "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.18.0",
@@ -79,7 +80,7 @@
   },
   "lint-staged": {
     "*.js": "eslint --color --fix",
-    "*.scss": "stylelint --fix --color --config ./.stylelintrc",
+    "a.scss": "stylelint --fix --color --config ./.stylelintrc",
     "*.pug": "pug-lint"
   }
 }
