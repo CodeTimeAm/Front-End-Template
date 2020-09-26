@@ -4,24 +4,24 @@
 - second  ***`READ ALL DOCUMENTATION`***
 
 
-- [Gulp Troubleshoot](documentation/gulp-sass-troubleshoot.md)
-- [Cheking github](documentation/checking-github.md)
+- [Gulp Troubleshoot](wiki/gulp-sass-troubleshoot.md)
+- [Cheking github](wiki/checking-github.md)
 
-# [Gulp tasks , Working in Branch](documentation/branch.md)
+# [Gulp tasks , Working in Branch](wiki/branch.md)
 
-# [Creating Branch , function and packages](documentation/gulp-function.md)
+# [Creating Branch , function and packages](wiki/gulp-function.md)
 
-# [Folder and file structure](documentation/folder-file-structure.md)
+# [Folder and file structure](wiki/folder-file-structure.md)
 
-# [Working with images and Sprites PNG or SVG](documentation/images.md)
+# [Working with images and Sprites PNG or SVG](wiki/images.md)
 
-# [Working with Fonts](documentation/fonts.md)
+# [Working with Fonts](wiki/fonts.md)
 
-# [Connecting third-party libraries](documentation/libraries.md)
+# [Connecting third-party libraries](wiki/libraries.md)
 
-# [Working with styles functions mixins vendor](documentation/style.md)
+# [Working with styles functions mixins vendor](wiki/style.md)
 
-# [Mixins](documentation/mixins.md)
+# [Mixins](wiki/mixins.md)
 
-# [Pug-lint used rules](documentation/pug-lint-rules.md)
+# [Pug-lint used rules](wiki/pug-lint-rules.md)
 
