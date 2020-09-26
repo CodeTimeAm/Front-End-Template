@@ -1,79 +1,82 @@
 const project_folder = "build";
 const source_folder = "src";
 
-let path = {
+let fs = require("fs");
+
+const path = {
     build: {
-        html: project_folder + "/",
         css: project_folder + "/css",
-        js: project_folder + "/js",
-        img: project_folder + "/img",
+        favicon: source_folder + "/img/favicon",
         fonts: project_folder + "/fonts",
-        png: source_folder + "/img/sprite",
-        pug_css: source_folder + "/scss",
+        html: project_folder + "/",
+        img: project_folder + "/img",
+        js: project_folder + "/js",
+        sprite: source_folder + "/img",
+        png_css: source_folder + "/scss",
         pug: project_folder + "/",
-        favicon: source_folder + '/img/favicon',
+    },
+    clean: {
+        favicon: [source_folder + "/img/favicon/*.*"],
+        project: [project_folder],
     },
     src: {
-        pug: "./" + source_folder + "/pug/*.pug",
-        css: "./" + source_folder + "/scss/style.scss",
-        js: "./" + source_folder + "/js/script.js",
-        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
-        svg: "./" + source_folder + "/img/sprite/svg/**/*.svg",
-        png: "./" + source_folder + "/img/sprite/png/**/*.png",
-        fonts: "./" + source_folder + "/fonts/*.ttf",
+        css: source_folder + "/scss/style.scss",
+        fonts: source_folder + "/fonts/",
+        html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
+        img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
+        js: source_folder + "/js/script.js",
+        png: source_folder + "/img/sprite/png/**/*.png",
+        pug: [source_folder + "/pug/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
+        svg: source_folder + "/img/sprite/svg/**/*.svg",
     },
     watch: {
-        html: "./" + project_folder + "/**/*.html",
-        pug: source_folder + "/pug/**/*.pug",
-        pug_css: "./" + source_folder + "/pug/**/*.scss",
-        css: "./" + source_folder + "/scss/**/*.scss",
-        js: "./" + source_folder + "/js/**/*.js",
-        img: "./" + source_folder + "/img/**/*.{jpg,jepg,png,svg,gif,ico,webp}",
-        svg: source_folder + "/img/sprite/svg/**/*.svg",
+        css: source_folder + "/scss/**/*.scss",
+        favicon: source_folder + "/img/**/favicon.png",
+        fonts: source_folder + "/fonts/",
+        html: project_folder + "/**/*.html",
+        img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
+        js: source_folder + "/js/**/*.js",
         png: source_folder + "/img/sprite/png/**/*.png",
-        favicon: source_folder + '/img/**/favicon.png',
-    },
-    // clean: [project_folder, project_app_folder],
-    clean: {
-        project: [project_folder],
-        favicon: [source_folder + '/img/favicon/*.*'],
+        pug: source_folder + "/pug/**/*.pug",
+        pug_css: source_folder + "/pug/**/*.scss",
+        svg: source_folder + "/img/sprite/svg/**/*.svg",
     },
 };
 
 
-const {src, dest} = require('gulp'),
-    gulp = require('gulp'),
-    autoprefixer = require('gulp-autoprefixer'),
-    browsersync = require('browser-sync').create(),
+const { src, dest } = require("gulp"),
+    gulp = require("gulp"),
+    autoprefixer = require("gulp-autoprefixer"),
+    bemValidator = require("gulp-html-bem-validator"),
+    browsersync = require("browser-sync").create(),
     del = require("del"),
-    csso = require('gulp-csso'),
+    csso = require("gulp-csso"),
     favicons = require("favicons").stream,
-    group_media = require("gulp-group-css-media-queries"),
-    htmlmin = require('gulp-htmlmin'),
-    inject = require("gulp-inject-string"),
-    imagemin = require('gulp-imagemin'),
+    fonter = require("gulp-fonter"),
     log = require("fancy-log"),
-    notify = require('gulp-notify'),
-    plumber = require('gulp-plumber'),
+    group_media = require("gulp-group-css-media-queries"),
+    htmlmin = require("gulp-htmlmin"),
+    imagemin = require("gulp-imagemin"),
+    notify = require("gulp-notify"),
+    plumber = require("gulp-plumber"),
+    Pug = require("gulp-pug"),
+    pugLinter = require("gulp-pug-linter"),
     rename = require("gulp-rename"),
-    sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
-    spritesmith = require('gulp.spritesmith'),
+    ttf2woff = require("gulp-ttf2woff"),
+    ttf2woff2 = require("gulp-ttf2woff2"),
+    sass = require("gulp-sass"),
+    shorthand = require("gulp-shorthand"),
+    sourcemaps = require("gulp-sourcemaps"),
+    spritesmith = require("gulp.spritesmith"),
+    stylelint = require("stylelint"),
     svgsprite = require("gulp-svg-sprite"),
-    uglify = require('gulp-uglify'),
-    watch = require('gulp-watch'),
-    Pug = require('gulp-pug'),
-    stylelint = require('stylelint'),
-    shorthand = require('gulp-shorthand'),
-    pugLinter = require('gulp-pug-linter'),
-    bemValidator = require('gulp-html-bem-validator'),
-    through2 = require('through2'),
-    argv = require('yargs').argv;
-
+    uglify = require("gulp-uglify"),
+    watch = require("gulp-watch"),
+    zipping = require("gulp-zip");
 
 /* browser-sync
 =========================*/
-async function browserSync(params) {
+async function browserSync() {
     return browsersync.init({
         server: {
             baseDir: "./" + project_folder + "/"
@@ -85,26 +88,31 @@ async function browserSync(params) {
 /* html:build
 ====================================================*/
 function html() {
-    return src(path.watch.html)
+    return src(path.src.html)
         .pipe(plumber({
-            errorHandler: notify.onError(function (err) {
+            errorHandler: notify.onError(function () {
             })
         }))
+        // .pipe(dest(path.build.html))
         .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true
         }))
+        // .pipe(
+        //     rename({
+        //         extname: ".min.html"
+        //     })
+        // )
         .pipe(dest(path.build.html))
-        .pipe(browsersync.stream())
+        .pipe(browsersync.stream());
 }
-
 
 /* BEM validate – welcome to hell
 ====================================================*/
 function validateBem() {
     return src(path.watch.html)
         .pipe(bemValidator())
-        .pipe(dest(path.build.html))
+        .pipe(dest(path.build.html));
 }
 
 /* pug
@@ -112,14 +120,14 @@ function validateBem() {
 async function pug() {
     return src(path.src.pug)
         .pipe(plumber({
-            errorHandler: notify.onError(function (err) {
+            errorHandler: notify.onError(function () {
             })
         }))
         .pipe(Pug({
             pretty: true
         }))
-        .pipe(dest(path.build.html))
-        .pipe(browsersync.stream())
+        .pipe(dest(path.build.pug))
+        .pipe(browsersync.stream());
 }
 
 /* pug Linter
@@ -127,7 +135,7 @@ async function pug() {
 
 function PugLinter() {
     return src(path.src.pug)
-        .pipe(pugLinter({failAfterError: true}))
+        .pipe(pugLinter({ reporter: 'default' }));
 }
 
 /* css:build
@@ -138,8 +146,8 @@ function css() {
             sass({
                 outputStyle: ["expanded", "nested"],
                 precision: 10,
-                includePaths: ['.'],
-                onError: console.error.bind(console, 'Sass error:')
+                includePaths: ["."],
+                onError: console.error.bind(console, "Sass error:")
             })
         )
         .pipe(
@@ -148,18 +156,18 @@ function css() {
         .pipe(plumber({
             errorHandler: notify.onError(function (err) {
                 return {
-                    title: 'Styles',
+                    title: "Styles",
                     sound: false,
                     message: err.message
-                }
+                };
             })
         }))
         .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer({
-                overrideBrowserslist: ["last 4 version"],
-                cascade: true
-            })
+            overrideBrowserslist: ["last 4 version"],
+            cascade: true
+        })
         )
         .pipe(sourcemaps.write())
         .pipe(shorthand())
@@ -177,23 +185,26 @@ function css() {
 /* scss lint
 ====================================================*/
 function lintScss() {
-    return gulp.src(path.watch.css).pipe(stylelint({
-        reporters: [
-            {
-                failAfterError: true,
-                formatter: 'string',
-                console: true,
-            },
-        ],
-    }));
+    return gulp.src(path.watch.css)
+        .pipe(plumber())
+        .pipe(stylelint({
+            reporters: [
+                {
+                    failAfterError: true,
+                    formatter: "string",
+                    console: true,
+                },
+            ],
+        }));
 }
+
 
 /* js build
 ====================================================*/
 function js() {
     return src(path.src.js)
         .pipe(plumber({
-            errorHandler: notify.onError(function (err) {
+            errorHandler: notify.onError(function () {
             })
         }))
         .pipe(dest(path.build.js))
@@ -207,52 +218,116 @@ function js() {
         .pipe(browsersync.stream());
 }
 
+/* fonts build
+====================================================*/
+function fontsCopy() {
+    return src([[path.src.fonts] + "*.{woff,woff2}"])
+        .pipe(dest(path.build.fonts));
+}
+
+/* fonts TTF to WOFF WOFF2
+====================================================*/
+function fontsWoff() {
+    src([[path.src.fonts] + "*.ttf"])
+        .pipe(ttf2woff())
+        .pipe(dest(path.src.fonts));
+    return src([[path.src.fonts] + "*.ttf"])
+        .pipe(ttf2woff2())
+        .pipe(dest(path.src.fonts));
+}
+
+/* fonts OTF to TTF
+====================================================*/
+function fontsOtf() {
+    return src([[path.src.fonts] + "*.otf"])
+        .pipe(
+            fonter({
+                formats: ["ttf"],
+            }))
+        .pipe(dest(path.src.fonts));
+}
+
+/* fonts @include fontface
+====================================================*/
+async function fontsStyle(callback) {
+
+    let file_content = fs.readFileSync(source_folder + "/scss/_fonts.scss");
+    if (file_content === "") {
+        fs.writeFile(source_folder + "/scss/_fonts.scss", "", cb);
+        return fs.readdir(path.build.fonts, function (err, items) {
+            if (items) {
+                let c_fontname;
+                for (var i = 0; i < items.length; i++) {
+                    let fontname = items[i].split(".");
+                    fontname = fontname[0];
+                    if (c_fontname !== fontname) {
+                        fs.appendFile(source_folder + "/scss/_fonts.scss", "@include fontface(\"" + fontname + "\", \"" + fontname + "\", \"400\", \"normal\");\r\n", cb);
+                    }
+                    c_fontname = fontname;
+                }
+            }
+        });
+    }
+    callback();
+}
+
+function cb() {
+}
+
+
 /* image build
 ====================================================*/
 function images() {
     return src(path.src.img)
-        .pipe(
-            imagemin([
-                    imagemin.gifsicle({interlaced: true}),
-                    imagemin.mozjpeg({quality: 75, progressive: true}),
-                    imagemin.optipng({optimizationLevel: 5}),
-                    imagemin.svgo({
-                        plugins: [
-                            {removeViewBox: true},
-                            {cleanupIDs: false}
-                        ]
-                    })
-                ],
-                {
-                    progressive: true,
-                    svgoPlugins: [{removeViewBox: false}],
-                    interlaced: true,
-                    optimizationLevel: 3 // 0 to 7
-                }))
+        .pipe(dest(path.build.img))
+        .pipe(browsersync.stream());
+}
+/* image min
+====================================================*/
+function imagesMin() {
+    return src(path.src.img)
+        .pipe(imagemin([
+            imagemin.gifsicle({ interlaced: true }),
+            imagemin.mozjpeg({ quality: 75, progressive: true }),
+            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.svgo({
+                plugins: [
+                    { removeViewBox: true },
+                    { cleanupIDs: false }
+                ]
+            })
+        ],
+            {
+                progressive: true,
+                svgoPlugins: [{ removeViewBox: false }],
+                interlaced: true,
+                optimizationLevel: 3 // 0 to 7
+            }))
         .pipe(dest(path.build.img))
         .pipe(browsersync.stream());
 }
 
 /* sprite
 ====================================================*/
-async function imgSprite() {
+async function imgSprite(callback) {
     let spriteData = gulp.src(path.src.png)
         .pipe(plumber())
         .pipe(spritesmith({
-            imgName: 'sprite.png',
-            cssName: '_sprite.scss',
-            cssFormat: 'scss',
-            algorithm: 'top-down',
-            imgPath: '../img/sprite/sprite.png',
+            imgName: "sprites.png",
+            cssName: "_sprites.scss",
+            cssFormat: "css",
+            algorithm: "top-down",
+            imgPath: "../img/sprites.png",
             padding: 10
         }));
-    spriteData.img.pipe(gulp.dest(path.build.png));
-    spriteData.css.pipe(gulp.dest(path.build.pug_css));
+    spriteData.img.pipe(gulp.dest(path.build.sprite));
+    spriteData.css.pipe(gulp.dest([path.build.png_css] + "/mixins/"));
+    callback();
 }
 
 /* SVG sprite
 ====================================================*/
-svgconfig = {
+let svgconfig = {
     shape: {
         dimension: { // Set maximum dimensions
             maxWidth: 32,
@@ -264,37 +339,36 @@ svgconfig = {
     },
     mode: {
         stack: {
-            sprite: "../icons.svg",  //sprite file name
-            example: true
+            sprite: "../sprites.svg",  //sprite file name
+            // example: true
         },
-        view: { // Activate the «view» mode
-            bust: false,
-            render: {
-                scss: true // Activate Sass output (with default options)
-            }
-        },
-        symbol: true // Activate the «symbol» mode
+        // view: { // Activate the «view» mode
+        //     bust: false,
+        //     render: {
+        //         scss: true // Activate Sass output (with default options)
+        //     }
+        // },
+        // symbol: true // Activate the «symbol» mode
     },
 };
 
 function svgSprite() {
     return gulp.src(path.src.svg)
-        .pipe(svgsprite())
         .pipe(svgsprite(svgconfig))
-        .pipe(dest(path.build.img));
+        .pipe(dest(path.build.sprite));
 }
 
 /* favicon:clean
 ====================================================*/
 function delfavicon() {
-    return del(path.clean.favicon)
+    return del(path.clean.favicon);
 }
 
 /* favicon:build  / generate
 ====================================================*/
-favconfig = {
+let favconfig = {
     path: "/img/favicon/",                    // Path for overriding default icons path. `string`
-    appName: 'CodeTime',                      // Your application's name. `string`
+    appName: "CodeTime",                      // Your application's name. `string`
     appShortName: null,                       // Your application's short_name. `string`. Optional. If not set, appName will be used
     appDescription: null,                     // Your application's description. `string`
     developerName: null,                      // Your (or your developer's) name. `string`
@@ -347,50 +421,96 @@ async function faviconGenerate() {
 
 /* clean
 ====================================================*/
+let zipname = require("path").basename(__dirname);
+
+function zip() {
+    return src("build/**/*.*")
+        .pipe(zipping("archive.zip"))
+        .pipe(rename({
+            basename: zipname
+        }))
+        .pipe(dest("build/"));
+}
+
+/* clean
+====================================================*/
 const clean = () => del(path.clean.project);
 
 /* default
 ====================================================*/
-const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug));
-const watching = gulp.series(build, gulp.parallel(watchFiles, imgSprite, svgSprite, browserSync));
-const favicon = gulp.series(delfavicon, faviconGenerate);
-const faviconWatch = gulp.series(delfavicon, faviconGenerate);
+const build = gulp.series(clean, gulp.parallel(html, js, css, images, pug), fontsOtf, fontsWoff, fontsCopy);
+const watching = gulp.series(build, gulp.parallel(imgSprite, svgSprite, watchPug, browserSync));
+const junior = gulp.series(build, gulp.parallel(watchHtml, browserSync));
 const validate = gulp.series(validateBem);
+const favicon = gulp.series(delfavicon, faviconGenerate);
+const fonts = gulp.series(fontsOtf, fontsWoff, fontsCopy);
 
-/* watch
+/* watch pug
 ====================================================*/
-async function watchFiles(params) {
+async function watchPug(callback) {
     gulp.watch([path.watch.css], css);
     gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.fonts + "*.woff",
+    path.src.fonts + "*.woff2"], fontsCopy);
+    gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
+    gulp.watch([path.watch.fonts + "*.otf"], fonts);
     gulp.watch([path.watch.img], images);
     gulp.watch([path.watch.svg], svgSprite);
     gulp.watch([path.watch.png], imgSprite);
     gulp.watch([path.watch.pug], pug);
     gulp.watch([path.watch.pug_css], css);
-    gulp.watch([path.watch.favicon], faviconWatch);
-    params();
+    gulp.watch([path.watch.favicon], favicon);
+    callback();
 }
+
+/* watch html
+====================================================*/
+async function watchHtml(callback) {
+    gulp.watch([path.watch.html], html);
+    gulp.watch([path.watch.css], css);
+    gulp.watch([path.watch.js], js);
+    gulp.watch([path.watch.fonts + "*.woff",
+    path.src.fonts + "*.woff2"], fontsCopy);
+    gulp.watch([path.watch.fonts + "*.ttf"], fontsWoff);
+    gulp.watch([path.watch.fonts + "*.otf"], fonts);
+    gulp.watch([path.watch.img], images);
+    gulp.watch([path.watch.svg], svgSprite);
+    gulp.watch([path.watch.png], imgSprite);
+    gulp.watch([path.watch.pug_css], css);
+    gulp.watch([path.watch.favicon], favicon);
+    callback();
+}
+
 
 /* =================================================*/
 
-exports.validate = validate;
-exports.validateBem = validateBem;
 exports.favicon = favicon;
-exports.faviconWatch = faviconWatch;
 exports.faviconGenerate = faviconGenerate;
 exports.delfavicon = delfavicon;
-exports.svgSprite = svgSprite;
-exports.imgSprite = imgSprite;
 exports.PugLinter = PugLinter;
 exports.pug = pug;
+exports.fontsStyle = fontsStyle;
+exports.fontsCopy = fontsCopy;
+exports.fonts = fonts;
+exports.fontsOtf = fontsOtf;
+exports.fontsWoff = fontsWoff;
+exports.validate = validate;
+exports.validateBem = validateBem;
+exports.svgSprite = svgSprite;
+exports.imgSprite = imgSprite;
 exports.lintScss = lintScss;
 exports.watch = watch;
-exports.watchFiles = watchFiles;
+exports.watchPug = watchPug;
+exports.watchHtml = watchHtml;
 exports.clean = clean;
+exports.imagesMin = imagesMin;
 exports.images = images;
 exports.js = js;
 exports.css = css;
 exports.html = html;
 exports.build = build;
+exports.junior = junior;
+exports.zipping = zipping;
+exports.zip = zip;
 exports.watching = watching;
 exports.default = watching;
