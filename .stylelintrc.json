@@ -7,9 +7,6 @@
 		"stylelint-selector-bem-pattern"
 	],
 	"rules": {
-		"at-rule-blacklist": [
-			"extend"
-		],
 		"at-rule-empty-line-before": [
 			"always",
 			{
@@ -377,7 +374,7 @@
 				"message": "Должны быть пробелы между функциями  |  There must be spaces between functions"
 			}
 		],
-		"indentation": 2,
+		"indentation": "tab",
 		"declaration-no-important": [
 			true,
 			{
@@ -1025,14 +1022,6 @@
 		"scss/percent-placeholder-pattern": null,
 		"scss/selector-no-redundant-nesting-selector": true,
 		"selector-attribute-brackets-space-inside": "never",
-		"selector-attribute-operator-blacklist": [
-			[
-				"id"
-			],
-			{
-				"message": "Для стилизации ID использовать нельзя  |  For styling ID cannot use"
-			}
-		],
 		"selector-attribute-operator-space-after": "never",
 		"selector-attribute-operator-space-before": "never",
 		"selector-attribute-operator-whitelist": null,
@@ -1147,16 +1136,6 @@
 			}
 		],
 		"time-min-milliseconds": 10,
-		"unit-blacklist": [
-			"ch",
-			"cm",
-			"ex",
-			"in",
-			"mm",
-			"pc",
-			"pt",
-			"q"
-		],
 		"unit-case": [
 			"lower",
 			{
