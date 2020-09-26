@@ -1,1 +1,1 @@
-# [Reade Documentation](https://codetimeam.github.io/Front-End-Template/)
+# [Read Documentation](https://codetimeam.github.io/Front-End-Template/)
