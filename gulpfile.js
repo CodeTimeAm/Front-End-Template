@@ -26,7 +26,7 @@ const path = {
         img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
         js: source_folder + "/js/script.js",
         png: source_folder + "/img/sprite/png/**/*.png",
-        pug: [source_folder + "/pug/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
+        pug: [source_folder + "/pug/**/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
         svg: source_folder + "/img/sprite/svg/**/*.svg",
     },
     watch: {
@@ -170,7 +170,7 @@ function css() {
         })
         )
         .pipe(sourcemaps.write())
-        .pipe(shorthand())
+        // .pipe(shorthand())
         .pipe(dest(path.build.css))
         .pipe(csso())
         .pipe(

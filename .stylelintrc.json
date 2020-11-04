@@ -389,7 +389,6 @@
 			}
 		],
 		"max-empty-lines": 1,
-		"max-line-length": 120,
 		"max-nesting-depth": null,
 		"media-feature-colon-space-after": [
 			"always",
@@ -1036,12 +1035,6 @@
 			}
 		],
 		"selector-id-pattern": null,
-		"selector-list-comma-newline-after": [
-			"never-multi-line",
-			{
-				"message": "После запятой необходим перенос строки  |  A line break is required after a comma"
-			}
-		],
 		"selector-list-comma-newline-before": [
 			"never-multi-line",
 			{
