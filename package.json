@@ -71,6 +71,7 @@
     "favicons": "^6.2.0",
     "gulp-favicons": "^2.4.0",
     "gulp-svg-sprite": "^1.5.0",
+    "gulp-webp": "^4.0.1",
     "gulp-zip": "^5.0.2"
   },
   "husky": {

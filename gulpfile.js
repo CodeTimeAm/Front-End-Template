@@ -14,6 +14,7 @@ const path = {
         sprite: source_folder + "/img",
         png_css: source_folder + "/scss",
         pug: project_folder + "/",
+        towebp: source_folder + "/img/towebp",
     },
     clean: {
         favicon: [source_folder + "/img/favicon/*.*"],
@@ -40,6 +41,7 @@ const path = {
         pug: source_folder + "/pug/**/*.pug",
         pug_css: source_folder + "/pug/**/*.scss",
         svg: source_folder + "/img/sprite/svg/**/*.svg",
+		towebp: source_folder + "/img/towebp/",
     },
 };
 
@@ -72,7 +74,8 @@ const { src, dest } = require("gulp"),
     svgsprite = require("gulp-svg-sprite"),
     uglify = require("gulp-uglify"),
     watch = require("gulp-watch"),
-    zipping = require("gulp-zip");
+    zipping = require("gulp-zip"),
+	webp = require('gulp-webp');
 
 /* browser-sync
 =========================*/
@@ -358,6 +361,13 @@ function svgSprite() {
         .pipe(dest(path.build.sprite));
 }
 
+/* jpg -> webp
+====================================================*/
+function towebp() {
+	return gulp.src([path.watch.towebp]+ '*.jpg')
+		.pipe(webp())
+		.pipe(dest(path.build.towebp));
+}
 /* favicon:clean
 ====================================================*/
 function delfavicon() {
@@ -460,6 +470,7 @@ async function watchPug(callback) {
     gulp.watch([path.watch.pug], pug);
     gulp.watch([path.watch.pug_css], css);
     gulp.watch([path.watch.favicon], favicon);
+    gulp.watch([path.watch.towebp], towebp);
     callback();
 }
 
@@ -512,5 +523,6 @@ exports.build = build;
 exports.junior = junior;
 exports.zipping = zipping;
 exports.zip = zip;
+exports.towebp = towebp;
 exports.watching = watching;
 exports.default = watching;
