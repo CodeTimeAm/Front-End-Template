@@ -25,7 +25,7 @@ const path = {
         fonts: source_folder + "/fonts/",
         html: [source_folder + "/*.html", "!" + source_folder + "/_*.html"],
         img: source_folder + "/img/**/*.{jpg,jpeg,png,svg,gif,ico,webp}",
-        js: source_folder + "/js/script.js",
+        js: source_folder + "/js/**/*.js",
         png: source_folder + "/img/sprite/png/**/*.png",
         pug: [source_folder + "/pug/**/*.pug", "!" + source_folder + ["/pug/template/*.pug", "/pug/section/*.pug", "/pug/mixin/*.pug"]],
         svg: source_folder + "/img/sprite/svg/**/*.svg",
@@ -41,7 +41,7 @@ const path = {
         pug: source_folder + "/pug/**/*.pug",
         pug_css: source_folder + "/pug/**/*.scss",
         svg: source_folder + "/img/sprite/svg/**/*.svg",
-		towebp: source_folder + "/img/towebp/",
+        towebp: source_folder + "/img/towebp/",
     },
 };
 
@@ -75,7 +75,7 @@ const { src, dest } = require("gulp"),
     uglify = require("gulp-uglify"),
     watch = require("gulp-watch"),
     zipping = require("gulp-zip"),
-	webp = require('gulp-webp');
+    webp = require('gulp-webp');
 
 /* browser-sync
 =========================*/
@@ -364,9 +364,9 @@ function svgSprite() {
 /* jpg -> webp
 ====================================================*/
 function towebp() {
-	return gulp.src([path.watch.towebp]+ '*.jpg')
-		.pipe(webp())
-		.pipe(dest(path.build.towebp));
+    return gulp.src([path.watch.towebp] + '*.jpg')
+        .pipe(webp())
+        .pipe(dest(path.build.towebp));
 }
 /* favicon:clean
 ====================================================*/
