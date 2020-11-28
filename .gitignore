@@ -12,6 +12,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.idea/
 
 # Generated files
 .idea/**/contentModel.xml
@@ -838,3 +839,4 @@ bower_components
 # End of https://www.toptal.com/developers/gitignore/api/yarn,bower
 package-lock.json
 build/
+/.idea/

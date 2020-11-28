@@ -89,3 +89,32 @@ h1, h2, h3, h4, h5, h6 {
 .icon {
 	display: inline-block;
 }
+
+input[type="radio"] {
+	position: relative;
+	&:checked::after {
+		content: "";
+		position: absolute;
+		display: inline-block;
+		width: 15px;
+		height: 15px;
+		background: #27282D;
+		left: 3px;
+		top: 3px;
+		visibility: visible;
+		// transform: translate(-50%,-50%);
+		border-radius: 50%;
+	}
+	&:checked::before {
+		content: "";
+		position: absolute;
+		display: inline-block;
+		width: 21px;
+		height: 21px;
+		left: 0;
+		top: 0;
+		visibility: visible;
+		border: 1px #27282D solid;
+		border-radius: 50%;
+	}
+}
