@@ -81,8 +81,8 @@
     }
   },
   "lint-staged": {
-    "remove.js": "eslint --color --fix",
-    "remove.scss": "stylelint --fix --color --config ./.stylelintrc",
-    "remove.pug": "pug-lint"
+    "*.js": "eslint --color --fix",
+    "*.scss": "stylelint --fix --color --config ./.stylelintrc",
+    "*.pug": "pug-lint"
   }
 }
